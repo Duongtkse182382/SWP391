@@ -150,7 +150,7 @@ CREATE TABLE PurchaseOrder (
     Total money
 );
 
-CREATE TABLE PurchaseDetailID (
+CREATE TABLE PurchaseDetails (
     PDetailID int PRIMARY KEY,
     PurchaseID int,
     Name nvarchar(255),
@@ -163,3 +163,55 @@ CREATE TABLE PurchaseDetailID (
     Clarity varchar(255),
     Cut varchar(255)
 );
+
+-- MaterialPriceList references Material
+ALTER TABLE MaterialPriceList
+ADD FOREIGN KEY (MaterialID) REFERENCES Material(MaterialID);
+
+-- ProductMaterial references Product and Material
+ALTER TABLE ProductMaterial
+ADD FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
+    FOREIGN KEY (MaterialID) REFERENCES Material(MaterialID);
+
+-- Gem references Product
+ALTER TABLE Gem
+ADD FOREIGN KEY (ProductID) REFERENCES Product(ProductID);
+
+-- GemPriceList references Gem
+ALTER TABLE GemPriceList
+ADD FOREIGN KEY (GemID) REFERENCES Gem(GemID);
+
+-- Product references Category and Type
+ALTER TABLE Product
+ADD FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID),
+    FOREIGN KEY (TypeID) REFERENCES Type(TypeID);
+
+-- Staff references Role and Counter
+ALTER TABLE Staff
+ADD FOREIGN KEY (RoleID) REFERENCES Role(RoleID),
+    FOREIGN KEY (Counterid) REFERENCES Counter(CounterID);
+
+-- Order references Status and OrderDetail
+ALTER TABLE [Order]
+ADD FOREIGN KEY (StatusID) REFERENCES Status(StatusID),
+    FOREIGN KEY (DetailID) REFERENCES OrderDetail(DetailID);
+
+-- OrderDetail references Staff, Product, Customer, and Promotion
+ALTER TABLE OrderDetail
+ADD FOREIGN KEY (StaffID) REFERENCES Staff(StaffID),
+    FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
+    FOREIGN KEY (PromotionID) REFERENCES Promotion(PromotionID);
+
+-- PurchaseOrder references
+ALTER TABLE PurchaseOrder
+ADD FOREIGN KEY (StaffID) REFERENCES Staff(StaffID),
+    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
+    FOREIGN KEY (PromotionID) REFERENCES Promotion(PromotionID),
+    FOREIGN KEY (StatusID) REFERENCES Status(StatusID);
+
+-- PurchaseDetails references
+ALTER TABLE PurchaseDetails
+ADD FOREIGN KEY (PurchaseID) REFERENCES PurchaseOrder(PurchaseID),
+    FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
+    FOREIGN KEY (MaterialID) REFERENCES Material(MaterialID);
