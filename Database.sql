@@ -65,7 +65,7 @@ CREATE TABLE Product (
     CategoryID int,
     TypeID int,
     ProductionCost money,
-	Quantity int DEFAULT 1,
+    Quantity int DEFAULT 1,
     Status int,
     PriceRate float
 );
@@ -94,6 +94,7 @@ CREATE TABLE Role (
 CREATE TABLE Counter (
     CounterID int PRIMARY KEY,
     CounterName nvarchar(255),
+    CounterType nvarchar(255),
     isActive int
 );
 
@@ -115,7 +116,7 @@ CREATE TABLE OrderDetail (
     ProductID int,
     CustomerID int,
     PromotionID int,
-	Quantity int,
+    Quantity int,
     Date date,
     Total money
 );
