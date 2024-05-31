@@ -67,7 +67,8 @@ CREATE TABLE Product (
     ProductionCost money,
     Quantity int DEFAULT 1,
     Status int,
-    PriceRate float
+    PriceRate float,
+    Image varbinary(MAX)
 );
 
 CREATE TABLE Staff (
