@@ -21,16 +21,16 @@
                         Trần Đại Dương
                     </div>
                     <div>
-                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                        <span class="child-manager">Cashier <i class="fa-solid fa-pencil"></i> </span>
                     </div>
                 </div>
             </div>
             <p class="active">History Order</p>
             <a  class="link-customer" th:href="@{/customers}"><p>List customer</p></a>
-            <p>Bill of sell</p>
-            <p>Bill of buy</p>
-            <p>Personal profile</p>
-            <p>Warranty</p>
+            <a  class="link-customer" th:href="@{seller/products/bill-of-sell}"><p>Bill of Sell</p></a>
+            <a  class="link-customer" th:href="@{seller/products/bill-of-buy}"><p>Bill of Buy</p></a>
+            <a  class="link-customer" th:href="@{/cashier-profile}"><p>Personal Profile</p></a>
+            <a  class="link-customer" th:href="@{/warranty}"><p>Warranty</p></a>
         </div>
         <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
     </div>
@@ -40,9 +40,9 @@
         </div>
         <div class="bill-details">
             <div class="staff">
-                <input value="Search" class="staff-input" />
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
+    <input id="searchInput" class="staff-input" onkeyup="searchOrders()" placeholder="Search by customer name or phone number..." />
+    <i class="fa-solid fa-magnifying-glass"></i>
+</div>
         </div>
         <div class="bill-table">
             <table>
@@ -64,14 +64,15 @@
                         <td th:text="${order.customer.customerName}"></td>
                         <td th:text="${order.customer.phone}"></td>
                         <td th:text="${order.staff.fullName}"></td>
-                        <td th:text="${order.product.quantity}"></td>
+                        <td th:text="${order.quantity}"></td>
                         <td>
-                            <button th:classappend="${order.status ? 'status complete' : 'status pending'}">
-                                <span class="sf"><i class="fa-solid fa-circle"></i></span>
-                                <span th:text="${order.status ? 'Complete' : 'Pending'}"></span>
-                            </button>
+                           <button class="status" th:classappend="${order.orderStatus.name == 'Complete' || order.orderStatus.name == 'Dilivery'} ? 'complete' : 'pending'">
+    <span class="sf"><i class="fa-solid fa-circle"></i></span>
+    <span th:text="${order.orderStatus.name}"></span>
+</button>
+
                         </td>
-                        <td th:text="${order.purchaseOrder.total}"></td>
+                        <td th:text="${order.total}"></td>
                         <td><button class="detail-btn"><i class="fa-solid fa-file"></i></button></td>
                     </tr>
                 </tbody>
@@ -95,6 +96,31 @@
     </div>
 </div>
     </div>
+    <script type="text/javascript">
+    function searchOrders() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase().trim();
+        table = document.querySelector("table");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            tdName = tr[i].getElementsByTagName("td")[1]; 
+            tdPhone = tr[i].getElementsByTagName("td")[2];
+
+            if (tdName || tdPhone) {
+                txtValueName = tdName.textContent || tdName.innerText;
+                txtValuePhone = tdPhone.textContent || tdPhone.innerText;
+                
+                if (txtValueName.toUpperCase().includes(filter) || txtValuePhone.includes(filter)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
 </body>
 
 </html>

@@ -21,16 +21,16 @@
                     Trần Đại Dương
                 </div>
                 <div>
-                    <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                    <span class="child-manager">Cashier <i class="fa-solid fa-pencil"></i> </span>
                 </div>
             </div>
         </div>
-        <p>History Order</p>
-        <p>List customer</p>
-        <p>Bill of sell</p>
-        <p class="active">Bill of buy</p>
-        <p>Personal profile</p>
-        <p>Warranty</p>
+        <a class="link-historyOrder" th:href="@{/orders}"><p>History Order</p></a>
+        <a class="link-historyOrder" th:href="@{/customers}"><p>List customer</p></a>
+        <p class="active">Bill of Sell</p>
+        <a class="link-historyOrder" th:href="@{bill-of-buy}"><p>Bill of Buy</p></a>
+      <a  class="link-historyOrder" th:href="@{/cashier-profile}"><p>Personal Profile</p></a>
+            <a  class="link-historyOrder" th:href="@{/warranty}"><p>Warranty</p></a>
     </div>
     <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
     </div>
@@ -42,12 +42,13 @@
         <div class="bill-header">
             <h1>Bill of Sell</h1>
         </div>
+        <form th:oject="${product}">
         <div class="bill-details">
             <div class="profile">
                 <p class="profile-bill">Sales invoices are sent to:</p>
-                <p><span class="profile-customer">Customer name:</span> <input type="text" disabled> </p>
-                <p><span class="profile-phone">Phone number:</span><input type="text" disabled></p>
-                <p><span class="profile-address">Address:</span><input type="text" disabled></p>
+                <p><span class="profile-customer">Customer name:</span> <input type="text"> </p>
+                <p><span class="profile-phone">Phone number:</span><input type="text" ></p>
+                <p><span class="profile-address">Address:</span><input type="text" ></p>
             </div>
             <div class="staff">
                 <p class="staff-name">Staff name:</p>
@@ -88,35 +89,7 @@
                         <td>$1,500.00</td>
                         <td class="total">$1,500.00</td>
                     </tr>
-                    <tr>
-                        <td class="product">
-                            Neck Strap
-                            <p class="nc-title">10K White Gold Necklace</p>
-                        </td>
-                        <td>J34</td>
-                        <td>Diamond</td>
-                        <td>$2,000.00</td>
-                        <td class="total">$2,000.00</td>
-                    </tr>
-                    <tr>
-                        <td class="product">
-                            9999 Gold
-                            <p class="pr-title">
-                            </p>
-                        </td>
-                        <td>G32</td>
-                        <td>Gold</td>
-                        <td>$3,000.00</td>
-                        <td class="total">$3,000.00</td>
-                    </tr>
-                    <tr>
-                        <td class="product">24K Gold</td>
-                        <td>G24</td>
-                        <td>Gold</td>
-                        <td>$3,000.00</td>
-                        <td class="total">$3,000.00</td>
-                    </tr>
-                </tbody>
+                   
             </table>
         </div>
         <div class="total-section">
@@ -136,8 +109,8 @@
         <div class="buttons">
             <button class="cancel-button">Cancel</button>
             <button class="print-button">Print</button>
-            <button class="create-button">Create</button>
         </div>
+        </form>
     </div>
 </body>
 

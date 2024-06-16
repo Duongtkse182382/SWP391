@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create New Product</title>
+    <link rel="stylesheet" th:href="@{/css/CreateNewProduct.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+            <a  class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a>
+            <p class="active">Manage Product</p>
+             <a class="link-product" th:href="@{/staff}"><p>Manage Staff</p></a>
+             <a  class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
+           <a  class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
+            <p>Manage Category</p>
+            <p>Manage Material</p>
+        </div>
+        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+    </div>
+    <div class="content">
+        <div class="profile">
+            <div class="profile-container">
+                <div class="profile-title">
+                    <h4>Create New Product</h4>
+                </div>
+            </div>
+            <div class="input-profile">
+							<form  th:action="@{ create-product/create}" th:object="${product}" method="post" >
+					<div class="col">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="product-code">Product Code</label>
+                            <input type="text" class="form-control" id="product-code" th:field=*{productCode}>
+                        </div>
+                    </div>
+                   <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="product-name">Product Name</label>
+                        <input type="text" class="form-control" id="product-name" th:field=*{productName}>
+                    </div>
+                  
+                   </div>
+                  
+                </div>
+                <div class="layout">
+                    <div class="group">
+                        <div class="col">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="material">Material</label>
+                                    <select class="form-control" id="material">
+                                       <option value="Gold18K">Gold18K</option>
+                                        <option value="Diamond">Diamond</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="type">Type</label>
+                                    <select class="form-control" id="type">
+                                        <option value="Jewely">Jewely</option>
+                                        <option value="Gold">Gold</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="origin">Origin</label>
+                                    <select class="form-control" id="origin">
+                                        <option value="Natural">Natural</option>
+                                        <option value="Artificial">Artificial</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="img">
+                       
+                    </div>
+                </div>
+               
+                <div class="col">
+                    <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="carat">Carat</label>
+                        <input type="text" class="form-control" id="carat" disabled>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="category">Category</label>
+                        <select class="form-control" id="category">
+                            <option>Gold</option>
+                        </select>
+                    </div>
+                    </div>
+                   <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="clarity">Clarity</label>
+                            <input type="text" class="form-control" id="clarity" disabled>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="weight">Weight</label>
+                            <input type="text" class="form-control" id="weight" th:field=*{weight}>
+                        </div>
+                   </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="color">Color</label>
+                        <input type="text" class="form-control" id="color" disabled>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="counter">Counter</label>
+                        <input type="text" class="form-control" id="counter" >
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="cut">Cut</label>
+                        <input type="password" class="form-control" id="confirm-password" disabled>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="price-rate">Price Rate</label>
+                        <input type="text" class="form-control" id="price-rate" th:field=*{priceRate}>
+                    </div>
+                    </div>
+                </div>
+                <div class="buttons text-center mt-4">
+                    <button type="submit" class="btn btn-profile">Create</button>
+                </div>
+			</form>
+                
+                
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
