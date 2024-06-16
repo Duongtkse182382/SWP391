@@ -29,7 +29,12 @@
             justify-content: flex-start;
             margin-top     : 20px;
         }
-
+        button.delete-btn {
+    padding: 3px 12px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
         .sidebar .sidebar-title .sidebar-profile {
             display      : flex;
             font-size    : 16px;

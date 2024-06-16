@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pucharse Order Detail</title>
-    <link rel="stylesheet" th:href="@{css/PucharseOrderDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/PucharseOrderDetail.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -22,15 +22,12 @@
                         Trần Đại Dương
                     </div>
                     <div>
-                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                        <span class="child-manager">Seller <i class="fa-solid fa-pencil"></i> </span>
                     </div>
                 </div>
-            </div>
-            <p class="active">List Of Order</p>
-            <p>New Sell Order</p>
-            <p>Bill of sell</p>
-            <p>New Purchase Order</p>
-            <p>Product List as Counter</p>
+            </div>     
+             <p class="active" >List Of Order</p>
+             <a class="link-product" th:href="@{/seller/products}"><p>Product List as Counter</p></a>
         </div>
         <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
     </div>
@@ -44,7 +41,7 @@
                 </div>
             </div>
             <div class="btn-group">
-                <button class="btn-save">Save</button>
+                <a th:href="@{/orders/listOfOrder}"><button class="btn-save">Save</button></a> 
             </div>
         </div>
 

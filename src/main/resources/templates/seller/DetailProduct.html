@@ -19,15 +19,12 @@
                         Trần Đại Dương
                     </div>
                     <div>
-                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                        <span class="child-manager">Seller <i class="fa-solid fa-pencil"></i> </span>
                     </div>
                 </div>
             </div>
-            <p>List Of Order</p>
-            <p>New Sell Order</p>
-            <p>Bill of sell</p>
-            <p>New Purchase Order</p>
-            <p class="active">Product List as Counter</p>
+             <a class="link-product" th:href="@{/orders/listOfOrder}"><p>List Of Order</p></a>
+              <p>Product List as Counter</p>
         </div>
         <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
     </div>
@@ -37,7 +34,7 @@
                 <h1>Detail Of Product</h1>
             </div>
             <div class="title-second">
-                <a href="/products"><button class="title-btn">Back</button></a>
+                <a href="/seller/products"><button class="title-btn">Back</button></a>
             </div>
         </div>
         <div class="detail-product">
@@ -46,30 +43,19 @@
                 </div>
             </div>
             <div class="detail-input">
-                <form action="#" th:action="@{'/products/detail-product/' + ${product.productID} + '/update'}" th:object="${product}" method="post">
                     <div class="input-container">
                         <div class="product-id">
                             <label>Product Code:</label>
-                            <input type="text" th:field="*{productCode}" class="product-input">
+                            <input type="text" th:value="${product.productCode}" class="product-input">
                         </div>
                         <div class="product-id">
                             <label>Product Name:</label>
-                            <input type="text" th:field="*{productName}" class="product-input">
-                        </div>
-                        <div class="product-id">
-                            <label>Quantity:</label>
-                            <input type="text" th:field="*{quantity}" class="product-input">
-                        </div>
-                        <div class="update">
-                            <button type="submit" class="btn-update">Update <i class="fa-solid fa-arrow-right"></i></button>
+                            <input type="text" th:value="${product.productName}" class="product-input">
                         </div>
                     </div>
                 </form>
-                <div th:if="${updateSuccess}">
-                    <p>Update successful!</p>
-                </div>
             </div>
         </div>
     </div>
-</body>
+     </body>
 </html>

@@ -26,7 +26,10 @@
             justify-content: flex-start;
             margin-top     : 20px;
         }
-
+.link-product{
+			color: inherit;
+            text-decoration: none;
+		}
         .sidebar .sidebar-title .sidebar-profile {
             display      : flex;
             font-size    : 16px;
