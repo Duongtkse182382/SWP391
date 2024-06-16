@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Of Product</title>
+    <link rel="stylesheet" th:href="@{/css/DetailProduct.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+            <p>List Of Order</p>
+            <p>New Sell Order</p>
+            <p>Bill of sell</p>
+            <p>New Purchase Order</p>
+            <p class="active">Product List as Counter</p>
+        </div>
+        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+    </div>
+    <div class="content">
+        <div class="title">
+            <div class="title-first">
+                <h1>Detail Of Product</h1>
+            </div>
+            <div class="title-second">
+                <a href="/products"><button class="title-btn">Back</button></a>
+            </div>
+        </div>
+        <div class="detail-product">
+            <div class="container">
+                <div class="detail-container">
+                </div>
+            </div>
+            <div class="detail-input">
+                <form action="#" th:action="@{'/products/detail-product/' + ${product.productID} + '/update'}" th:object="${product}" method="post">
+                    <div class="input-container">
+                        <div class="product-id">
+                            <label>Product Code:</label>
+                            <input type="text" th:field="*{productCode}" class="product-input">
+                        </div>
+                        <div class="product-id">
+                            <label>Product Name:</label>
+                            <input type="text" th:field="*{productName}" class="product-input">
+                        </div>
+                        <div class="product-id">
+                            <label>Quantity:</label>
+                            <input type="text" th:field="*{quantity}" class="product-input">
+                        </div>
+                        <div class="update">
+                            <button type="submit" class="btn-update">Update <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </form>
+                <div th:if="${updateSuccess}">
+                    <p>Update successful!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

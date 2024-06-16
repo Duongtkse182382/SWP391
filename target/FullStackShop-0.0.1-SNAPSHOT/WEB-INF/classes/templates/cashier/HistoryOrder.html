@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>History Order</title>
+    <link rel="stylesheet" th:href="@{/css/HistoryOrder.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+            <p class="active">History Order</p>
+            <a  class="link-customer" th:href="@{/customers}"><p>List customer</p></a>
+            <p>Bill of sell</p>
+            <p>Bill of buy</p>
+            <p>Personal profile</p>
+            <p>Warranty</p>
+        </div>
+        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+    </div>
+    <div class="content">
+        <div class="bill-header">
+            <h1>History Order</h1>
+        </div>
+        <div class="bill-details">
+            <div class="staff">
+                <input value="Search" class="staff-input" />
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+        </div>
+        <div class="bill-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order Code</th>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>Staff Name</th>
+                        <th>Quantity</th>
+                        <th >Status</th>
+                        <th>Price</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   <tr th:each="order : ${orders}">
+                        <td th:text="${order.orderCode}"></td>
+                        <td th:text="${order.customer.customerName}"></td>
+                        <td th:text="${order.customer.phone}"></td>
+                        <td th:text="${order.staff.fullName}"></td>
+                        <td th:text="${order.product.quantity}"></td>
+                        <td>
+                            <button th:classappend="${order.status ? 'status complete' : 'status pending'}">
+                                <span class="sf"><i class="fa-solid fa-circle"></i></span>
+                                <span th:text="${order.status ? 'Complete' : 'Pending'}"></span>
+                            </button>
+                        </td>
+                        <td th:text="${order.purchaseOrder.total}"></td>
+                        <td><button class="detail-btn"><i class="fa-solid fa-file"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+          <div class="pagination-container">
+    <div class="previous">
+        <a th:if="${currentPage > 0}" th:href="@{/orders(page=${currentPage - 1 })}">
+            <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
+        </a>
+    </div>
+    <div class="pages">
+        <span th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:class="${pageNumber == currentPage ? 'page-active' : ''}">
+            <a th:href="@{/orders(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+        </span>
+    </div>
+    <div class="next">
+        <a th:if="${currentPage < totalPages - 1}" th:href="@{/orders(page=${currentPage + 1})}">
+            <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
+        </a>
+    </div>
+</div>
+    </div>
+</body>
+
+</html>

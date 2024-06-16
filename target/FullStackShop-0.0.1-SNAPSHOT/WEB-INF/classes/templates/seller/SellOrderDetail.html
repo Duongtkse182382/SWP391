@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SellOrderDetail</title>
+    <link rel="stylesheet" th:href="@{css/SellOrderDetail.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+            <p class="active">List Of Order</p>
+            <p>New Sell Order</p>
+            <p>Bill of sell</p>
+            <p>New Purchase Order</p>
+            <p>Product List as Counter</p>
+        </div>
+        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+    </div>
+    <div class="content">
+        <div class="content-header">
+            <div class="bill-header">
+                <h1>New Sell Order</h1>
+                <div class="title-file">
+                    <i class="fa-regular fa-file"></i>
+                    <span>#Order:1</span>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-save">Completed</button>
+                <button class="btn-update">Update</button>
+            </div>
+        </div>
+
+        <div class="profile-input-container">
+            <div class="first-group-input">
+                <div class="first-input">
+                    <label>Order Date <i class="fa-solid fa-calendar-days"></i></label>
+                    <div>
+                        <input type="text" value="2024-02-13" class="input-order">
+                    </div>
+                </div>
+                <div class="second-input">
+                    <label>Staff Name<i class="fa-solid fa-user"></i></label>
+                    <div>
+                        <input type="text" value="Thanh" class="input-staff">
+                    </div>
+                </div>
+            </div>
+            <div class="second-group-input">
+                <div class="third-input">
+                    <label>Customer Name</label>
+                    <div>
+                        <input type="text" value="Thanh Cọc" class="input-customer">
+                    </div>
+                </div>
+                <div class="fourth-input">
+                    <label>Phone Number</label>
+                    <div>
+                        <input type="text" value="0930920332" class="input-phone">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-price-bill">
+        <div class="bill-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Code</th>
+                        <th>Type</th>
+                        <th>Product Name</th>
+                        <th>Material</th>
+                        <th>Weight/Carat</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#J11</td>
+                        <td>J</td>
+                        <td>Dây chuyền vàng đính ruby</td>
+                        <td>24k gold</td>
+                        <td>3,25</td>
+                        <td>$4900.00</td>
+                        <td><i class="fa-solid fa-trash-can"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#J11</td>
+                        <td>J</td>
+                        <td>Dây chuyền vàng đính ruby</td>
+                        <td>24k gold</td>
+                        <td>3,25</td>
+                        <td>$4900.00</td>
+                        <td><i class="fa-solid fa-trash-can"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#J11</td>
+                        <td>J</td>
+                        <td>Dây chuyền vàng đính ruby</td>
+                        <td>24k gold</td>
+                        <td>3,25</td>
+                        <td>$4900.00</td>
+                        <td><i class="fa-solid fa-trash-can"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#J11</td>
+                        <td>J</td>
+                        <td>Dây chuyền vàng đính ruby</td>
+                        <td>24k gold</td>
+                        <td>3,25</td>
+                        <td>$4900.00</td>
+                        <td><i class="fa-solid fa-trash-can"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#J11</td>
+                        <td>J</td>
+                        <td>Dây chuyền vàng đính ruby</td>
+                        <td>24k gold</td>
+                        <td>3,25</td>
+                        <td>$4900.00</td>
+                        <td><i class="fa-solid fa-trash-can"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#J11</td>
+                        <td>J</td>
+                        <td>Dây chuyền vàng đính ruby</td>
+                        <td>24k gold</td>
+                        <td>3,25</td>
+                        <td>$4900.00</td>
+                        <td><i class="fa-solid fa-trash-can"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="totals">
+            <div class="total-price">Total Price:</div>
+            <div class="price">$9800.00</div>
+        </div>
+        </div>
+        
+    </div>
+</body>
+
+</html>
