@@ -29,7 +29,7 @@ function checkDiamondCode() {
                 body: formData
             }).then(response => {
                 if (response.ok) {
-                    window.location.href = '/seller/products/bill-of-buy';
+                    window.location.href = '/orders/listOfOrder';
                 } else {
                     alert('Failed to save the order. Please try again.');
                 }
