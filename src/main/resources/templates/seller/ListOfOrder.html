@@ -59,7 +59,7 @@
                <tbody>
     <tr th:each="order : ${orders}">
        <td>
-    <a th:href="@{${order.orderCode.startsWith('S')} ? '/orders/SellOrderDetail' : '/orders/PurchaseOrderDetail'}">
+    <a th:href="@{${order.orderCode.startsWith('S')} ? '/orders/SellOrderDetail/' + ${order.orderID} : '/orders/PurchaseOrderDetail/'+${order.orderID}}">
         <i class="fa-solid fa-file"></i>
     </a>
     <span class="code-file" th:text="${order.orderCode}"></span>
@@ -67,9 +67,9 @@
         <td th:text="${order.customer.customerName}"></td>
         <td th:text="${order.customer.phone}"></td>
         <td th:text="${order.quantity}"></td>
-        <td >$4900</td>
+        <td th:text="${order.total}"></td>
         <td>
-         <button class="status" th:classappend="${order.orderStatus.name == 'Complete' || order.orderStatus.name == 'Dilivery'} ? 'complete' : 'pending'">
+         <button class="status" th:classappend="${order.orderStatus.name == 'Completed' || order.orderStatus.name == 'Delivering'} ? 'complete' : 'pending'">
     <span class="sf"><i class="fa-solid fa-circle"></i></span>
     <span th:text="${order.orderStatus.name}"></span>
 </button>

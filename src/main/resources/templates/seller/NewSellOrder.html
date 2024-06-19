@@ -26,7 +26,7 @@
                 </div>
             </div>
            <p class="active">List Of Order</p>
-           <a class="link-historyOrder" th:href="@{/seller/products}">Product List as Counter</p></a>
+           <a class="link-historyOrder" th:href="@{/seller/products}">Product List as Counter</a>
         </div>
         <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
     </div>
@@ -46,18 +46,20 @@
             </div>
         </div>
       <form method="post" action="/orders/new-sell-order/save" th:object="${orderDto}" id="add-result">
-            <div class="profile-input-container">
+          <div class="profile-input-container">
                 <div class="first-group-input">
                     <div class="first-input">
                         <label>Order Date <i class="fa-solid fa-calendar-days"></i></label>
                         <div>
-                            <input type="text"  class="input-order">
+                            <input type="text" id="order-date" class="input-order">
+                            <span id="order-date-error" class="error-message"></span>
                         </div>
                     </div>
                     <div class="second-input">
                         <label>Staff Name<i class="fa-solid fa-user"></i></label>
                         <div>
-                            <input type="text"  class="input-staff">
+                            <input type="text" id="staff-name" class="input-staff">
+                            <span id="staff-name-error" class="error-message"></span>
                         </div>
                     </div>
                 </div>
@@ -65,13 +67,15 @@
                     <div class="third-input">
                         <label>Customer Name</label>
                         <div>
-                            <input type="text" th:field="*{customerName}" class="input-customer">
+                            <input type="text" id="customer-name" class="input-customer">
+                            <span id="customer-name-error" class="error-message"></span>
                         </div>
                     </div>
                     <div class="fourth-input">
                         <label>Phone Number</label>
                         <div>
-                            <input type="text" th:field="*{phoneNumber}" class="input-phone">
+                            <input type="text" id="phone-number" class="input-phone">
+                            <span id="phone-number-error" class="error-message"></span>
                         </div>
                     </div>
                 </div>
@@ -115,14 +119,24 @@
                            <td th:text="${Product.materialPriceList.material.name}"></td>
                             <td th:text="${Product.weight}"></td>
                            <td th:text="${Product.MaterialPriceList.sellPrice * Product.weight}"></td>
-                            <td><button type="button">Remove</button></td>
+                             <td><i class="fa-solid fa-trash-can" onclick="removeProduct(this.parentElement.parentElement)"></i></td>
                         </tr>
                     </tbody>
                 </table>
+                <div class="total-container-product">
+				 <div class="product-total">
+					  Total
+				 </div>
+				 <div class="product-total-input">
+					 <input id="total-price" name="totalPrice"  readonly  />
+				 </div>
+			 </div>
             </div>
+             
         </form>
     </div>
     <script th:src="@{/js/NewSellOrder.js}"></script>
+
 </body>
 
 </html>

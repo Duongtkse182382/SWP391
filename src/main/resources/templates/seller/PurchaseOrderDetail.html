@@ -41,22 +41,22 @@
                 </div>
             </div>
             <div class="btn-group">
-                <a th:href="@{/orders/listOfOrder}"><button class="btn-save">Save</button></a> 
+                <button class="btn-save" onclick="submitForm()">Save</button>
             </div>
         </div>
-
-        <div class="profile-input-container">
+          <form th:action="@{/orders/purchaseOrderDetail/{orderID}/save(orderID=${order.orderID})}" method="post" id="add-result">
+			     <div class="profile-input-container">
             <div class="first-group-input">
                 <div class="first-input">
                     <label>Order Date <i class="fa-solid fa-calendar-days"></i></label>
                     <div>
-                        <input type="text" value="2024-02-13" class="input-order">
+                        <input type="text" th:value=${order.date} class="input-order" readonly>
                     </div>
                 </div>
                 <div class="second-input">
                     <label>Staff Name<i class="fa-solid fa-user"></i></label>
                     <div>
-                        <input type="text" value="Thanh" class="input-staff">
+                          <input type="text" th:value="${order.staff.fullName}" class="input-staff" readonly>
                     </div>
                 </div>
             </div>
@@ -64,46 +64,45 @@
                 <div class="third-input">
                     <label>Customer Name</label>
                     <div>
-                        <input type="text" value="Thanh Cọc" class="input-customer">
+                        <input type="text" th:value="${order.customer.customerName}" class="input-customer" readonly>
                     </div>
                 </div>
                 <div class="fourth-input">
                     <label>Phone Number</label>
                     <div>
-                        <input type="text" value="0930920332" class="input-phone">
+                        <input type="text" th:value="${order.customer.phone}" class="input-phone" readonly>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="bill-group">
+        <div class="bill-group " th:each="orderDetail : ${order.orderDetails}">
             <div class="bill-title-first">Diamond</div>
-            <div class="form-group">
+            <div class="form-group" >
                 <div class="row">
                     <div class="col-3">
                         <label>Name Product</label>
-                        <input type="text" class="form-control" placeholder="Input name product" />
+                        <input type="text" th:value="${orderDetail.product.gemPriceList.gem.gemName}" class="form-control" />
                     </div>
                     <div class="col-3">
                         <label>Origin</label>
-                        <input type="text" class="form-control" placeholder="Input origin" />
+                         <input type="text" th:value="${orderDetail.product.gemPriceList.gem.origin}" class="form-control" />
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-3">
                         <label>Carat</label>
-                        <input type="text" class="form-control" placeholder="Input carat" />
+                         <input type="text" th:value="${orderDetail.product.gemPriceList.gem.carat}" class="form-control" />
                     </div>
                     <div class="col-3">
                         <label>Color</label>
-                        <input type="text" class="form-control" placeholder="Input color" />
-                    </div>
+                        <input type="text" th:value="${orderDetail.product.gemPriceList.gem.color}" class="form-control" />
                     <div class="col-3">
                         <label>Clarity</label>
-                        <input type="text" class="form-control" placeholder="Input clarity" />
+                        <input type="text" th:value="${orderDetail.product.gemPriceList.gem.clarity}" class="form-control" />
                     </div>
                     <div class="col-3">
                         <label>Cut</label>
-                        <input type="text" class="form-control" placeholder="Input cut" />
+                         <input type="text" th:value="${orderDetail.product.gemPriceList.gem.cut}" class="form-control" />
                     </div>
                 </div>
             </div>
@@ -112,15 +111,15 @@
                 <div class="row">
                     <div class="col-3">
                         <label>Name Product</label>
-                        <input type="text" class="form-control" placeholder="Input name product" />
+                        <input type="text" th:value="${orderDetail.product.materialPriceList.material.name}" class="form-control" />
                     </div>
                     <div class="col-3">
                         <label>Type Gold</label>
-                        <input type="text" class="form-control" placeholder="Input type gold" />
+                        <input type="text" th:value="${orderDetail.product.type.typeName}" class="form-control" />
                     </div>
                     <div class="col-3">
                         <label>Weight</label>
-                        <input type="text" class="form-control" placeholder="Input weight" />
+                        <input type="text" th:value="${orderDetail.product.weight}" class="form-control" />
                     </div>
                 </div>
             </div>
@@ -132,16 +131,38 @@
                     <p class="total">Total price: </p>
                 </div>
                 <div class="total-right">
-                    <p>$10,000</p>
-                    <p>$10,000</p>
-                    <p class="total-child">$20,000</p>
+                    <p  th:text="${orderDetail.product.gemPriceList.buyPrice}"></p>
+                    <p  th:text="${orderDetail.product.materialPriceList.buyPrice}"></p>
+                    <p class="total-child" th:text="${order.total}"></p>
                 </div>
             </div>
         </div>
+		  </form>
+      
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+		 function submitForm() {
+            const form = document.getElementById('add-result');
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href =  `/orders/listOfOrder`;
+                } else {
+                    alert('Failed to save the order. Please try again.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        }
+	</script>
 </body>
 
 </html>
