@@ -13,12 +13,9 @@
             flex-direction  : column;
             justify-content : space-between;
             height          : 930px;
-            line-height     : 30px;
+            line-height     : 42px;
         }
-  .link-historyOrder{
-		   color: inherit;
-            text-decoration: none;
-	   }
+ 
         .profile-container .img-profile {
             background   : url("../../assets/HeroImage.png") no-repeat center center;
             width        : 220px;
@@ -179,6 +176,12 @@
             pointer-events: none;
             outline       : none;
         }
+         .profile.overlay select {
+            pointer-events: none;
+            outline       : none;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
 
         #passwordModal {
             position : fixed;

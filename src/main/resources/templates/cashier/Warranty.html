@@ -27,12 +27,16 @@
             </div>
             <a  class="link-historyOrder" th:href="@{/orders}"><p>History Order</p></a>
             <a class="link-historyOrder" th:href="@{/customers}"><p>List customer</p></a>
-            <a  class="link-historyOrder" th:href="@{seller/products/bill-of-sell}"><p>Bill of Sell</p></a>
-            <a  class="link-historyOrder" th:href="@{seller/products/bill-of-buy}"><p>Bill of Buy</p></a>
+            <a  class="link-historyOrder" th:href="@{seller/products/bill-of-sell/11}"><p>Bill of Sell</p></a>
+            <a  class="link-historyOrder" th:href="@{seller/products/bill-of-buy/14}"><p>Bill of Buy</p></a>
             <a  class="link-historyOrder" th:href="@{/cashier-profile}"><p>Personal Profile</p></a>
             <p class="active">Warranty</p>
         </div>
-        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+         <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
     </div>
     <div class="content">
         <div class="bill-header">
