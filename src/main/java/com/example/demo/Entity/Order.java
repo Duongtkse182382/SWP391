@@ -3,7 +3,7 @@ package com.example.demo.Entity;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @Entity
@@ -48,8 +48,14 @@ public class Order {
     
     @Column(name = "OrderstatusID")
     private int OrderstatusID;
+    
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<PurchaseDetail> purchaseDetails;
 
-    @OneToMany(mappedBy = "orderID", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "orderID", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private List<OrderDetail> orderDetails;
 
 }
+
+

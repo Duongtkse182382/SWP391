@@ -17,6 +17,7 @@ import com.example.demo.dto.ProductOrderDTO;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,14 +64,13 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public void saveProductFromOrder(OrderDTO orderDTO) {
 		Order order = new Order();
-
 		order.setTotal(orderDTO.getTotal());
 		order.setQuantity(orderDTO.getProduct().size());
-		order.setStaffID(1);
+		order.setStaffID(orderDTO.getStaffID());
 		order.setOrderstatusID(1);
 		Double total = 0.0;
 		for (int i = 0; i < orderDTO.getProduct().size(); i++) {
-			total += orderDTO.getProduct().get(i).getMaterialPriceList().getSellPrice();
+			total += orderDTO.getProduct().get(i).getMaterialPriceList().getSellPrice()*orderDTO.getProduct().get(i).getWeight() + orderDTO.getProduct().get(i).getGemPriceList().getSellPrice();
 		}
 		order.setTotal(total);
 		order.setDate(new Date());
@@ -87,9 +87,16 @@ public class OrderServiceImpl implements OrderService {
 			OrderDetail orDetail = new OrderDetail();
 			orDetail.setOrderID(order.getOrderID());
 			orDetail.setProductID(orderDTO.getProduct().get(i).getProductID());
-			orDetail.setTotal((orderDTO.getProduct().get(i).getMaterialPriceList().getSellPrice()));
+			orDetail.setTotal((orderDTO.getProduct().get(i).getMaterialPriceList().getSellPrice()*orderDTO.getProduct().get(i).getWeight() + orderDTO.getProduct().get(i).getGemPriceList().getSellPrice()));
 			orderDetailRepository.save(orDetail);
 		}
-
 	}
+	@Override
+	public Optional<Order> findOrderById(Integer id){
+		return orderRepository.findById(id);
+	}
+	 @Override
+	    public void updateOrder(Order order) {
+	        orderRepository.save(order);
+	    }
 }

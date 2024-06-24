@@ -30,6 +30,10 @@ public class MaterialServiceImpl implements MaterialService {
     public Material saveMaterial(Material material) {
         return materialRepository.save(material);
     }
+    @Override
+    public Material getMaterialByName(String name) {
+        return materialRepository.findByName(name).orElse(null);
+    }
 
     @Override
     public Material updateMaterial(Material material) {

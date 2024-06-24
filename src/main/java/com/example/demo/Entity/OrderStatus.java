@@ -2,8 +2,8 @@ package com.example.demo.Entity;
 
 import java.util.List;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -21,5 +21,9 @@ public class OrderStatus {
     
     @OneToMany(mappedBy = "orderStatus")
     private List<Order> orders;
+
+	public void getName(String string) {
+	    this.name=name;
+	}
 }
 

@@ -2,9 +2,9 @@ package com.example.demo.Entity;
 
 import java.util.List;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -15,16 +15,14 @@ public class Gem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int gemID;
-    
-    @NotNull
     private String gemCode;
     private String gemName;
     private String origin;
     private float carat;
-    private String color;
+    private String color;             
     private String clarity;
     private String cut;
 
-    @OneToMany(mappedBy = "gem")
+    @OneToMany(mappedBy = "gem",cascade = CascadeType.ALL)
     private List<GemPriceList> gemPriceLists;
 }

@@ -1,6 +1,6 @@
 package com.example.demo.Entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import java.util.Date;
 
@@ -12,11 +12,12 @@ import java.util.Date;
 public class GemPriceList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int gemPriceListID;
+    private Integer gemPriceListID;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "gemID", referencedColumnName = "gemID", insertable = false, updatable = false)
     private Gem gem;
+
 
     @Column(name = "gemID")
     private int gemID;
