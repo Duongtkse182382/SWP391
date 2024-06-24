@@ -26,6 +26,10 @@ body {
             justify-content: flex-start;
             margin-top     : 20px;
         }
+.pagination-container a:focus,
+.pagination-container a:hover {
+    outline: none; 
+}
 
        .sidebar .sidebar-profile {
     display: flex;

@@ -19,7 +19,7 @@
                 <div class="sidebar-pic"></div>
                 <div class="sidebar-name">
                     <div class="child-name">
-                        Trần Đại Dương
+                         <span th:text="${staffs.fullName}"></span>
                     </div>
                     <div>
                         <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
@@ -30,87 +30,94 @@
               <a  class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
             <p class="active">Manage Staff</p>
              <a  class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
-           <a  class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
-            <p>Manage Category</p>
+             <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
+           <a  class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>        
             <p>Manage Material</p>
         </div>
-        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+        <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
     </div>
     <div class="content">
-        <div class="profile">
-            <div class="profile-container">
-                <div class="profile-title">
-                    <h1>Edit Staff Profile</h1>
-                    <p>FPT Jewelry Store</p>
-                </div>
-                <div class="img-profile">
-
-                </div>
-                <div class="img-title">
-                    Bui Doan Nhat Truong
-                    <p>#bdnt2583</p>
-                </div>
+    <div class="profile">
+        <div class="profile-container">
+            <div class="profile-title">
+                <h1>Edit Staff Profile</h1>
+                <p>FPT Jewelry Store</p>
             </div>
-            <div class="input-profile">
+            <div class="img-profile"></div>
+            <div class="img-title" th:text="${staff.fullName}"></div>
+        </div>
+        <div class="input-profile">
+            <form th:action="@{'/staff/edit-staff-profile/' + ${staff.staffID} + '/save'}" method="post" th:object="${staff}">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="full-name">Full Name</label>
-                        <input type="text" class="form-control" id="full-name" value="Bui Doan Nhat Truong">
+                        <input type="text" class="form-control" id="full-name" th:field="*{fullName}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="dob">Date of Birth</label>
-                        <input type="date" class="form-control" id="dob" value="25-08-2003">
+                        <input type="date" class="form-control" id="dateOfBirth" th:field="*{dateOfBirth}">
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="sex">Gender</label>
-                    <select class="form-control" id="sex">
-                        <option value="Men">Men</option>
-                        <option value="Women">Women</option>
-                        <option value="Other">Other</option>
-                    </select>
+                        <label for="gender">Gender</label>
+                        <select class="form-control" id="gender" th:field="*{gender}">
+                            <option value="1" th:text="Men" th:selected="${staff.gender == '1'}"></option>
+                            <option value="2" th:text="Women" th:selected="${staff.gender == '2'}"></option>
+                            <option value="3" th:text="Other" th:selected="${staff.gender == '3'}"></option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address"
-                            value="Duc Tho, Huyen Duc Tho, Tinh Ha Tinh">
+                        <input type="text" class="form-control" id="address" th:field="*{address}">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="phone">Phone</label>
-                        <input type="text" class="form-control" id="phone" value="0379870607">
+                        <input type="text" class="form-control" id="phone" th:field="*{phoneNumber}">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" value="truongbdnse170294@fpt.edu.vn">
+                        <input type="email" class="form-control" id="email" th:field="*{email}">
+                         <div th:if="${error}" class="text-danger" th:text="${error}"></div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="role">Role</label>
-                        <input type="text" class="form-control" id="role" value="Seller Diamond">
-                    </div>
+    <label for="role">Role</label>
+    <select class="form-control" id="role" th:field="*{roleID}">
+        <option value="1" th:text="Manager" th:selected="${staff.roleID == 1}"></option>
+        <option value="2" th:text="Cashier" th:selected="${staff.roleID == 2}"></option>
+        <option value="4"  th:text="Seller" th:selected="${staff.roleID == 4}"></option>
+    </select>
+</div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="counter">Of the Counter</label>
-                        <input type="text" class="form-control" id="counter" value="Diamond">
+                        <label for="counter">Counter</label>
+                        <select class="form-control" id="role" th:field="*{counterID}">
+        <option value="1" th:text="Gold" th:selected="${staff.counterID == 1}"></option>
+        <option value="2" th:text="Jewlery" th:selected="${staff.counterID == 2}"></option>
+    </select>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="status">Status</label>
-                        <select class="form-control">
-                            <option value="Active">Active</option>
-                            <option value="Deactive">Deactive</option>
+                        <label for="isActive">Status</label>
+                        <select class="form-control" id="isActive" th:field="*{active}">
+                            <option value="true" th:text="Active" th:selected="${staff.active}"></option>
+                            <option value="false" th:text="Inactive" th:selected="${!staff.active}"></option>
                         </select>
                     </div>
                 </div>
                 <div class="buttons text-center mt-4">
-                    <button type="button" class="btn btn-profile">Save</button>
+                    <button type="submit" class="btn btn-profile">Save</button>
                 </div>
-
-            </div>
+            </form>
         </div>
     </div>
+</div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -24,7 +24,7 @@
             cursor         : pointer;
             color          : #000000;
             font-weight    : 600;
-            font-size      : 14px;
+            font-size      : 13px;
             display        : flex;
             flex-direction : column;
             justify-content: flex-start;
@@ -35,7 +35,7 @@
             display      : flex;
             align-items  : center;
             /* Centers items vertically */
-            font-size    : 14px;
+            font-size    : 13px;
             padding      : 8px;
             border       : 1px solid #E0E0E0;
             gap          : 8px;
@@ -443,6 +443,10 @@
         .pagination-container .i-left {
             margin-right: 10px;
         }
+.pagination-container a:focus,
+.pagination-container a:hover {
+    outline: none; 
+}
 
         .pagination-container .i-right {
             margin-left: 10px;

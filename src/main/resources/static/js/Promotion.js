@@ -1,13 +1,11 @@
 function showPasswordModal() {
-  // Kiểm tra nếu đây là lần đầu tiên tải trang
-  if (!sessionStorage.getItem("isPageLoaded")) {
-    // Đặt cờ trong sessionStorage để đánh dấu rằng trang đã được tải
-    sessionStorage.setItem("isPageLoaded", "true");
-    return; // Không hiển thị modal
-  }
   document.getElementById("passwordModal").style.display = "block";
   document.querySelector(".content-group").classList.add("overlay");
 }
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("passwordModal").style.display = "none";
+});
+
 
 function hidePasswordModal() {
   document.getElementById("passwordModal").style.display = "none";

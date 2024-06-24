@@ -346,7 +346,8 @@
             background-color: #26C75D;
         }
 
-        .pagination-container {
+
+       .pagination-container {
             display        : flex;
             height         : 47px;
             align-items    : center;
@@ -392,7 +393,7 @@
         .pagination-container .next {
             margin-right: 15px
         }
-
+      
         .cancel-button:hover,
         .print-button:hover {
             opacity: 0.8;

@@ -1,7 +1,5 @@
-`<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,7 +10,6 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="sidebar">
         <div class="sidebar-title">
@@ -20,22 +17,26 @@
                 <div class="sidebar-pic"></div>
                 <div class="sidebar-name">
                     <div class="child-name">
-                        Trần Đại Dương
+                     <span th:text="${staffs.fullName}"></span>
                     </div>
                     <div>
                         <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
                     </div>
                 </div>
             </div>
-           <a  class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a>
-              <a  class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
+            <a class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a>
+            <a class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
             <p class="active">Manage Staff</p>
-             <a  class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
-           <a  class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
-            <p>Manage Category</p>
+            <a class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
+            <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
+            <a class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
             <p>Manage Material</p>
         </div>
-        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+        <form th:action="@{/perform_logout}" method="post">
+            <button type="submit">
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
     </div>
     <div class="content">
         <div class="profile">
@@ -45,74 +46,182 @@
                     <p>FPT Jewelry Store</p>
                 </div>
             </div>
-            <div class="input-profile">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="full-name">Full Name</label>
-                        <input type="text" class="form-control" id="full-name" >
+            <form th:action="@{/staff/create-new-staff/save}" th:object="${staff}" method="post" id="create-staff-form">
+                <div class="input-profile">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" th:field="*{fullName}">
+                              <small id="fullName-error" class="text-danger"></small>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="dateOfBirth">Date of Birth</label>
+                            <input type="date" class="form-control" id="dateOfBirth" th:field="*{dateOfBirth}">
+                              <small id="dateOfBirth-error" class="text-danger"></small>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="gender">Gender</label>
+                            <select class="form-control" id="gender" th:field="*{gender}">
+                                <option value="1" th:selected="${staff.gender == 1}">Female</option>
+                                <option value="2" th:selected="${staff.gender == 2}">Male</option>
+                                <option value="3" th:selected="${staff.gender == 3}">Other</option>
+                            </select>
+                            <small id="gender-error" class="text-danger"></small>
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="dob">Date of Birth</label>
-                        <input type="date" class="form-control" id="dob">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" th:field="*{address}">
+                             <small id="address-error" class="text-danger"></small>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="phoneNumber">Phone</label>
+                            <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}">
+                             <small id="phoneNumber-error" class="text-danger"></small>
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="sex">Gender</label>
-                        <select class="form-control" id="sex">
-                            <option value="Men">Men</option>
-                            <option value="Women">Women</option>
-                            <option value="Other">Other</option>
-                        </select>
+                    <div class="form-row">
+                       <div class="form-group col-md-6">
+                       <label for="email">Email</label>
+                       <input type="email" class="form-control" id="email" th:field="*{email}">
+                        <small id="email-error" class="text-danger"></small>
+                         </div>
+                        <div class="form-group col-md-6">
+                            <label for="roleID">Role</label>
+                            <select class="form-control" id="roleID" th:field="*{roleID}">
+                                <option value="2" th:selected="${staff.roleID == 2}">Seller</option>
+                                <option value="4" th:selected="${staff.roleID == 4}">Cashier</option>
+                            </select>
+                                 <small id="roleID-error" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" th:field="*{password}">
+                               <small id="password-error" class="text-danger"></small>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword">
+                              <small id="confirmPassword-error" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="counterID">Of the Counter</label>
+                            <select class="form-control" id="counterID" th:field="*{counterID}">
+                                <option value="1" th:selected="${staff.counterID == 1}">Gold</option>
+                                <option value="2" th:selected="${staff.counterID == 2}">Jewelry</option>
+                            </select>
+                              <small id="counterID-error" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="buttons text-center mt-4">
+                        <button type="button" class="btn btn-profile" id="create-button">Create</button>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="phone">Phone</label>
-                        <input type="text" class="form-control" id="phone">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" >
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="role">Role</label>
-                        <input type="text" class="form-control" id="role">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirm-password">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="counter">Of the Counter</label>
-                        <input type="text" class="form-control" id="counter" >
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="status">Status</label>
-                        <input type="text" class="form-control" id="status" >
-                    </div>
-                </div>
-                <div class="buttons text-center mt-4">
-                 <a th:href="@{/staff}"><button type="button" class="btn btn-profile">Create</button></a>  
-                </div>
-            </div>
+            </form>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+     <script>
+        $(document).ready(function() {
+            function validateForm() {
+                let isValid = true;
+                $('#fullName-error').text('');
+                $('#dateOfBirth-error').text('');
+                $('#gender-error').text('');
+                $('#address-error').text('');
+                $('#phoneNumber-error').text('');
+                $('#email-error').text('');
+                $('#roleID-error').text('');
+                $('#password-error').text('');
+                $('#confirmPassword-error').text('');
+                $('#counterID-error').text('');
 
+                let fullName = $('#fullName').val().trim();
+                if (fullName === '') {
+                    $('#fullName-error').text('Full Name cannot be empty.');
+                    isValid = false;
+                }
+
+                let gender = $('#gender').val();
+                if (gender === '') {
+                    $('#gender-error').text('Please select a Gender.');
+                    isValid = false;
+                }
+
+                let address = $('#address').val().trim();
+                if (address === '') {
+                    $('#address-error').text('Address cannot be empty.');
+                    isValid = false;
+                }
+
+                let phoneNumber = $('#phoneNumber').val().trim();
+                if (phoneNumber === '') {
+                    $('#phoneNumber-error').text('Phone Number cannot be empty.');
+                    isValid = false;
+                } else if (!/^\d+$/.test(phoneNumber)) {
+                    $('#phoneNumber-error').text('Phone Number must contain only digits.');
+                    isValid = false;
+                }
+
+                let email = $('#email').val().trim();
+                if (email === '') {
+                    $('#email-error').text('Email cannot be empty.');
+                    isValid = false;
+                } else if (!/\S+@\S+\.\S+/.test(email)) {
+                    $('#email-error').text('Invalid email format.');
+                    isValid = false;
+                }
+                let roleID = $('#roleID').val();
+                if (roleID === '') {
+                    $('#roleID-error').text('Please select a Role.');
+                    isValid = false;
+                }
+
+                let password = $('#password').val().trim();
+                if (password === '') {
+                    $('#password-error').text('Password cannot be empty.');
+                    isValid = false;
+                }
+                let confirmPassword = $('#confirmPassword').val().trim();
+                if (confirmPassword === '') {
+                    $('#confirmPassword-error').text('Please confirm your Password.');
+                    isValid = false;
+                } else if (confirmPassword !== password) {
+                    $('#confirmPassword-error').text('Passwords do not match.');
+                    isValid = false;
+                }
+                return isValid;
+            }
+            $('#create-button').click(function(event) {
+                if (!validateForm()) {
+                    event.preventDefault(); 
+                    return;
+                }
+
+                let formData = new FormData(document.getElementById('create-staff-form'));
+                fetch('/staff/create-new-staff/save', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/staff'; 
+                    } else {
+                        alert('Create staff failed');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+</body>
 </html>

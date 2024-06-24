@@ -15,6 +15,9 @@
             height          : 950px;
             line-height     : 30px;
         }
+        form#promotionForm {
+    background: #ffffff;
+}
 .link-product{
 		   color: inherit;
             text-decoration: none;
@@ -416,6 +419,11 @@
         .pagination-container .i-left {
             margin-right: 10px;
         }
+        .pagination-container a:focus,
+.pagination-container a:hover {
+    outline: none; 
+}
+        
 
         .pagination-container .i-right {
             margin-left: 10px;
@@ -431,7 +439,7 @@
         .pagination-container .next {
             margin-right: 15px
         }
-
+       
         .cancel-button:hover,
         .print-button:hover {
             opacity: 0.8;

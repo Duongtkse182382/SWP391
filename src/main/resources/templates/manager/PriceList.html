@@ -18,7 +18,7 @@
                 <div class="sidebar-pic"></div>
                 <div class="sidebar-name">
                     <div class="child-name">
-                        Trần Đại Dương
+                        <span th:text="${staff.fullName}"></span>
                     </div>
                     <div>
                         <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
@@ -30,10 +30,13 @@
             <p>Manage Staff</p>
             <p>Promotion</p>
             <p>Manage Counter</p>
-            <p>Manage Category</p>
             <p>Manage Material</p>
         </div>
-        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+       <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
     </div>
     <div class="content">
         <div class="bill-details">
