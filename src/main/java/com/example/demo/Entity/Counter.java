@@ -3,7 +3,7 @@ import lombok.*;
 
 import java.util.List;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 
 @Entity

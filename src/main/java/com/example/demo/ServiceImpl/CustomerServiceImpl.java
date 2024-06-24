@@ -48,12 +48,12 @@ public class CustomerServiceImpl implements CustomerService {
 	        if (optionalCustomer.isPresent()) {
 	            customer = optionalCustomer.get();
 	            customer.setCustomerName(name);
-	            customer.setLoyalPoint(customer.getLoyalPoint() + loyalPoint); // Cộng thêm loyalPoint mới vào loyalPoint cũ
+	            customer.setLoyalPoint(customer.getLoyalPoint() + loyalPoint);
 	        } else {
 	            customer = new Customer();
 	            customer.setPhone(phone);
 	            customer.setCustomerName(name);
-	            customer.setLoyalPoint(loyalPoint); // Thiết lập loyalPoint mới nếu khách hàng chưa tồn tại
+	            customer.setLoyalPoint(loyalPoint);
 	        }
 	        return customerRepository.save(customer);
 	    }
