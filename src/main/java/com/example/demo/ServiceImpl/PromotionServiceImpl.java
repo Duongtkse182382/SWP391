@@ -1,5 +1,7 @@
 package com.example.demo.ServiceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,5 +26,9 @@ public class PromotionServiceImpl implements PromotionService {
        public Promotion save(Promotion promotion) {
     	   promotion.setStatus(true);
     	   return promotionRepository.save(promotion);
+       }
+       @Override
+       public List<Promotion> findAll() {
+           return promotionRepository.findAll();
        }
 }

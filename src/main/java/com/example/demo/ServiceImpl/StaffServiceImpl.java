@@ -69,25 +69,20 @@ public class StaffServiceImpl implements StaffService {
 	        String newEmail = staff.getEmail();
 	        Staff existingStaff = staffRepository.findById(staffId)
 	                .orElseThrow(() -> new RuntimeException("Staff not found"));
-
-	        // Check if the email is the same or not assigned yet
 	        if (existingStaff.getEmail() == null || existingStaff.getEmail().equals(newEmail)) {
-	            // Check if the email exists for another staff excluding the current staff
 	        	 staff.setPassword(existingStaff.getPassword());
 	                staffRepository.save(staff);
 	        } else {
-	            // Check if the new email exists for another staff
 	            Staff staffWithSameEmail = staffRepository.findByEmail(newEmail);
 	            if (staffWithSameEmail == null || staffWithSameEmail.getStaffID() == staffId) {
-	                // Check if the email exists for another staff excluding the current staff
 	                if (!isEmailExistsForOtherStaff(newEmail, staffId)) {
 	                	 staff.setPassword(existingStaff.getPassword());
 	                    staffRepository.save(staff);
 	                } else {
-	                    throw new Exception("Email đã tồn tại. Vui lòng chọn email khác.");
+	                    throw new Exception("Email already exists. Please select a different email.");
 	                }
 	            } else {
-	                throw new Exception("Email đã tồn tại. Vui lòng chọn email khác.");
+	                throw new Exception("Email already exists. Please select a different email.");
 	            }
 	        }
 	    }
