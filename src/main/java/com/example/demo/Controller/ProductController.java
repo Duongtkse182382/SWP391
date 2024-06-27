@@ -138,13 +138,7 @@ public class ProductController {
 	       model.addAttribute("staff", staff);
         return "manager/createNewProduct";
     }
-    @GetMapping("/dashboard")
-    public String showDashboard(Model model) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-	       Staff staff = staffRepository.findByEmail(email);
-	       model.addAttribute("staff", staff);
-    	return "manager/dashboard";
-    }
+  
     @GetMapping("/promotion")
     public String showPromotionList(Model model, @RequestParam(defaultValue = "0") int page) {
         Page<Promotion> promotionPage = promotionService.findAll(PageRequest.of(page, 10));

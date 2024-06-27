@@ -1,8 +1,10 @@
 package com.example.demo.ServiceImpl;
 
+import com.example.demo.Entity.Gem;
 import com.example.demo.Entity.Product;
 import com.example.demo.Repository.CategoryRepository;
 import com.example.demo.Repository.GemPriceListRepository;
+import com.example.demo.Repository.GemRepository;
 import com.example.demo.Repository.MaterialPriceListRepository;
 import com.example.demo.Repository.ProductRepository;
 import com.example.demo.Repository.TypeRepository;
@@ -23,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
 	   @Autowired
 	    private EntityManager entityManager;
     private final ProductRepository productRepository;
-    
+    private final GemRepository gemRepository;
 
     private final CategoryRepository categoryRepository;
 
@@ -36,12 +38,14 @@ public class ProductServiceImpl implements ProductService {
     private final MaterialPriceListRepository materialPriceListRepository;
 
 
-    public ProductServiceImpl(ProductRepository productRepository,TypeRepository typeRepository, CategoryRepository categoryRepository, GemPriceListRepository gemPriceListRepository, MaterialPriceListRepository materialPriceListRepository) {
+    public ProductServiceImpl(ProductRepository productRepository,TypeRepository typeRepository, CategoryRepository categoryRepository, GemPriceListRepository gemPriceListRepository,
+    		MaterialPriceListRepository materialPriceListRepository,GemRepository gemRepository) {
         this.productRepository = productRepository;
 		this.categoryRepository = categoryRepository;
 		this.gemPriceListRepository = gemPriceListRepository;
 		this.typeRepository = typeRepository;
 		this.materialPriceListRepository = materialPriceListRepository;
+		this.gemRepository=gemRepository;
     }
 
     @Override
@@ -103,28 +107,23 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void saveProduct(Product product) {
         if (product.getTypeID() == 2) {
-            product.setGemPriceListID(null);
-            product.getGemPriceList().getGem().setCut(null);
-            product.getGemPriceList().getGem().setClarity(null);
-            product.getGemPriceList().getGem().setColor(null);
+            product.setGemPriceListID(1);
             product.setOrderType("Sell");
             product.setActive(true);
             productRepository.save(product);
         } 
-        if( product.getTypeID() == 1 && product.getGemPriceList() != null){
+        if (product.getTypeID() == 1 && product.getGemPriceList() != null) {
+            Gem gem = product.getGemPriceList().getGem();
+            gem.setGemName("Diamond");
+            gem.setOrigin("Natural");
+            gem.setGemCode("GEM001");
+            gem = gemRepository.save(gem);
+            product.getGemPriceList().setGemID(gem.getGemID());
             product.setGemPriceListID(2);
-            product.getGemPriceList().getGem().setGemName("Diamond");
-            product.getGemPriceList().getGem().setOrigin("Natural");
-            product.getGemPriceList().getGem().setGemCode("GEM001");
             product.setOrderType("Sell");
             product.setActive(true);
             productRepository.save(product);
         }
-    }
-    	 
-    		 
-
- 
-    	
+    } 	  	
     }     
 

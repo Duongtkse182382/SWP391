@@ -13,12 +13,10 @@ import com.example.demo.Repository.TypeRepository;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.OrderService;
 import com.example.demo.dto.OrderDTO;
-import com.example.demo.dto.ProductOrderDTO;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -66,8 +64,9 @@ public class OrderServiceImpl implements OrderService {
 		Order order = new Order();
 		order.setTotal(orderDTO.getTotal());
 		order.setQuantity(orderDTO.getProduct().size());
-		order.setStaffID(orderDTO.getStaffID());
+		order.setStaffID(1);
 		order.setOrderstatusID(1);
+//		order.setPromotionID(1);
 		Double total = 0.0;
 		for (int i = 0; i < orderDTO.getProduct().size(); i++) {
 			total += orderDTO.getProduct().get(i).getMaterialPriceList().getSellPrice()*orderDTO.getProduct().get(i).getWeight() + orderDTO.getProduct().get(i).getGemPriceList().getSellPrice();
@@ -99,4 +98,5 @@ public class OrderServiceImpl implements OrderService {
 	    public void updateOrder(Order order) {
 	        orderRepository.save(order);
 	    }
+
 }

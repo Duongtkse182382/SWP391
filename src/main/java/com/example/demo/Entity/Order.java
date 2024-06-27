@@ -36,6 +36,15 @@ public class Order {
     
     @Column(name="orderCode")
     private String orderCode;
+    
+//    
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "promotionID", referencedColumnName = "promotionID", insertable = false, updatable = false)
+//    private Promotion promotion;
+//    
+//
+//    @Column(name = "promotionID")
+//    private int promotionID;
 
     private int quantity;
     private Double total;
