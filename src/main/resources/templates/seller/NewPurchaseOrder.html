@@ -21,7 +21,9 @@
 			<div class="sidebar-profile">
 				<div class="sidebar-pic"></div>
 				<div class="sidebar-name">
-					<div class="child-name">Trần Đại Dương</div>
+					<div class="child-name">
+					 <span th:text="${staff.fullName}"></span>
+					</div>
 					<div>
 						<span class="child-manager">Seller <i
 							class="fa-solid fa-pencil"></i>
@@ -29,12 +31,16 @@
 					</div>
 				</div>
 			</div>
-	         <p class="active">List Of Order</p>
-              <a class="link-historyOrder" th:href="@{/seller/products}">Product List as Counter</p></a>
+	           <a class="link-historyOrder" th:href="@{/orders/listOfOrder}"><p>List Of Sell Order</p></a>
+	           <p class="active">List Of Purchase Order</p>
+              <a class="link-historyOrder" th:href="@{/seller/products}"><p>Product List as Counter</p></a>
+               <a class="link-historyOrder" th:href="@{/seller-profile}"><p>Personal Profile</p></a>
 		</div>
-		<button>
-			<i class="fa-solid fa-right-from-bracket"></i> Log out
-		</button>
+		   <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
 	</div>
 	<div class="content">
 		<div class="content-header">
@@ -87,42 +93,7 @@
 			<div class="bill-group">
 				<div class="bill-title-first">Diamond</div>
 				<div class="form-group">
-					<div class="row">
-						<div class="col-3">
-							<label>Dimond Code</label> <input type="text"
-								th:field="*{diamondCode}" class="form-control"
-								placeholder="Input name product">
-							<div class="detail-add">
-
-								<button type="button" class="btn-check"
-									onclick="checkDiamondCode()">Check</button>
-
-							</div>
-						</div>
-						<div class="col-3">
-							<label>Origin</label> <input type="text" th:field="*{origin}"
-								class="form-control" placeholder="Origin" readonly>
-						</div>
-					</div>
-					<div class="row mt-3">
-						<div class="col-3">
-							<label>Carat</label> <input type="text" th:field="*{carat}"
-								class="form-control" placeholder="Carat" readonly>
-						</div>
-						<div class="col-3">
-							<label>Color</label> <input type="text" th:field="*{color}"
-								class="form-control" placeholder="Color" readonly>
-						</div>
-						<div class="col-3">
-							<label>Clarity</label> <input type="text" th:field="*{clarity}"
-								class="form-control" placeholder="Clarity" readonly>
-						</div>
-						<div class="col-3">
-							<label>Cut</label> <input type="text" th:field="*{cut}"
-								class="form-control" placeholder="Cut" readonly>
-						</div>
-					</div>
-				</div>
+					
 				<div class="bill-title-second">Material</div>
 				<div class="form-group">
 					<div class="row">
@@ -147,17 +118,15 @@
 				</div>
 				<div class="total-section mt-2">
 					<div>
-						<p>Diamond Price:</p>
 						<p>Material Price:</p>
 						<hr />
 						<p class="total">Total price:</p>
 					</div>
 					<div class="total-right">
-						<input type="text" th:field="*{diamondPrice}" class="form-control"
-							placeholder="Input diamond price"  readonly>
+						
 							 <input type="text" th:field="*{goldPrice}" class="form-control" id="gold-price" placeholder="Material price" readonly>
 						<p class="total-child"
-							th:text="${purchaseOrderDTO.diamondPrice + purchaseOrderDTO.goldPrice}" ></p>
+							th:text="${purchaseOrderDTO.goldPrice}" ></p>
 					</div>
 				</div>
 			</div>

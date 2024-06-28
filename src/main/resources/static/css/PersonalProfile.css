@@ -51,6 +51,7 @@
             flex-direction : column;
             justify-content: flex-start;
             margin-top     : 20px;
+            line-height: 50px;
         }
 
         .sidebar .sidebar-title .sidebar-profile {
@@ -85,7 +86,10 @@
         .sidebar-name .child-manager i {
             margin-left: 10px;
         }
-
+.link-listoforder{
+	        color: inherit;
+            text-decoration: none;
+}
         .sidebar button {
             background-color: #E0E0E0;
             color           : #000000;

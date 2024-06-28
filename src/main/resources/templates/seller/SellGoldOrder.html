@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SellGoldOrder</title>
+<link rel="stylesheet" th:href="@{/css/NewSellGold.css}">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+	integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+	<div class="sidebar">
+		<div class="sidebar-title">
+			<div class="sidebar-profile">
+				<div class="sidebar-pic"></div>
+				<div class="sidebar-name">
+					<div class="child-name">
+					 <span th:text="${staff.fullName}"></span>
+					</div>
+					<div>
+						<span class="child-manager">Seller <i
+							class="fa-solid fa-pencil"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+
+				<p class="active">List Of Sell Order</p>
+				  <a class="link-historyOrder" th:href="@{/orders/listOfPurchaseOrder}"><p>List Of Purchase Order</p></a>
+		 <a class="link-historyOrder" th:href="@{/seller/products}">
+				<p>Product List as Counter</p>
+			</a>
+			<a class="link-historyOrder" th:href="@{/seller-profile}"><p>Personal Profile</p></a>
+		</div>
+		<form th:action="@{/perform_logout}" method="post">
+			<button type="submit">
+				<i class="fa-solid fa-right-from-bracket"></i> Log out
+			</button>
+		</form>
+	</div>
+	<div class="content">
+		<div class="content-header">
+			<div class="bill-header">
+				<h1>Sell Gold Order</h1>
+				<div class="title-file">
+					<i class="fa-regular fa-file"></i> <span
+						th:text="'#Order:' + ${purchaseOrderGoldDto.order.orderID}"></span>
+				</div>
+			</div>
+			<div class="btn-group">
+				<button class="btn-save" type="submit" form="add-result">Save</button>
+			</div>
+		</div>
+		<form
+			th:action="@{/orders/new-pur-gold/save}"
+			method="post" id="add-result">
+			<div class="profile-input-container">
+				<div class="first-group-input">
+					<div class="first-input">
+						<label>Order Date <i class="fa-solid fa-calendar-days"></i></label>
+						<div>
+							<input type="text" th:value="${#dates.format(purchaseOrderGoldDto.order.date, 'yyyy-MM-dd')}" 
+								class="input-order" readonly>
+						</div>
+					</div>
+					<div class="second-input">
+						<label>Staff Name<i class="fa-solid fa-user"></i></label>
+						<div>
+							<input type="text"
+								th:value="${purchaseOrderGoldDto.order.staff.fullName}"
+								class="input-staff" readonly>
+						</div>
+					</div>
+				</div>
+				<div class="second-group-input">
+					<div class="third-input">
+						<label>Customer Name</label>
+						<div>
+							<input type="text"
+								th:value="${purchaseOrderGoldDto.order.customer.customerName}"
+								class="input-customer" readonly>
+						</div>
+					</div>
+					<div class="fourth-input">
+						<label>Phone Number</label>
+						<div>
+							<input type="text"
+								th:value="${purchaseOrderGoldDto.order.customer.phone}"
+								class="input-phone" readonly>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container-price-bill">
+				<div class="bill-table">
+				<div class="title-product-sell">List Product Sold</div>
+					<table>
+						<thead>
+							<tr>
+							   <th>Product Code</th>
+                            <th>Type</th>
+                            <th>Product Name</th>
+                            <th>Material</th>
+                            <th>Weight</th>
+                             <th>Carat</th>
+                            <th>Price</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								th:each="orderDetail : ${purchaseOrderGoldDto.order.orderDetails}">
+							
+								<td th:text="${orderDetail.product.productCode}"></td>
+								<td th:text="${orderDetail.product.productName}"></td>
+								<td th:text="${orderDetail.product.type.typeName}"></td>
+								<td th:text="${orderDetail.product.materialPriceList.material.name}"></td>
+								<td th:text="${orderDetail.product.weight}"></td>
+								<td th:text="${orderDetail.product.gemPriceList.gem.carat}"></td>
+								<td th:text="${orderDetail.total}"></td>
+								<td><a
+									th:href="@{/orders/sell-gold-order/{orderID}(orderID=${purchaseOrderGoldDto.order.orderID},detailID=${orderDetail.detailID})}">
+										<i class="fa-solid fa-cart-shopping"></i>
+								</a></td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+
+			<div class="bill-table">
+				<div class="title-product-sell">List Purchase Product</div>
+				<table>
+					<thead>
+						<tr>
+							   <th>Product Code</th>
+                            <th>Type</th>
+                            <th>Product Name</th>
+                            <th>Material</th>
+                            <th>Weight</th>
+                             <th>Carat</th>
+                            <th>Price</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="orderDetail : ${purchaseOrderGoldDto.orderDetails}">
+						<td th:text="${orderDetail.product.productCode}"></td>
+								<td th:text="${orderDetail.product.productName}"></td>
+								<td th:text="${orderDetail.product.type.typeName}"></td>
+								<td th:text="${orderDetail.product.materialPriceList.material.name}"></td>
+								<td th:text="${orderDetail.product.weight}"></td>
+								<td th:text="${orderDetail.product.gemPriceList.gem.carat}"></td>
+								<td class="orderDetail-price" th:text="${orderDetail.total}"></td>
+							
+							<td><a
+								th:href="@{/orders/sell-gold-order/{orderID}(orderID=${purchaseOrderGoldDto.order.orderID},detailID=${orderDetail.detailID})}">
+									<i class="fa-solid fa-trash-can">
+							</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="total-container-product">
+					<div class="product-total">Total</div>
+					<div class="product-total-input">
+						<input id="total-price" name="totalPrice" readonly />
+					</div>
+				</div>
+		</form>
+	</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script th:src ="@{/js/PurchaseGold.js}"></script>
+</body>
+
+</html>
