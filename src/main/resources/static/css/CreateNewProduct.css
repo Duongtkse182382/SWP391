@@ -22,6 +22,10 @@
             text-decoration: none;
 		}
 
+.pagination-container a:focus,
+.pagination-container a:hover {
+    outline: none; 
+}
 
 
         .profile-container {
@@ -46,7 +50,7 @@
             cursor         : pointer;
             color          : #000000;
             font-weight    : 600;
-            font-size      : 14px;
+            font-size      : 13px;
             display        : flex;
             flex-direction : column;
             justify-content: flex-start;
@@ -56,7 +60,7 @@
        .sidebar .sidebar-profile {
     display: flex;
     align-items: center;
-    font-size: 14px;
+    font-size: 13px;
     padding: 8px;
     border: 1px solid #E0E0E0;
     gap: 8px;

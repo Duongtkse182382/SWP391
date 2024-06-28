@@ -354,8 +354,7 @@
         .create-button {
             background-color: #26C75D;
         }
-
-        .pagination-container {
+ .pagination-container {
             display        : flex;
             height         : 47px;
             align-items    : center;
@@ -390,6 +389,10 @@
         .pagination-container .i-right {
             margin-left: 10px;
         }
+.pagination-container a:focus,
+.pagination-container a:hover {
+    outline: none; 
+}
 
         .pagination-container .pages .page-active {
             border       : 1px solid #EFF1F4;

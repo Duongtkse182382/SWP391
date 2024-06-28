@@ -19,7 +19,7 @@
                 <div class="sidebar-pic"></div>
                 <div class="sidebar-name">
                     <div class="child-name">
-                        Trần Đại Dương
+                       <span th:text="${staff.fullName}"></span>
                     </div>
                     <div>
                         <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
@@ -30,11 +30,15 @@
             <p class="active">Manage Product</p>
              <a class="link-product" th:href="@{/staff}"><p>Manage Staff</p></a>
              <a  class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
+           <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
            <a  class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
-            <p>Manage Category</p>
             <p>Manage Material</p>
         </div>
-        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+       <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
     </div>
     <div class="content">
         <div class="profile">
@@ -44,121 +48,87 @@
                 </div>
             </div>
             <div class="input-profile">
-							<form  th:action="@{ create-product/create}" th:object="${product}" method="post" >
-					<div class="col">
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="product-code">Product Code</label>
-                            <input type="text" class="form-control" id="product-code" th:field=*{productCode}>
-                        </div>
-                    </div>
-                   <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="product-name">Product Name</label>
-                        <input type="text" class="form-control" id="product-name" th:field=*{productName}>
-                    </div>
-                  
-                   </div>
-                  
-                </div>
-                <div class="layout">
-                    <div class="group">
-                        <div class="col">
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="material">Material</label>
-                                    <select class="form-control" id="material">
-                                       <option value="Gold18K">Gold18K</option>
-                                        <option value="Diamond">Diamond</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="type">Type</label>
-                                    <select class="form-control" id="type">
-                                        <option value="Jewely">Jewely</option>
-                                        <option value="Gold">Gold</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="origin">Origin</label>
-                                    <select class="form-control" id="origin">
-                                        <option value="Natural">Natural</option>
-                                        <option value="Artificial">Artificial</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="img">
-                       
-                    </div>
-                </div>
-               
-                <div class="col">
-                    <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="carat">Carat</label>
-                        <input type="text" class="form-control" id="carat" disabled>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="category">Category</label>
-                        <select class="form-control" id="category">
-                            <option>Gold</option>
-                        </select>
-                    </div>
-                    </div>
-                   <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="clarity">Clarity</label>
-                            <input type="text" class="form-control" id="clarity" disabled>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="weight">Weight</label>
-                            <input type="text" class="form-control" id="weight" th:field=*{weight}>
-                        </div>
-                   </div>
-                </div>
-                <div class="col">
-                    <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="color">Color</label>
-                        <input type="text" class="form-control" id="color" disabled>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="counter">Counter</label>
-                        <input type="text" class="form-control" id="counter" >
-                    </div>
-                    </div>
-                    <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="cut">Cut</label>
-                        <input type="password" class="form-control" id="confirm-password" disabled>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="price-rate">Price Rate</label>
-                        <input type="text" class="form-control" id="price-rate" th:field=*{priceRate}>
-                    </div>
-                    </div>
-                </div>
-                <div class="buttons text-center mt-4">
-                    <button type="submit" class="btn btn-profile">Create</button>
-                </div>
-			</form>
-                
-                
+				<form id="create-product-form" th:action="@{/manager/products/create-product/create}" th:object="${product}" method="post">
+        <div class="form-group">
+            <label for="product-code">Product Code</label>
+            <input type="text" class="form-control" id="product-code" th:field="*{productCode}">
+            <small id="product-code-error" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="product-name">Product Name</label>
+            <input type="text" class="form-control" id="product-name" th:field="*{productName}">
+             <small id="product-name-error" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="material">Material</label>
+            <select class="form-control" id="material" th:field="*{materialPriceListID}">
+                <option th:each="materialPriceList : ${materialPriceLists}"
+                        th:value="${materialPriceList.materialPriceListID}"
+                        th:text="${materialPriceList.material.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="type">Type</label>
+            <select class="form-control" id="type" th:field="*{typeID}">
+               <option value="1" th:selected="${product.typeID} == 1">Jewelry</option>
+                <option value="2" th:selected="${product.typeID} == 2">Gold</option>
+            </select>
+        </div>
+        <div id="jewelry-fields" style="display: none;">
+            <div class="form-group">
+                <label for="origin">Origin</label>
+                <select class="form-control" id="origin" th:field="*{gemPriceList.gemID}" >
+                     <option value="1" th:selected="${product.gemPriceList.gemID} == 1">Natural</option>
+                <option value="2" th:selected="${product.gemPriceList.gemID} == 2">Artifical</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="carat">Carat</label>
+                <input type="text" class="form-control" id="carat" th:field="*{gemPriceList.gem.carat}">
+            </div>
+            <div class="form-group">
+                <label for="clarity">Clarity</label>
+                <input type="text" class="form-control" id="clarity" th:field="*{gemPriceList.gem.clarity}">
+            </div>
+            <div class="form-group">
+                <label for="color">Color</label>
+                <input type="text" class="form-control" id="color" th:field="*{gemPriceList.gem.color}">
+            </div>
+            <div class="form-group">
+                <label for="cut">Cut</label>
+                <input type="text" class="form-control" id="cut" th:field="*{gemPriceList.gem.cut}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" th:field="*{categoryID}">
+                <option th:each="category : ${categories}"
+                        th:value="${category.categoryID}"
+                        th:text="${category.catName}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="weight">Weight</label>
+            <input type="text" class="form-control" id="weight" th:field="*{weight}">
+              <small id="weight-error" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="price-rate">Price Rate</label>
+            <input type="text" class="form-control" id="price-rate" th:field="*{priceRate}">
+             <small id="price-rate-error" class="text-danger"></small>
+        </div>
+           <div class="d-flex justify-content-center">
+			 <button type="button" class="btn btn-primary mx-auto" id="create-button">Create</button>  
+		   </div>
+          
+    </form>             
             </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/CreateNewProduct.js}"></script>
 </body>
 
 </html>

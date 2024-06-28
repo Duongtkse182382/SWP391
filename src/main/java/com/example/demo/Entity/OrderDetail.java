@@ -1,6 +1,6 @@
 package com.example.demo.Entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @Entity
@@ -20,7 +20,13 @@ public class OrderDetail {
     @JoinColumn(name = "orderID",referencedColumnName = "orderID",insertable = false, updatable = false)
     private Order order;
     
+    @Column(name = "productID")
     private int productID;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "productID",referencedColumnName = "productID",insertable = false, updatable = false)
+    private Product product;
+    
     private float total;
     private String note;
 }

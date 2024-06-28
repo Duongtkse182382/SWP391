@@ -281,14 +281,14 @@
             background-color: #26C75D;
         }
 
-        .pagination-container {
+       .pagination-container {
             display        : flex;
             height         : 47px;
             align-items    : center;
             justify-content: space-between;
             width          : 100%;
             background     : #D2FCFC;
-            margin-top     : 20px;
+            margin-top     : 15px;
         }
 
         .pagination-container button {
@@ -316,6 +316,10 @@
         .pagination-container .i-right {
             margin-left: 10px;
         }
+.pagination-container a:focus,
+.pagination-container a:hover {
+    outline: none; 
+}
 
         .pagination-container .pages .page-active {
             border       : 1px solid #EFF1F4;
@@ -327,7 +331,7 @@
         .pagination-container .next {
             margin-right: 15px
         }
-
+      
         .cancel-button:hover,
         .print-button:hover {
             opacity: 0.8;

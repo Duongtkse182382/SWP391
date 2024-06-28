@@ -24,7 +24,7 @@
             cursor         : pointer;
             color          : #000000;
             font-weight    : 600;
-            font-size      : 14px;
+            font-size      : 13px;
             display        : flex;
             flex-direction : column;
             justify-content: flex-start;
@@ -34,7 +34,7 @@
        .sidebar .sidebar-profile {
     display: flex;
     align-items: center;
-    font-size: 14px;
+    font-size: 13px;
     padding: 8px;
     border: 1px solid #E0E0E0;
     gap: 8px;
@@ -356,7 +356,7 @@
             background-color: #26C75D;
         }
 
-        .pagination-container {
+       .pagination-container {
             display        : flex;
             height         : 47px;
             align-items    : center;
@@ -383,6 +383,10 @@
             display: flex;
             gap    : 15px;
         }
+.pagination-container a:focus,
+.pagination-container a:hover {
+    outline: none; 
+}
 
         .pagination-container .i-left {
             margin-right: 10px;
@@ -402,7 +406,7 @@
         .pagination-container .next {
             margin-right: 15px
         }
-
+      s
         .cancel-button:hover,
         .print-button:hover {
             opacity: 0.8;

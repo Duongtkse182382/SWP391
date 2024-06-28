@@ -1,6 +1,5 @@
 package com.example.demo.ServiceImpl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Entity.Gem;
@@ -13,7 +12,6 @@ import java.util.Optional;
 public class GemServiceImpl implements GemService{
 	private final GemRepository gemRepository;
 
-    @Autowired
     public GemServiceImpl(GemRepository gemRepository) {
         this.gemRepository = gemRepository;
     }

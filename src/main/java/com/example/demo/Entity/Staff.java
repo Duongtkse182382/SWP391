@@ -1,6 +1,9 @@
 package com.example.demo.Entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.*;
 import java.util.Date;
 
@@ -17,6 +20,7 @@ public class Staff {
     private String fullName;
     private String email;
     private String password;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
     private char gender;
     private String address;
@@ -29,4 +33,14 @@ public class Staff {
 
     @Column(name = "role_id")
     private int roleID;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "counter_id", referencedColumnName = "counterID", insertable = false, updatable = false)
+    private Counter counter;
+    
+    @Column(name = "counter_id")
+    private int counterID;
+    
+
+  
 }

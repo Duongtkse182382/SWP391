@@ -1,6 +1,8 @@
 package com.example.demo.Entity;
 
-import jakarta.persistence.*;
+import java.util.List;
+
+import javax.persistence.*;
 import lombok.*;
 
 @Entity
@@ -28,12 +30,13 @@ public class Product {
     @Column(name = "categoryID")
     private int categoryID;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "gemPriceListID", referencedColumnName = "gemPriceListID", insertable = false, updatable = false)
     private GemPriceList gemPriceList;
 
+
     @Column(name = "gemPriceListID")
-    private int gemPriceListID;
+    private Integer gemPriceListID;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "typeID", referencedColumnName = "typeID", insertable = false, updatable = false)
@@ -48,4 +51,8 @@ public class Product {
 
     @Column(name = "materialPriceListID")
     private int materialPriceListID;
+    
+    @OneToMany(mappedBy = "productID", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderDetail> orderDetails;
+
 }
