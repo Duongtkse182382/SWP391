@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -23,20 +21,23 @@
                         <span th:text="${staff.fullName}"></span>
                     </div>
                     <div>
-                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i></span>
                     </div>
                 </div>
             </div>
-            <a  class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a>
-              <a  class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
-             <a class="link-product" th:href="@{/staff}"><p>Manage Staff</p></a>
-             <a  class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
-             <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
+            <a class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a>
+            <a class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
+            <a class="link-product" th:href="@{/staff}"><p>Manage Staff</p></a>
+            <a class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
+            <a class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
             <p class="active">Manage Counter</p>
-            <p>Manage Material</p>
+             <a  class="link-product" th:href="@{/manage-material}"><p>Manage Material</p></a>
+               <a  class="link-product" th:href="@{/manage-gem}"><p>Manage Gem</p></a>            
+            <a  class="link-product" th:href="@{/price-list}"><p> Material Price List</p></a>
+             <a class="link-product" th:href="@{/gem-price-list}"><p>Gem Price List</p></a>
         </div>
-       <form th:action="@{/perform_logout}" method="post">
-            <button type="submit"> 
+        <form th:action="@{/perform_logout}" method="post">
+            <button type="submit">
                 <i class="fa-solid fa-right-from-bracket"></i> Log out
             </button>
         </form>
@@ -53,112 +54,123 @@
             </div>
             <div class="bill-details">
                 <div class="staff">
-    <input id="searchInput" class="staff-input" onkeyup="searchOrders()" placeholder="Search by customer name or phone number..." />
-    <i class="fa-solid fa-magnifying-glass"></i>
-</div>
+                    <input id="searchInput" class="staff-input" onkeyup="searchOrders()" placeholder="Search by customer name or phone number..." />
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
             </div>
             <div class="bill-table">
-                <table>
+                <table class="table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Phone Number</th>
-                            <th>Staff Name</th>
-                            <th>Quantity</th>
+                            <th>Counter Name</th>
                             <th>Status</th>
-                            <th>Price</th>
                             <th>Detail</th>
+                            <th>Update</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>#P3626-04</td>
-                        <td> Nguyễn Văn A</td>
-                        <td>09090902229</td>
-                        <td> Võ Văn Tân</td>
-                        <td>2</td>
-                        <td><button class="status complete"><span class="sf"><i class="fa-solid fa-circle"></i></span>Complete</button></td>
-                        <td>4,950.00</td>
-                      <td>
-    <a th:href="@{/counter/counterDetail}">
-        <button class="detail-btn">
-            <i class="fa-solid fa-file"></i>
-        </button>
-    </a>
-</td>
-                    </tr>
-                    <tr>
-                        <td>#P3626-04</td>
-                        <td> Nguyễn Văn B</td>
-                        <td>09081472846</td>
-                        <td> Võ Văn Kiệt</td>
-                        <td>6</td>
-                        <td><button class="status pending"><span class="sf"><i class="fa-solid fa-circle"></i></span>Pending</button></td>
-                        <td>5,927.00</td>
-                           <td>
-    <a th:href="@{/counter/counterDetail}">
-        <button class="detail-btn">
-            <i class="fa-solid fa-file"></i>
-        </button>
-    </a>
-</td>
-                    </tr>
+                        <tr th:each="counter : ${counterPage.content}">
+                            <td th:text="${counter.counterID}"></td>
+                            <td th:text="${counter.counterName}"></td>
+                            <td>
+                                <button th:classappend="${counter.active} ? 'status complete' : 'status pending'">
+                                    <span class="sf"><i class="fa-solid fa-circle"></i></span>
+                                    <span th:text="${counter.active} ? 'Active' : 'Inactive'"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <a th:href="@{'/counter/counterDetail/'+ ${counter.counterID} }">
+                                    <button class="detail-btn">
+                                        <i class="fa-solid fa-file"></i>
+                                    </button>
+                                </a>
+                            </td>
+                            <td>
+                              <a th:href="@{'/counter/editCounter/' + ${counter.counterID}}">
+                              <button class="detail-btn" onclick="showEditModal()">
+                                        Edit
+                               </button>
+                                  </a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
             <div class="pagination-container">
                 <div class="previous">
-                    <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
+                    <a th:if="${currentPage > 0}" th:href="@{/counter(page=${currentPage - 1 })}">
+                        <button class="btn-previous">
+                            <i class="fa-solid fa-arrow-left i-left"></i> Previous
+                        </button>
+                    </a>
                 </div>
                 <div class="pages">
-                    <span class="page-active">1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>...</span>
-                    <span>8</span>
-                    <span>9</span>
-                    <span>10</span>
+                    <span th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${pageNumber == currentPage} ? 'page-active' : ''">
+                        <a th:href="@{/counter(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+                    </span>
                 </div>
                 <div class="next">
-                    <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
+                    <a th:if="${currentPage < totalPages - 1}" th:href="@{/counter(page=${currentPage + 1})}">
+                        <button class="btn-next">
+                            Next <i class="fa-solid fa-arrow-right i-right"></i>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
-            <div id="passwordModal" class="container">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <form id="passwordForm" class="col-4 passwordForm">
-                            <span class="close" onclick="hidePasswordModal()">&times;</span>
-                            <div class="text-center create-new-password">Create Counter </div>
-                            <div class="group mt-4">
-                                <div class="col-12">
-                                    <label>Create Name</label>
-                                    <input type="text" name="Input Type" class="form-control" required>
-                                </div>
-                                <div class="col-12 mt-2">
-                                    <label>Status</label>
-                                    <select class="form-control">
-                                        <option>Active</option>
-                                        <option>Active</option>
-                                        <option>Active</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-save-password"
-                                        onclick="hidePasswordModal()">Create</button>
-                                </div>
+        <div id="passwordModal" class="container">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <form id="passwordForm" class="col-4 passwordForm" method="post" th:object="${counter}" th:action="@{/saveCounter}">
+                        <span class="close" onclick="hidePasswordModal()">&times;</span>
+                        <div class="text-center create-new-password">Create Counter</div>
+                        <div class="group mt-4">
+                            <div class="col-12">
+                                <label>Create Name</label>
+                                <input type="text" class="form-control" th:field="*{counterName}">
+                                   <div th:if="${errorMessage}" class="error-message text-danger" th:text="${errorMessage}"></div>
                             </div>
-                        </form>
-                    </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-save-password" onclick="hidePasswordModal()">Create</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
+     </div>
+    
+       <div id="editModal" class="container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <form id="editForm" class="col-4 editForm" method="post" th:object="${counter}" th:action="@{/counter/editCounter/ + ${counter.counterID} + /update}">
+                <span class="close" onclick="hideEditModal()">&times;</span>
+                <div class="text-center edit-counter">Edit Counter</div>
+                <div class="group mt-4">
+                    <div class="col-12">
+                        <label>Counter Name</label>
+                        <input type="text" class="form-control" th:field="*{counterName}">
+                    </div>
+                        <div class="col-12">
+            <label>Active</label>
+            <select class="form-control" th:field="*{active}">
+                <option value="true" th:selected="${counter.active} == true">Active</option>
+                <option value="false" th:selected="${counter.active == false}">Inactive</option>
+            </select>
+        </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-save" onclick="hideEditModal()">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-  
-        <script  type="text/javascript" th:src="@{/js/CounterList.js}"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</div>
+    
+    <script type="text/javascript" th:src="@{/js/CounterList.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>

@@ -33,7 +33,10 @@
             <p class="active">Promotion</p>
              <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
             <a class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
-            <p>Manage Material</p>
+              <a  class="link-product" th:href="@{/manage-material}"><p>Manage Material</p></a>
+              <a  class="link-product" th:href="@{/manage-gem}"><p>Manage Gem</p></a>          
+            <a  class="link-product" th:href="@{/price-list}"><p> Material Price List</p></a>
+                <a class="link-product" th:href="@{/gem-price-list}"><p>Gem Price List</p></a>
         </div>
         <form th:action="@{/perform_logout}" method="post">
             <button type="submit">
@@ -68,6 +71,7 @@
                             <th>Start date</th>
                             <th>End date</th>
                             <th>Status</th>
+                              <th>Update</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,6 +88,13 @@
                                     <span th:text="${promotion.status} ? 'On' : 'Off'"></span>
                                 </button>
                             </td>
+                            <td>
+                              <a th:href="@{'/promotion/update/' + ${promotion.promotionID}}">
+                              <button class="detail-btn">
+                                   Update
+                               </button>
+                                  </a>
+                            </td>     
                         </tr>
                     </tbody>
                 </table>
@@ -123,6 +134,7 @@
                                 <div class="col-6 form-group">
                                     <label>Code</label>
                                     <input type="text" th:field="*{promotionCode}" class="form-control" required />
+                                       <div th:if="${codeErrorMessage}" class="error-message text-danger" th:text="${codeErrorMessage}"></div>
                                 </div>
                             </div>
                             <div class="row mt-2">
@@ -130,6 +142,7 @@
                                     <label>Discount rate</label>
                                     <input type="text" th:field="*{promotionPercent}" class="form-control"
                                         required />
+                                        <div th:if="${percentErrorMessage}" class="error-message text-danger" th:text="${percentErrorMessage}"></div>
                                 </div>
                                 <div class="col-6 form-group">
                                     <label>Rank</label>
@@ -140,6 +153,7 @@
                                 <div class="col-6 form-group">
                                     <label>Start Date</label>
                                     <input type="date" th:field="*{startDate}" class="form-control" required />
+                                    <div th:if="${dateErrorMessage}" class="error-message text-danger" th:text="${dateErrorMessage}"></div>
                                 </div>
                                 <div class="col-6 form-group">
                                     <label>End Date</label>

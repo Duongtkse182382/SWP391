@@ -12,28 +12,57 @@
             display         : flex;
             flex-direction  : column;
             justify-content : space-between;
-            height          : 730px;
+            height          : 750px;
             line-height     : 30px;
         }
-       .link-historyOrder{
+        form#promotionForm {
+    background: #ffffff;
+}
+.link-product{
 		   color: inherit;
             text-decoration: none;
 	   }
-       .sidebar .sidebar-title {
+         .sidebar .sidebar-title {
             cursor         : pointer;
             color          : #000000;
             font-weight    : 600;
-            font-size      : 13px;
+            font-size      : 14px;
             display        : flex;
             flex-direction : column;
             justify-content: flex-start;
             margin-top     : 20px;
         }
+        .create{
+        display:flex;
+        justify-content:flex-end;
+        }
+          .overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+.bill-table.overlay  {
+            pointer-events  : none;
+            background-color: rgba(0, 0, 0, 0.5);
+            outline         : none;
+        }
+        .bill-table.overlay input {
+            pointer-events  : none;
+            background-color: rgba(0, 0, 0, 0.5);
+            outline         : none;
+        }
+
+        .bill-table.overlay button {
+            pointer-events: none;
+            outline       : none;
+        }
+            .pagination-container a {
+    text-decoration: none; 
+    color: inherit; 
+}
 
        .sidebar .sidebar-profile {
     display: flex;
     align-items: center;
-    font-size: 13px;
+    font-size: 14px;
     padding: 8px;
     border: 1px solid #E0E0E0;
     gap: 8px;
@@ -43,16 +72,11 @@
     margin-bottom: 30px;
 }
 
-
-
-
         .sidebar-title .active {
             background   : #ffff;
             padding      : 10px 0;
             border-radius: 10px;
         }
-
-      
         .sidebar-name .child-manager {
             color    : #828282;
             font-size: 14px;
@@ -62,7 +86,7 @@
             margin-left: 10px;
         }
 
-            .sidebar button {
+        .sidebar button {
             background-color: #E0E0E0;
             color           : #000000;
             border          : none;
@@ -82,12 +106,56 @@
         .sidebar button:hover {
             opacity: 0.8;
         }
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        span.close {
+            line-height : 78px;
+            margin-right: 10px;
+        }
+
+        .content-group.overlay {
+            pointer-events: none;
+        }
+
+
+
+        #passwordModal {
+            position : fixed;
+            top      : 50%;
+            left     : 50%;
+            transform: translate(-50%, -50%);
+            z-index  : 1000;
+        }
+
+        #passwordForm {
+            background-color: #FFFFFF;
+            left            : 40%;
+            transform       : translateX(-87%);
+            border-radius   : 10px;
+        }
+
+        .text-center.create-new-password {
+            margin-top : 30px;
+            color      : #000000;
+            font-weight: 600;
+            font-size  : 22px;
+        }
+
+        button.btn.btn-save-password {
+            padding      : 8px 22px;
+            margin-top   : 16px;
+            margin-bottom: 30px;
+            background   : #55A2FD;
+        }
 
         .content {
             background-color: #ffffff;
             width           : 85%;
-            padding         : 35px;
+            padding         : 37px;
         }
+
         .address {
             font-size  : 11px;
             color      : #5E6470;
@@ -96,7 +164,7 @@
 
         .bill-header {
             text-align   : center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .bill-header h1 {
@@ -123,7 +191,7 @@
         .complete {
             color     : #12B76A;
             background: #ECFDF3;
-            padding   : 4px 8px;
+            padding   : 4px 12px;
         }
 
         .status {
@@ -142,8 +210,12 @@
         .bill-table td {
             padding: 10px 12px;
             border : none;
-
         }
+
+        .bill-table thead {
+            text-align: center;
+        }
+
         .bill-table th .id {
             margin-left: 15px;
         }
@@ -152,7 +224,13 @@
             margin-left: 50px;
         }
 
-        .bill-table th .sf_name {
+        .bill-table th .sf_name,
+        .pr_name,
+        .pr_code,
+        .dc,
+        .st_date,
+        .f_date,
+        .status {
             margin-left: 10px;
         }
 
@@ -161,7 +239,7 @@
         }
 
         .bill-table tr td {
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #ddd
         }
 
 
@@ -182,7 +260,6 @@
         .bill-table .total {
             text-align: right;
         }
-
 
         .bill-details {
             display        : flex;
@@ -237,10 +314,11 @@
         }
 
         .bill-details button {
-            padding         : 14px 16px;
-            background-color: #D9D9D9;
+            padding         : 10px 32px;
+            background-color: #3693E3;
             border          : none;
             outline         : none;
+            border-radius   : 5px;
         }
 
         .total-section {
@@ -324,7 +402,7 @@
             outline      : none;
         }
 
-        t .cancel-button {
+        .cancel-button {
             background-color: #ff390e;
         }
 
@@ -336,7 +414,7 @@
             background-color: #26C75D;
         }
 
-     .pagination-container {
+        .pagination-container {
             display        : flex;
             height         : 47px;
             align-items    : center;
@@ -367,11 +445,15 @@
         .pagination-container .i-left {
             margin-right: 10px;
         }
+        .pagination-container a:focus,
+.pagination-container a:hover {
+    outline: none; 
+}
+        
 
         .pagination-container .i-right {
             margin-left: 10px;
         }
-
 
         .pagination-container .pages .page-active {
             border       : 1px solid #EFF1F4;
@@ -383,21 +465,8 @@
         .pagination-container .next {
             margin-right: 15px
         }
-    
-        td{
-			text-align:center;
-		}
-
+       
         .cancel-button:hover,
         .print-button:hover {
             opacity: 0.8;
         }
-                .pagination-container a {
-    text-decoration: none; 
-    color: inherit; 
-}
-
-.pagination-container a:focus,
-.pagination-container a:hover {
-    outline: none; 
-}

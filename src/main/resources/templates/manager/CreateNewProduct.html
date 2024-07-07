@@ -32,7 +32,10 @@
              <a  class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
            <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
            <a  class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
-            <p>Manage Material</p>
+              <a  class="link-product" th:href="@{/manage-material}"><p>Manage Material</p></a>
+                <a  class="link-product" th:href="@{/manage-gem}"><p>Manage Gem</p></a>            
+            <a  class="link-product" th:href="@{/price-list}"><p> Material Price List</p></a>
+            <a class="link-product" th:href="@{/gem-price-list}"><p>Gem Price List</p></a>
         </div>
        <form th:action="@{/perform_logout}" method="post">
             <button type="submit"> 
@@ -52,7 +55,8 @@
         <div class="form-group">
             <label for="product-code">Product Code</label>
             <input type="text" class="form-control" id="product-code" th:field="*{productCode}">
-            <small id="product-code-error" class="text-danger"></small>
+            <small id="product-code-error" class="text-danger" ></small>
+            <small th:if="${codeErrorMessage}" th:text="${codeErrorMessage}" class="text-danger"></small>
         </div>
         <div class="form-group">
             <label for="product-name">Product Name</label>
@@ -62,7 +66,7 @@
         <div class="form-group">
             <label for="material">Material</label>
             <select class="form-control" id="material" th:field="*{materialPriceListID}">
-                <option th:each="materialPriceList : ${materialPriceLists}"
+               <option th:each="materialPriceList : ${materialPriceLists}"
                         th:value="${materialPriceList.materialPriceListID}"
                         th:text="${materialPriceList.material.name}"></option>
             </select>
@@ -70,35 +74,30 @@
         <div class="form-group">
             <label for="type">Type</label>
             <select class="form-control" id="type" th:field="*{typeID}">
-               <option value="1" th:selected="${product.typeID} == 1">Jewelry</option>
-                <option value="2" th:selected="${product.typeID} == 2">Gold</option>
+             <option th:each="type : ${types}"
+                        th:value="${type.typeID}"
+                        th:text="${type.typeName}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="counter">Counter</label>
+            <select class="form-control" id="counter" th:field="*{counterID}">
+               <option th:each="counter : ${counters}"
+                        th:value="${counter.counterID}"
+                        th:text="${counter.counterName}"></option>
             </select>
         </div>
         <div id="jewelry-fields" style="display: none;">
-            <div class="form-group">
-                <label for="origin">Origin</label>
-                <select class="form-control" id="origin" th:field="*{gemPriceList.gemID}" >
-                     <option value="1" th:selected="${product.gemPriceList.gemID} == 1">Natural</option>
-                <option value="2" th:selected="${product.gemPriceList.gemID} == 2">Artifical</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="carat">Carat</label>
-                <input type="text" class="form-control" id="carat" th:field="*{gemPriceList.gem.carat}">
-            </div>
-            <div class="form-group">
-                <label for="clarity">Clarity</label>
-                <input type="text" class="form-control" id="clarity" th:field="*{gemPriceList.gem.clarity}">
-            </div>
-            <div class="form-group">
-                <label for="color">Color</label>
-                <input type="text" class="form-control" id="color" th:field="*{gemPriceList.gem.color}">
-            </div>
-            <div class="form-group">
-                <label for="cut">Cut</label>
-                <input type="text" class="form-control" id="cut" th:field="*{gemPriceList.gem.cut}">
-            </div>
-        </div>
+    <div class="form-group">
+        <label for="gemCode">GemCode</label>
+        <select class="form-control" id="gemCode" th:field="*{gemPriceListID}">
+            <option th:each="gemPriceList : ${gemPriceLists}"
+                    th:value="${gemPriceList.gemPriceListID}"
+                    th:text="${gemPriceList.gem.gemCode}"></option>
+        </select>
+    </div>
+</div>
+        
         <div class="form-group">
             <label for="category">Category</label>
             <select class="form-control" id="category" th:field="*{categoryID}">
@@ -118,7 +117,7 @@
              <small id="price-rate-error" class="text-danger"></small>
         </div>
            <div class="d-flex justify-content-center">
-			 <button type="button" class="btn btn-primary mx-auto" id="create-button">Create</button>  
+			 <button type="submit" class="btn btn-primary mx-auto" id="create-button">Create</button>  
 		   </div>
           
     </form>             

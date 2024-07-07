@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Material Price List</title>
+    <title>Gem Price List</title>
     <link rel="stylesheet" th:href="@{/css/PriceList.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
@@ -32,10 +32,10 @@
         <a class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
         <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
         <a class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
-          <a  class="link-product" th:href="@{/manage-material}"><p>Manage Material</p></a>  
-             <a  class="link-product" th:href="@{/manage-gem}"><p>Manage Gem</p></a>     
-         <p class="active"> Material Price List</p>
-           <a class="link-product" th:href="@{/gem-price-list}"><p>Gem Price List</p></a>
+         <a  class="link-product" th:href="@{/manage-material}"><p>Manage Material</p></a>
+         <a  class="link-product" th:href="@{/manage-gem}"><p>Manage Gem</p></a>          
+         <a class="link-product" th:href="@{/price-list}"><p>Material Price List</p></a>
+         <p class="active"> Gem Price List</p>
         </div>
        <form th:action="@{/perform_logout}" method="post">
             <button type="submit"> 
@@ -45,7 +45,7 @@
     </div>
     <div class="content">
         <div class="bill-header">
-            <h1>Material Price List</h1>
+            <h1>Gem Price List</h1>
         </div>
          <div class="create ">
                     <button class=" btn btn-primary btn-create " th:onclick="showPasswordModal()">Create</button>
@@ -55,25 +55,33 @@
                 <thead>
                     <tr>
                         <th>Material</th>
+                        <th>Clarity</th>
+                        <th>Color</th>
+                        <th>Cut</th>
+                        <th>Carat</th>
                         <th>Buy Price</th>
                         <th>Sell Price</th>
                         <th>Apply Date</th>
-                         <th>Update</th>
+                        <th>Update</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="materialPrice : ${materialPriceListPage}">
-                        <td th:text="${materialPrice.material.name}"></td>
-                        <td th:text="${materialPrice.buyPrice}"></td>
-                         <td th:text="${materialPrice.sellPrice}"></td>
-                        <td th:text="${#dates.format(materialPrice.applyDate, 'yyyy-MM-dd hh:mm:ss a')}"></td>
-                         <td>
-                              <a th:href="@{'price-list/update/' + ${materialPrice.materialPriceListID}}">
+                    <tr th:each="gemPriceList : ${gemPriceListPage}">
+                        <td th:text="${gemPriceList.gem.gemName}"></td>
+                        <td th:text="${gemPriceList.gem.clarity}"></td>
+                        <td th:text="${gemPriceList.gem.color}"></td>
+                        <td th:text="${gemPriceList.gem.cut}"></td>
+                        <td th:text="${gemPriceList.gem.carat}"></td>
+                        <td th:text="${gemPriceList.buyPrice}"></td>
+                         <td th:text="${gemPriceList.sellPrice}"></td>
+                        <td th:text="${#dates.format(gemPriceList.applyDate, 'yyyy-MM-dd hh:mm:ss a')}"></td>         
+                        <td>
+                              <a th:href="@{'gem-price-list/update/' + ${gemPriceList.gemPriceListID}}">
                               <button class="detail-btn">
                                    Update
                                </button>
                                   </a>
-                            </td>                   
+                            </td>     
                    </tr>
                    
                 </tbody>
@@ -81,18 +89,18 @@
         </div>
         <div class="pagination-container">
                 <div class="previous">
-                    <a th:if="${currentPage > 0}" th:href="@{/price-list(page=${currentPage - 1 })}">
+                    <a th:if="${currentPage > 0}" th:href="@{/gem-price-list(page=${currentPage - 1 })}">
                         <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
                     </a>
                 </div>
                 <div class="pages">
                     <span th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}"
                         th:class="${pageNumber == currentPage} ? 'page-active' : ''">
-                        <a th:href="@{/price-list(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+                        <a th:href="@{/gem-price-list(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
                     </span>
                 </div>
                 <div class="next">
-                    <a th:if="${currentPage < totalPages - 1}" th:href="@{/price-list(page=${currentPage + 1})}">
+                    <a th:if="${currentPage < totalPages - 1}" th:href="@{/gem-price-list(page=${currentPage + 1})}">
                         <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
                     </a>
                 </div>
@@ -103,18 +111,18 @@
     <div id="passwordModal" class="container">
             <div class="container">
                 <div class="row justify-content-center">
-                    <form th:action="@{/price-list}" method="post" id="promotionForm" class="col-5 passwordForm"
-                        th:object="${materialPrice}">
+                    <form th:action="@{/gem-price-list}" method="post" id="promotionForm" class="col-5 passwordForm"
+                        th:object="${gemPriceList}">
                         <span class="close" onclick="hidePasswordModal()">&times;</span>
-                        <div class="text-center create-new-password">Create Material Price List </div>
+                        <div class="text-center create-new-password">Create Gem Price List </div>
                         <div class="group mt-4">
                             <div class="row">
                                 <div class="col-6 form-group">
                                     <label>Material Name</label>
-                                    <select th:field=*{materialID}>
-                                      <option th:each="material : ${material}"
-                        th:value="${material.materialID}"
-                        th:text="${material.name}"></option>
+                                   <select th:field=*{gemID}>
+                                    <option th:each="gem : ${gem}"
+                        th:value="${gem.gemID}"
+                        th:text="${gem.gemName}"></option>
                                     </select>
                                 </div>
                             <div class="col-6 form-group">

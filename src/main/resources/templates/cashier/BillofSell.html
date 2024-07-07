@@ -28,7 +28,7 @@
             <a class="link-historyOrder" th:href="@{/orders}"><p>History Order</p></a>
             <a class="link-historyOrder" th:href="@{/customers}"><p>List customer</p></a>
             <p class="active">Bill of Sell</p>
-            <a class="link-historyOrder" th:href="@{/seller/products/bill-of-buy/14}"><p>Bill of Buy</p></a>
+            
             <a class="link-historyOrder" th:href="@{/cashier-profile}"><p>Personal Profile</p></a>
         </div>
            <form th:action="@{/perform_logout}" method="post">
@@ -37,7 +37,7 @@
             </button>
         </form>
     </div>
-    <div class="content">
+    <div class="content" id="content">
         <div class="address">
             <p>FPT Jewelry Store</p>
             <p>Tel: 0909002229</p>
@@ -57,12 +57,16 @@
                         <span class="profile-phone">Phone number:</span>
                         <input type="text" th:value="*{customer.phone}" readonly>
                     </p>
+                       <p>
+                        <span class="profile-loyal">Loyal Point:</span>
+                        <input type="text" th:value="*{customer.loyalPoint}" readonly>
+                    </p>
                 </div>
                 <div class="staff">
                     <p class="staff-name">Staff Name</p>
                     <p th:text="*{staff.fullName}"></p>
                 </div>
-                <div class="staff-id">
+                <div class="loyal-point">
                     <p class="sf-title">Staff Id</p>
                     <p th:text="*{staffID}"></p>
                 </div>
@@ -80,9 +84,9 @@
                     <thead>
                         <tr>
                             <th class="product">PRODUCT_NAME</th>
+                            <th>PRODUCT_TYPE</th>
                             <th>PRODUCT_CODE</th>
                             <th>MATERIAL</th>
-                            <th>Warranty Time(Months)</th>
                             <th>UNIT PRICE</th>
                             <th class="total">PRICE</th>
                         </tr>
@@ -92,10 +96,9 @@
                             <td class="product">
                                 <span th:text="${detail.product.productName}"></span>
                             </td>
+                            <td th:text="${detail.product.type.typeName}"></td>
                             <td th:text="${detail.product.productCode}"></td>
-                                   
                             <td th:text="${detail.product.materialPriceList.material.name}"></td>
-                            <td th:text="${detail.product.type.warrantyTime}"></td>
                             <td th:text="${detail.product.materialPriceList.sellPrice}"></td>
                             <td class="total" th:text="${detail.total}"></td>
                         </tr>
@@ -122,7 +125,7 @@
                         </select>
                     </p>
                      <p id="promotion-field-percent-value"><span id="promotion-percent"></span></p>
-                    <p id="promotion-field-value"><span id="additionalDiscount">350.0</span></p>
+                    <p id="promotion-field-value"><span id="additionalDiscount"></span></p>
                     <hr />
                     <p class="total"><span class="total-child" id="total-amount"></span></p>
                 </div>
@@ -148,9 +151,6 @@
                    provisionalTotal += total;
                }
            });
-
-           // Disable print button if provisionalTotal is NaN or 0
-  
 
            document.getElementById('provisional-total').textContent = provisionalTotal.toFixed(1);
 
@@ -210,21 +210,22 @@
            updateTotalAmount();
        }
 
-       // Function to update total amount based on calculations
        function updateTotalAmount() {
        	  let provisionalTotal = calculateProvisionalTotal();
        	    let discount = provisionalTotal * 0.10;
-       	    let additionalDiscount = parseFloat(document.getElementById('additionalDiscount').textContent);
+       
        	    let promotionCode = document.getElementById('promotion-code').value;
        	    let promotionPercent = parseFloat(document.getElementById('promotion-percent').textContent);
-       	    document.getElementById('discount-amount').textContent = discount.toFixed(1);	   
+       	    document.getElementById('discount-amount').textContent = discount.toFixed(1);
+    	    let additionalDiscount = (promotionPercent/100)*provisionalTotal;
+    	    document.getElementById('additionalDiscount').textContent =  additionalDiscount.toFixed(1);
        	      
        	    if (promotionCode === '' || promotionCode === 'Select Promotion Code' || isNaN(promotionPercent)) {
        	        let totalAmount = provisionalTotal + discount;
        	        document.getElementById('total-amount').textContent = totalAmount.toFixed(1);
        	        document.getElementById('additionalDiscount').parentNode.style.display = 'none';
        	    } else {
-       	        let totalAmount = provisionalTotal + discount + additionalDiscount + ((promotionPercent/100)* provisionalTotal);
+       	        let totalAmount = provisionalTotal + discount + additionalDiscount;
        	        document.getElementById('discount-amount').textContent = discount.toFixed(1);
        	        document.getElementById('total-amount').textContent = totalAmount.toFixed(1);
        	        document.getElementById('additionalDiscount').parentNode.style.display = 'block';
@@ -249,21 +250,32 @@
        });
 
        document.querySelector('.print-button').addEventListener('click', function () {
-           formData.append('totalAmount', document.getElementById('total-amount').textContent);
-           fetch(`/seller/products/bill-of-sell/${orderID}/print`, {
-               method: 'POST',
-               body: formData
-           }).then(response => {
-               if (response.ok) {
-                   console.log('Order updated successfully');
-                   window.location.href = '/orders';
-               } else {
-                   alert('Failed to update order');
-               }
-           }).catch(error => {
-               console.error('Error:', error);
-           });
-       });
+     	  html2canvas(document.getElementById('content')).then(function (canvas) {    
+   	        const imgData = canvas.toDataURL('image/png');
+   	        const { jsPDF } = window.jspdf;
+   	        const pdf = new jsPDF('p', 'pt', 'a4');
+   	        const imgProps = pdf.getImageProperties(imgData);
+   	        const pdfWidth = pdf.internal.pageSize.getWidth();
+   	        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+   	        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+   	        pdf.save('bill_of_sell.pdf');
+             formData.append('totalAmount', document.getElementById('total-amount').textContent);
+             fetch(`/seller/products/bill-of-sell/${orderID}/print`, {
+                 method: 'POST',
+                 body: formData
+             }).then(response => {
+                 if (response.ok) {
+                     console.log('Order updated successfully');
+                     window.location.href = '/orders';
+                 } else {
+                     alert('Failed to update order');
+                 }
+             }).catch(error => {
+                 console.error('Error:', error);
+             });
+
+   	    });
+     });
 
        document.querySelector('.cancel-button').addEventListener('click', function () {
            formData.append('totalAmount', document.getElementById('total-amount').textContent);
@@ -281,8 +293,12 @@
                console.error('Error:', error);
            });
        });
+     
+       
    });
 </script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </body>
 
 </html>

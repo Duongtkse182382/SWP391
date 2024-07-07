@@ -8,53 +8,75 @@
         .sidebar {
             background-color: #FFEDE1;
             padding         : 20px;
-            width           : 20%;
+            width           : 15%;
             display         : flex;
             flex-direction  : column;
             justify-content : space-between;
             height          : 750px;
             line-height     : 30px;
         }
-
-        .sidebar .sidebar-title {
+        form#promotionForm {
+    background: #ffffff;
+}
+.link-product{
+		   color: inherit;
+            text-decoration: none;
+	   }
+         .sidebar .sidebar-title {
             cursor         : pointer;
             color          : #000000;
             font-weight    : 600;
-            font-size      : 20px;
+            font-size      : 14px;
             display        : flex;
             flex-direction : column;
             justify-content: flex-start;
             margin-top     : 20px;
+        }
+        .create{
+        display:flex;
+        justify-content:flex-end;
+        }
+          .overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+.bill-table.overlay  {
+            pointer-events  : none;
+            background-color: rgba(0, 0, 0, 0.5);
+            outline         : none;
+        }
+        .bill-table.overlay input {
+            pointer-events  : none;
+            background-color: rgba(0, 0, 0, 0.5);
+            outline         : none;
+        }
+
+        .bill-table.overlay button {
+            pointer-events: none;
+            outline       : none;
         }
             .pagination-container a {
     text-decoration: none; 
     color: inherit; 
 }
 
-        .sidebar .sidebar-title .sidebar-profile {
-            display      : flex;
-            font-size    : 16px;
-            padding      : 12px;
-            border       : 1px solid #E0E0E0;
-            gap          : 10px;
-            background   : #E0E0E0;
-            border-radius: 15px;
-            line-height  : 27px;
-            margin-bottom: 30px;
-        }
+       .sidebar .sidebar-profile {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 8px;
+    border: 1px solid #E0E0E0;
+    gap: 8px;
+    background: #E0E0E0;
+    border-radius: 15px;
+    line-height: 27px;
+    margin-bottom: 30px;
+}
 
         .sidebar-title .active {
             background   : #ffff;
             padding      : 10px 0;
             border-radius: 10px;
         }
-
-        .sidebar-pic {
-            width        : 25%;
-            border       : 1px solid #000000;
-            border-radius: 50%;
-        }
-
         .sidebar-name .child-manager {
             color    : #828282;
             font-size: 14px;
@@ -74,7 +96,7 @@
             width           : 146px;
             height          : 48px;
             margin-bottom   : 9px;
-            margin-left     : 35px;
+            margin-left     : 5px;
         }
 
         .sidebar button i {
@@ -84,11 +106,54 @@
         .sidebar button:hover {
             opacity: 0.8;
         }
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        span.close {
+            line-height : 78px;
+            margin-right: 10px;
+        }
+
+        .content-group.overlay {
+            pointer-events: none;
+        }
+
+
+
+        #passwordModal {
+            position : fixed;
+            top      : 50%;
+            left     : 50%;
+            transform: translate(-50%, -50%);
+            z-index  : 1000;
+        }
+
+        #passwordForm {
+            background-color: #FFFFFF;
+            left            : 40%;
+            transform       : translateX(-87%);
+            border-radius   : 10px;
+        }
+
+        .text-center.create-new-password {
+            margin-top : 30px;
+            color      : #000000;
+            font-weight: 600;
+            font-size  : 22px;
+        }
+
+        button.btn.btn-save-password {
+            padding      : 8px 22px;
+            margin-top   : 16px;
+            margin-bottom: 30px;
+            background   : #55A2FD;
+        }
 
         .content {
             background-color: #ffffff;
             width           : 85%;
-            padding         : 30px;
+            padding         : 37px;
         }
 
         .address {
@@ -98,6 +163,7 @@
         }
 
         .bill-header {
+            text-align   : center;
             margin-bottom: 30px;
         }
 
@@ -125,7 +191,7 @@
         .complete {
             color     : #12B76A;
             background: #ECFDF3;
-            padding   : 4px 14px;
+            padding   : 4px 12px;
         }
 
         .status {
@@ -158,7 +224,13 @@
             margin-left: 50px;
         }
 
-        .bill-table th .sf_name {
+        .bill-table th .sf_name,
+        .pr_name,
+        .pr_code,
+        .dc,
+        .st_date,
+        .f_date,
+        .status {
             margin-left: 10px;
         }
 
@@ -192,8 +264,8 @@
         .bill-details {
             display        : flex;
             align-items    : center;
-            justify-content: flex-end;
-            gap            : 10px;
+            justify-content: center;
+            gap            : 25px;
 
         }
 
@@ -232,37 +304,21 @@
         }
 
         .bill-details .staff .staff-input {
-            padding         : 7px;
+            padding         : 12px 17px;
             font-size       : 13px;
             outline         : none;
             border          : 1px solid #ddd;
             background-color: #FFFFFF;
-            border-radius   : 5px;
+            border-radius   : 8px;
             color           : #B5B7C0;
         }
 
-        .btn-filter {
-            font-size    : 13px;
-            padding      : 7px 20px;
-            background   : #FFFFFF;
-            border       : 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .fa-solid.fa-filter {
-            margin-right: 8px;
-        }
-
-        button.btn-new-product {
-            padding         : 7px 22px;
-            border          : 1px solid #ddd;
+        .bill-details button {
+            padding         : 10px 32px;
+            background-color: #3693E3;
+            border          : none;
+            outline         : none;
             border-radius   : 5px;
-            color           : #ffffff;
-            background-color: #F77EB5;
-        }
-
-        .fa-solid.fa-circle-plus {
-            margin-right: 8px;
         }
 
         .total-section {
@@ -289,12 +345,11 @@
 
         .staff .fa-magnifying-glass {
             position : absolute;
-            left     : 10px;
+            right    : 10px;
             top      : 50%;
             transform: translateY(-50%);
             color    : #7E7E7E;
             cursor   : pointer;
-            font-size: 13px;
         }
 
         .total-section p {
@@ -347,7 +402,7 @@
             outline      : none;
         }
 
-        t .cancel-button {
+        .cancel-button {
             background-color: #ff390e;
         }
 
@@ -358,7 +413,8 @@
         .create-button {
             background-color: #26C75D;
         }
- .pagination-container {
+
+        .pagination-container {
             display        : flex;
             height         : 47px;
             align-items    : center;
@@ -389,14 +445,15 @@
         .pagination-container .i-left {
             margin-right: 10px;
         }
+        .pagination-container a:focus,
+.pagination-container a:hover {
+    outline: none; 
+}
+        
 
         .pagination-container .i-right {
             margin-left: 10px;
         }
-.pagination-container a:focus,
-.pagination-container a:hover {
-    outline: none; 
-}
 
         .pagination-container .pages .page-active {
             border       : 1px solid #EFF1F4;
@@ -408,7 +465,7 @@
         .pagination-container .next {
             margin-right: 15px
         }
-
+       
         .cancel-button:hover,
         .print-button:hover {
             opacity: 0.8;

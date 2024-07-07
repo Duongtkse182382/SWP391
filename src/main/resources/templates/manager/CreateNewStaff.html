@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +11,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="sidebar">
         <div class="sidebar-title">
@@ -30,7 +32,10 @@
             <a class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
             <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
             <a class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
-            <p>Manage Material</p>
+              <a  class="link-product" th:href="@{/manage-material}"><p>Manage Material</p></a>     
+              <a  class="link-product" th:href="@{/manage-gem}"><p>Manage Gem</p></a>     
+            <a  class="link-product" th:href="@{/price-list}"><p> Material Price List</p></a>
+                <a class="link-product" th:href="@{/gem-price-list}"><p>Gem Price List</p></a>
         </div>
         <form th:action="@{/perform_logout}" method="post">
             <button type="submit">
@@ -85,7 +90,7 @@
                        <div class="form-group col-md-6">
                        <label for="email">Email</label>
                        <input type="email" class="form-control" id="email" th:field="*{email}">
-                        <small id="email-error" class="text-danger"></small>
+                       <div th:if="${error}" class="text-danger" th:text="${error}"></div>
                          </div>
                         <div class="form-group col-md-6">
                             <label for="roleID">Role</label>
@@ -128,7 +133,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-     <script>
+    <script>
         $(document).ready(function() {
             function validateForm() {
                 let isValid = true;
@@ -200,28 +205,16 @@
                 return isValid;
             }
             $('#create-button').click(function(event) {
+                event.preventDefault(); 
+
                 if (!validateForm()) {
-                    event.preventDefault(); 
                     return;
                 }
 
-                let formData = new FormData(document.getElementById('create-staff-form'));
-                fetch('/staff/create-new-staff/save', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = '/staff'; 
-                    } else {
-                        alert('Create staff failed');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                $('#create-staff-form').submit();
             });
         });
     </script>
 </body>
+
 </html>

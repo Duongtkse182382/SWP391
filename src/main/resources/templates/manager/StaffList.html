@@ -30,7 +30,10 @@
         <a class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
         <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
         <a class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
-        <p>Manage Material</p>
+          <a  class="link-product" th:href="@{/manage-material}"><p>Manage Material</p></a>
+          <a  class="link-product" th:href="@{/manage-gem}"><p>Manage Gem</p></a>          
+        <a  class="link-product" th:href="@{/price-list}"><p> Material Price List</p></a>
+            <a class="link-product" th:href="@{/gem-price-list}"><p>Gem Price List</p></a>
     </div>
     <form th:action="@{/perform_logout}" method="post">
         <button type="submit">
@@ -44,9 +47,6 @@
             <h1>Staff List</h1>
         </div>
         <div class="button-group">
-            <div>
-                <button class="btn-export"><i class="fa-solid fa-file-export"></i> Export</button>
-            </div>
             <div>
                 <a th:href="@{/staff/create-new-staff}"><button class="btn-new-staff"><i class="fa-solid fa-circle-plus"></i> New Staff</button></a>
             </div>
@@ -110,32 +110,17 @@
         <div class="sale-table">
             <table class="custom-spacing">
                 <thead>
-                <tr>
+               <tr>
                     <th class="left-column">Staff Name</th>
                     <th class="flex-middle">ID</th>
-                    <th class="flex-end">Quantity</th>
+                    <th class="flex-end">Total Sales</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="left-column">A</td>
-                    <td class="flex-middle">256</td>
-                    <td class="flex-end">1154</td>
-                </tr>
-                <tr>
-                    <td class="left-column">A</td>
-                    <td class="flex-middle">256</td>
-                    <td class="flex-end">2254</td>
-                </tr>
-                <tr>
-                    <td class="left-column">A</td>
-                    <td class="flex-middle">256</td>
-                    <td class="flex-end">2256</td>
-                </tr>
-                <tr>
-                    <td class="left-column">A</td>
-                    <td class="flex-middle">256</td>
-                    <td class="flex-end">2256</td>
+                 <tr th:each="staffRow : ${topStaff}">
+                    <td class="left-column" th:text="${staffRow[1]}"></td> <!-- staffName -->
+                    <td class="flex-middle" th:text="${staffRow[0]}"></td> <!-- staffID -->
+                    <td class="flex-end" th:text="${staffRow[2]}"></td> <!-- totalSum -->
                 </tr>
                 </tbody>
             </table>

@@ -29,9 +29,12 @@
               <a  class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
              <a class="link-product" th:href="@{/staff}"><p>Manage Staff</p></a>
              <a  class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
-             <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
+             <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>       
             <p class="active">Manage Counter</p>
-            <p>Manage Material</p>
+          <a  class="link-product" th:href="@{/manage-material}"><p>Manage Material</p></a> 
+            <a  class="link-product" th:href="@{/manage-gem}"><p>Manage Gem</p></a>           
+             <a  class="link-product" th:href="@{/price-list}"><p>Material Price List</p></a>
+              <a class="link-product" th:href="@{/gem-price-list}"><p>Gem Price List</p></a>
         </div>
          <form th:action="@{/perform_logout}" method="post">
             <button type="submit"> 
@@ -42,7 +45,11 @@
     <div class="content">
         <div class="bill-header">
             <h1>Counter Detail</h1>
+               <div class="create-counter-list">
+                   <a th:href="@{/counter}"> <button >Back</button></a>
+                </div>
         </div>
+     
         <div class="bill-details">
             <div class="staff">
                 <input value="Search" class="staff-input" />
@@ -50,129 +57,28 @@
             </div>
         </div>
         <div class="bill-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>ID</th>
-                        <th>Description</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
-                        <th class="delete-container">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>14K Yellow Diamond bracelet</td>
-                        <td>356</td>
-                        <td>abcdefgh</td>
-                        <td> 12</td>
-                        <td><button class="status complete"><span class="sf">
-                            <i class="fa-solid fa-circle"></i></span>On sale</button></td>
-                        <td class="delete-container"><a th:href="@{/counter}"><i class="fa-regular fa-trash-can"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>14K Yellow Diamond bracelet</td>
-                        <td>356</td>
-                        <td>abcdefgh</td>
-                        <td> 12</td>
-                        <td><button class="status pending"><span class="sf">
-                                    <i class="fa-solid fa-circle"></i></span>Sold out</button></td>
-                        <td class="delete-container"><i class="fa-regular fa-trash-can"></i></td>
-                    </tr>
-                    <tr>
-                        <td>14K Yellow Diamond bracelet</td>
-                        <td>356</td>
-                        <td>abcdefgh</td>
-                        <td> 12</td>
-                        <td><button class="status complete"><span class="sf">
-                                    <i class="fa-solid fa-circle"></i></span>On sale</button></td>
-                        <td class="delete-container"><i class="fa-regular fa-trash-can"></i></td>
-                    </tr>
-                    <tr>
-                        <td>14K Yellow Diamond bracelet</td>
-                        <td>356</td>
-                        <td>abcdefgh</td>
-                        <td> 12</td>
-                        <td><button class="status pending"><span class="sf">
-                                    <i class="fa-solid fa-circle"></i></span>Sold out</button></td>
-                        <td class="delete-container"><i class="fa-regular fa-trash-can"></i></td>
-                    </tr>
-                    <tr>
-                        <td>14K Yellow Diamond bracelet</td>
-                        <td>356</td>
-                        <td>abcdefgh</td>
-                        <td> 12</td>
-                        <td><button class="status complete"><span class="sf">
-                                    <i class="fa-solid fa-circle"></i></span>On sale</button></td>
-                        <td class="delete-container"><i class="fa-regular fa-trash-can"></i></td>
-                    </tr>
-                    <tr>
-                        <td>14K Yellow Diamond bracelet</td>
-                        <td>356</td>
-                        <td>abcdefgh</td>
-                        <td> 12</td>
-                        <td><button class="status pending"><span class="sf">
-                                    <i class="fa-solid fa-circle"></i></span>Sold out</button></td>
-                        <td class="delete-container"><i class="fa-regular fa-trash-can"></i></td>
-                    </tr>
-                    <tr>
-                        <td>14K Yellow Diamond bracelet</td>
-                        <td>356</td>
-                        <td>abcdefgh</td>
-                        <td> 12</td>
-                        <td><button class="status complete"><span class="sf">
-                                    <i class="fa-solid fa-circle"></i></span>On sale</button></td>
-                        <td class="delete-container"><i class="fa-regular fa-trash-can"></i></td>
-                    </tr>
-                    <tr>
-                        <td>14K Yellow Diamond bracelet</td>
-                        <td>356</td>
-                        <td>abcdefgh</td>
-                        <td> 12</td>
-                        <td><button class="status pending"><span class="sf">
-                                    <i class="fa-solid fa-circle"></i></span>Sold out</button></td>
-                        <td class="delete-container"><i class="fa-regular fa-trash-can"></i></td>
-                    </tr>
-                    <tr>
-                        <td>14K Yellow Diamond bracelet</td>
-                        <td>356</td>
-                        <td>abcdefgh</td>
-                        <td> 12</td>
-                        <td><button class="status complete"><span class="sf">
-                                    <i class="fa-solid fa-circle"></i></span>On sale</button></td>
-                        <td class="delete-container"><i class="fa-regular fa-trash-can"></i></td>
-                    </tr>
-                    <tr>
-                        <td>14K Yellow Diamond bracelet</td>
-                        <td>356</td>
-                        <td>abcdefgh</td>
-                        <td> 12</td>
-                        <td><button class="status pending"><span class="sf">
-                                    <i class="fa-solid fa-circle"></i></span>Sold out</button></td>
-                        <td class="delete-container"><i class="fa-regular fa-trash-can"></i></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="pagination-container">
-            <div class="previous">
-                <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Counter Name</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    <tr >
+        <td th:text="${counter.counterID}"></td>
+        <td th:text="${counter.counterName}"></td>
+        <td>
+            <button th:classappend="${counter.active} ? 'status complete' : 'status pending'">
+                <span class="sf"><i class="fa-solid fa-circle"></i></span>
+                <span th:text="${counter.active} ? 'Active' : 'Inactive'"></span>
+            </button>
+        </td>
+    </tr>
+</tbody>                </table>
             </div>
-            <div class="pages">
-                <span class="page-active">1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>...</span>
-                <span>8</span>
-                <span>9</span>
-                <span>10</span>
-            </div>
-            <div class="next">
-                <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
-            </div>
-        </div>
-    </div>
+        </div>  
 </body>
 
 </html>
