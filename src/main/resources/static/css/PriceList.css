@@ -26,6 +26,10 @@
             justify-content: flex-start;
             margin-top     : 20px;
         }
+            .pagination-container a {
+    text-decoration: none; 
+    color: inherit; 
+}
 
         .sidebar .sidebar-title .sidebar-profile {
             display      : flex;

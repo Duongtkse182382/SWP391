@@ -20,22 +20,26 @@
                 <div class="sidebar-pic"></div>
                 <div class="sidebar-name">
                     <div class="child-name">
-                        Trần Đại Dương
+                        <span th:text="${staff.fullName}"></span>
                     </div>
                     <div>
                         <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
                     </div>
                 </div>
             </div>
-             <a  class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a>
-             <a  class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
+            <a  class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a>
+              <a  class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
              <a class="link-product" th:href="@{/staff}"><p>Manage Staff</p></a>
              <a  class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
+             <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
             <p class="active">Manage Counter</p>
-            <p>Manage Category</p>
             <p>Manage Material</p>
         </div>
-        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+       <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
     </div>
     <div class="content">
         <div class="content-group">

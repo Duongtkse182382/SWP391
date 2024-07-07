@@ -30,7 +30,6 @@
             <p class="active">Bill of Sell</p>
             <a class="link-historyOrder" th:href="@{/seller/products/bill-of-buy/14}"><p>Bill of Buy</p></a>
             <a class="link-historyOrder" th:href="@{/cashier-profile}"><p>Personal Profile</p></a>
-            <a class="link-historyOrder" th:href="@{/warranty}"><p>Warranty</p></a>
         </div>
            <form th:action="@{/perform_logout}" method="post">
             <button type="submit"> 
@@ -46,7 +45,7 @@
         <div class="bill-header">
             <h1>Bill of Sell</h1>
         </div>
-        <form id="billForm" th:object="${order}">
+<form id="billForm" th:object="${order}">
             <div class="bill-details">
                 <div class="profile">
                     <p class="profile-bill">Sales invoices are sent to:</p>
@@ -60,7 +59,7 @@
                     </p>
                 </div>
                 <div class="staff">
-                    <p class="staff-name"></p>
+                    <p class="staff-name">Staff Name</p>
                     <p th:text="*{staff.fullName}"></p>
                 </div>
                 <div class="staff-id">
@@ -83,6 +82,7 @@
                             <th class="product">PRODUCT_NAME</th>
                             <th>PRODUCT_CODE</th>
                             <th>MATERIAL</th>
+                            <th>Warranty Time(Months)</th>
                             <th>UNIT PRICE</th>
                             <th class="total">PRICE</th>
                         </tr>
@@ -93,7 +93,9 @@
                                 <span th:text="${detail.product.productName}"></span>
                             </td>
                             <td th:text="${detail.product.productCode}"></td>
+                                   
                             <td th:text="${detail.product.materialPriceList.material.name}"></td>
+                            <td th:text="${detail.product.type.warrantyTime}"></td>
                             <td th:text="${detail.product.materialPriceList.sellPrice}"></td>
                             <td class="total" th:text="${detail.total}"></td>
                         </tr>
@@ -104,85 +106,183 @@
                 <div>
                     <p>Provisional total:</p>
                     <p>Tax (10%):</p>
+                    <p>Promotion Code:</p>
+                    <p id="promotion-field-percent">Promotion Percent:</p>
+                    <p id="promotion-field">Promotion:</p>
                     <hr />
                     <p class="total">Total:</p>
                 </div>
                 <div class="total-right">
-                    <p id="provisional-total"></p>
-                    <p id="tax-amount"></p>
-                    <p class="total-child" id="total-amount"></p>
+                    <p> <span id="provisional-total"></span></p>
+                    <p> <span id="discount-amount"></span></p>
+                    <p>
+                        <select id="promotion-code" class="promotion-code">
+                            <option value="">Select Promotion Code</option>
+                            <option th:each="promotion : ${promotions}" th:value="${promotion.promotionCode}" th:data-percent="${promotion.promotionPercent}" th:text="${promotion.promotionCode}"></option>
+                        </select>
+                    </p>
+                     <p id="promotion-field-percent-value"><span id="promotion-percent"></span></p>
+                    <p id="promotion-field-value"><span id="additionalDiscount">350.0</span></p>
+                    <hr />
+                    <p class="total"><span class="total-child" id="total-amount"></span></p>
                 </div>
             </div>
             <div class="buttons">
-                <button type="button" class="cancel-button">Cancel</button>
-                <button type="button" class="print-button" disabled>Print</button>
+                <button type="button" class="add-button">Add</button>
+                <button type="button" class="cancel-button" >Cancel</button>
+                <button type="button" class="print-button" >Print</button>
             </div>
         </form>
     </div>
 
-    <script th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        let rows = document.querySelectorAll('.bill-table tbody tr');
-        let provisionalTotal = 0;
+   <script th:inline="javascript">
+   document.addEventListener('DOMContentLoaded', function () {
+   	function calculateProvisionalTotal() {
+           let rows = document.querySelectorAll('.bill-table tbody tr');
+           let provisionalTotal = 0;
 
-        rows.forEach(function (row) {
-            let total = parseFloat(row.querySelector('td.total').textContent.replace(/[^0-9.-]+/g, ""));
+           rows.forEach(function (row) {
+               let total = parseFloat(row.querySelector('td.total').textContent.replace(/[^0-9.-]+/g, ""));
 
-            if (!isNaN(total)) {
-                provisionalTotal += total;
-            }
-        });
+               if (!isNaN(total)) {
+                   provisionalTotal += total;
+               }
+           });
 
-        if (provisionalTotal === 0) {
-            document.querySelector('.print-button').disabled = true;
-        } else {
-            document.querySelector('.print-button').disabled = false;
-        }
+           // Disable print button if provisionalTotal is NaN or 0
+  
 
-        document.getElementById('provisional-total').textContent = provisionalTotal.toFixed(2);
-        let tax = provisionalTotal * 0.10;
-        let totalAmount = provisionalTotal + tax;
-        document.getElementById('tax-amount').textContent = tax.toFixed(2);
-        document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
+           document.getElementById('provisional-total').textContent = provisionalTotal.toFixed(1);
 
-        let orderID = /*[[${order.orderID}]]*/ '';
-        let formData = new FormData();
-        formData.append('orderID', orderID);
-        formData.append('totalAmount', totalAmount.toFixed(2));
+           return provisionalTotal;
+       }
 
-        document.querySelector('.print-button').addEventListener('click', function () {
-            fetch(`/seller/products/bill-of-sell/${orderID}/print`, {
-                method: 'POST',
-                body: formData
-            }).then(response => {
-                if (response.ok) {
-                    console.log('Order updated successfully');
-                    window.location.href = '/orders';
-                } else {
-                    alert('Failed to update order');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-            });
-        });
 
-        document.querySelector('.cancel-button').addEventListener('click', function () {
-            fetch(`/seller/products/bill-of-sell/${orderID}/cancel`, {
-                method: 'POST',
-                body: formData
-            }).then(response => {
-                if (response.ok) {
-                    console.log('Order canceled successfully');
-                    window.location.href = '/orders';
-                } else {
-                    alert('Failed to cancel order');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-            });
-        });
-    });
-    </script>
+       function loadPromotionFromStorage() {
+           const savedPromotionCode = localStorage.getItem('promotionCode');
+           const savedPromotionPercent = localStorage.getItem('promotionPercent');
+
+           if (savedPromotionCode) {
+               document.getElementById('promotion-code').value = savedPromotionCode;
+               document.getElementById('promotion-percent').textContent = savedPromotionPercent;
+           }
+
+           updatePromotionPercent();
+       }
+
+       function savePromotionToStorage() {
+           const promotionCode = document.getElementById('promotion-code').value;
+           const promotionPercent = document.getElementById('promotion-percent').textContent;
+
+           localStorage.setItem('promotionCode', promotionCode);
+           localStorage.setItem('promotionPercent', promotionPercent);
+       }
+
+       document.getElementById('promotion-code').addEventListener('change', function () {
+           updatePromotionPercent();
+           savePromotionToStorage();
+       });
+
+       function updatePromotionPercent() {
+           let promotionCode = document.getElementById('promotion-code').value;
+           let options = document.getElementById('promotion-code').getElementsByTagName('option');
+           let promotionPercent = '';
+           for (let i = 0; i < options.length; i++) {
+               if (options[i].value === promotionCode) {
+                   promotionPercent = options[i].getAttribute('data-percent');
+                   break;
+               }
+           }
+           document.getElementById('promotion-percent').textContent = promotionPercent;
+
+           if (promotionCode === '' || promotionCode === 'Select Promotion Code' || isNaN(parseFloat(promotionPercent))) {
+               document.getElementById('promotion-field-percent').style.display = 'none';
+               document.getElementById('promotion-field').style.display = 'none';
+               document.getElementById('promotion-field-percent-value').style.display = 'none';
+               document.getElementById('promotion-field-value').style.display = 'none';
+           } else {
+               document.getElementById('promotion-field-percent').style.display = 'block';
+               document.getElementById('promotion-field').style.display = 'block';
+               document.getElementById('promotion-field-percent-value').style.display = 'block';
+               document.getElementById('promotion-field-value').style.display = 'block';
+           }
+
+           updateTotalAmount();
+       }
+
+       // Function to update total amount based on calculations
+       function updateTotalAmount() {
+       	  let provisionalTotal = calculateProvisionalTotal();
+       	    let discount = provisionalTotal * 0.10;
+       	    let additionalDiscount = parseFloat(document.getElementById('additionalDiscount').textContent);
+       	    let promotionCode = document.getElementById('promotion-code').value;
+       	    let promotionPercent = parseFloat(document.getElementById('promotion-percent').textContent);
+       	    document.getElementById('discount-amount').textContent = discount.toFixed(1);	   
+       	      
+       	    if (promotionCode === '' || promotionCode === 'Select Promotion Code' || isNaN(promotionPercent)) {
+       	        let totalAmount = provisionalTotal + discount;
+       	        document.getElementById('total-amount').textContent = totalAmount.toFixed(1);
+       	        document.getElementById('additionalDiscount').parentNode.style.display = 'none';
+       	    } else {
+       	        let totalAmount = provisionalTotal + discount + additionalDiscount + ((promotionPercent/100)* provisionalTotal);
+       	        document.getElementById('discount-amount').textContent = discount.toFixed(1);
+       	        document.getElementById('total-amount').textContent = totalAmount.toFixed(1);
+       	        document.getElementById('additionalDiscount').parentNode.style.display = 'block';
+       	    }
+       }
+
+       loadPromotionFromStorage();
+
+       calculateProvisionalTotal();
+       updateTotalAmount();
+
+       let orderID = /*[[${order.orderID}]]*/ '';
+       let formData = new FormData();
+       formData.append('orderID', orderID);
+
+       document.querySelector('.add-button').addEventListener('click', function () {
+           let promotionCode = document.getElementById('promotion-code').value;     
+           document.querySelector('.add-button').disabled = true;
+           document.querySelector('.cancel-button').disabled = false;
+           document.querySelector('.print-button').disabled = false;
+           document.getElementById('promotion-code').disabled = true;
+       });
+
+       document.querySelector('.print-button').addEventListener('click', function () {
+           formData.append('totalAmount', document.getElementById('total-amount').textContent);
+           fetch(`/seller/products/bill-of-sell/${orderID}/print`, {
+               method: 'POST',
+               body: formData
+           }).then(response => {
+               if (response.ok) {
+                   console.log('Order updated successfully');
+                   window.location.href = '/orders';
+               } else {
+                   alert('Failed to update order');
+               }
+           }).catch(error => {
+               console.error('Error:', error);
+           });
+       });
+
+       document.querySelector('.cancel-button').addEventListener('click', function () {
+           formData.append('totalAmount', document.getElementById('total-amount').textContent);
+           fetch(`/seller/products/bill-of-sell/${orderID}/cancel`, {
+               method: 'POST',
+               body: formData
+           }).then(response => {
+               if (response.ok) {
+                   console.log('Order canceled successfully');
+                   window.location.href = '/orders';
+               } else {
+                   alert('Failed to cancel order');
+               }
+           }).catch(error => {
+               console.error('Error:', error);
+           });
+       });
+   });
+</script>
 </body>
 
 </html>
