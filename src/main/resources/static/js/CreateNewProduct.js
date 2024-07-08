@@ -14,22 +14,6 @@ $(document).ready(function() {
             event.preventDefault(); 
             return;
         }
-        
-        let formData = new FormData(document.getElementById('create-product-form'));
-        fetch('/manager/products/create-product/create', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            if (response.ok) {
-                window.location.href = '/manager/products';
-            } else {
-                alert('Create product failed');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
     });
 
     function validateForm() {

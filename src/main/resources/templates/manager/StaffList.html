@@ -28,12 +28,12 @@
         <a class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
         <p class="active">Manage Staff</p>
         <a class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
-        <a  class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
+        <a class="link-product" th:href="@{/manager-profile}"><p>Personal Profile</p></a>
         <a class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
-          <a  class="link-product" th:href="@{/manage-material}"><p>Manage Material</p></a>
-          <a  class="link-product" th:href="@{/manage-gem}"><p>Manage Gem</p></a>          
-        <a  class="link-product" th:href="@{/price-list}"><p> Material Price List</p></a>
-            <a class="link-product" th:href="@{/gem-price-list}"><p>Gem Price List</p></a>
+        <a class="link-product" th:href="@{/manage-material}"><p>Manage Material</p></a>
+        <a class="link-product" th:href="@{/manage-gem}"><p>Manage Gem</p></a>
+        <a class="link-product" th:href="@{/price-list}"><p>Material Price List</p></a>
+        <a class="link-product" th:href="@{/gem-price-list}"><p>Gem Price List</p></a>
     </div>
     <form th:action="@{/perform_logout}" method="post">
         <button type="submit">
@@ -46,7 +46,13 @@
         <div class="bill-header">
             <h1>Staff List</h1>
         </div>
-        <div class="button-group">
+        <div class="bill-details">
+            <div class="staff">
+                <input id="searchInput" class="staff-input" onkeyup="searchOrders()" placeholder="Search by staffName ..." />
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+        </div>
+        <div class="button-group mt-3">
             <div>
                 <a th:href="@{/staff/create-new-staff}"><button class="btn-new-staff"><i class="fa-solid fa-circle-plus"></i> New Staff</button></a>
             </div>
@@ -61,7 +67,7 @@
                     <th>Role</th>
                     <th>Status</th>
                     <th>Counter</th>
-                    <th>Detail <th>
+                    <th>Detail</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -76,31 +82,31 @@
                         </button>
                     </td>
                     <td th:text="${staff.counter.counterName}"></td>
-                     <td>
-                      <a th:href="@{'staff/edit-staff-profile/' + ${staff.staffID}}">
-                                <button class="detail-btn"><i class="fa-solid fa-file"></i></button>
-                      </a>
-                     </td>
+                    <td>
+                        <a th:href="@{'/staff/edit-staff-profile/' + ${staff.staffID}}">
+                            <button class="detail-btn"><i class="fa-solid fa-file"></i></button>
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <div class="pagination-container">
             <div class="previous">
-        <a th:if="${currentPage > 0}" th:href="@{/staff(page=${currentPage - 1 })}">
-            <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
-        </a>
-    </div>
-    <div class="pages">
-        <span th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:class="${pageNumber == currentPage ? 'page-active' : ''}">
-            <a th:href="@{/staff(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
-        </span>
-    </div>
-    <div class="next">
-        <a th:if="${currentPage < totalPages - 1}" th:href="@{/staff(page=${currentPage + 1})}">
-            <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
-        </a>
-    </div>
+                <a th:if="${currentPage > 0}" th:href="@{/staff(page=${currentPage - 1 })}">
+                    <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
+                </a>
+            </div>
+            <div class="pages">
+                <span th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:class="${pageNumber == currentPage ? 'page-active' : ''}">
+                    <a th:href="@{/staff(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+                </span>
+            </div>
+            <div class="next">
+                <a th:if="${currentPage < totalPages - 1}" th:href="@{/staff(page=${currentPage + 1})}">
+                    <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
+                </a>
+            </div>
         </div>
     </div>
     <div class="top-sale">
@@ -110,14 +116,14 @@
         <div class="sale-table">
             <table class="custom-spacing">
                 <thead>
-               <tr>
+                <tr>
                     <th class="left-column">Staff Name</th>
                     <th class="flex-middle">ID</th>
                     <th class="flex-end">Total Sales</th>
                 </tr>
                 </thead>
                 <tbody>
-                 <tr th:each="staffRow : ${topStaff}">
+                <tr th:each="staffRow : ${topStaff}">
                     <td class="left-column" th:text="${staffRow[1]}"></td> <!-- staffName -->
                     <td class="flex-middle" th:text="${staffRow[0]}"></td> <!-- staffID -->
                     <td class="flex-end" th:text="${staffRow[2]}"></td> <!-- totalSum -->
@@ -130,5 +136,26 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script th:inline="javascript">
+    function searchOrders() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.querySelector(".bill-table table");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]; 
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 </body>
 </html>

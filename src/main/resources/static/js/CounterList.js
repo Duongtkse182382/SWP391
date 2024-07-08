@@ -4,6 +4,7 @@ function showPasswordModal() {
 }
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("passwordModal").style.display = "none";
+  document.getElementById('editModal').style.display = 'none';
 });
 
 function hidePasswordModal() {
@@ -33,3 +34,7 @@ function hidePasswordModal() {
             }
         }
     }
+	
+
+
+	
