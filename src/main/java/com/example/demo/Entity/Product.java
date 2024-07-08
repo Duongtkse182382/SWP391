@@ -45,14 +45,25 @@ public class Product {
     @Column(name = "typeID")
     private int typeID;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "materialPriceListID", referencedColumnName = "materialPriceListID", insertable = false, updatable = false)
-    private MaterialPriceList materialPriceList;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "materialPriceListID", referencedColumnName = "materialPriceListID", insertable = false, updatable = false)
+//    private MaterialPriceList materialPriceList;
 
     @Column(name = "materialPriceListID")
     private int materialPriceListID;
     
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "counterID", referencedColumnName = "counterID", insertable = false, updatable = false)
+    private Counter counter;
+
+    @Column(name = "counterID")
+    private int counterID;
+    
     @OneToMany(mappedBy = "productID", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails;
-
+   
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "materialPriceListID", referencedColumnName = "materialPriceListID", insertable = false, updatable = false)
+    private MaterialPriceList materialPriceList;
+    
 }

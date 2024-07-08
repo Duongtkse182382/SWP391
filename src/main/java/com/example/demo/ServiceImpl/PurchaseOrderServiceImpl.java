@@ -59,10 +59,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		int quantity = 0;
 		double total = (double) (purchaseOrderDTO.getDiamondPrice() + purchaseOrderDTO.getGoldPrice());
 		order.setTotal(total);
-
 		order.setQuantity(quantity);
 		order.setStaffID(purchaseOrderDTO.getStaffId());
-		order.setOrderstatusID(2);
+		order.setOrderstatusID(1);
 		order.setQuantity(1);
 		order.setDate(new Date());
 		order.setType(true);
@@ -71,9 +70,6 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		String name = purchaseOrderDTO.getCustomerName();
 		Customer cus = customerService.insertOrUpdateCustomer(phone, name, lpoint);
 		order.setCustomerID(cus.getCustomerID());
-		
-	
-		// New product material
 		Product product = new Product();
 		List<MaterialPriceList> materialPrice = materialPriceListService
 				.getMaterialPriceListById(purchaseOrderDTO.getTypeGold().intValue());
@@ -88,6 +84,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		product.setWeight(purchaseOrderDTO.getWeight());
 		product.setProductName(purchaseOrderDTO.getMaterialName());
 		product.setProductCode("Materail");
+		product.setCounterID(5);
 		productRepository.save(product);
 
 		orderRepository.save(order);
@@ -133,7 +130,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		Customer cus = customerService.insertOrUpdateCustomer(phone, name, 0);
 		order.setCustomerID(cus.getCustomerID());
 		order.setType(true);
-		order.setOrderstatusID(2);
+		order.setOrderstatusID(1);
 		order.setQuantity(details.size());
 		orderRepository.save(order);
 
