@@ -1,6 +1,7 @@
 package com.example.demo.ServiceImpl;
 
 import com.example.demo.Entity.Gem;
+import com.example.demo.Entity.GemPriceList;
 import com.example.demo.Entity.Product;
 import com.example.demo.Repository.CategoryRepository;
 import com.example.demo.Repository.GemPriceListRepository;
@@ -64,66 +65,39 @@ public class ProductServiceImpl implements ProductService {
     }
     
 
-    @Transactional
-    public void updateProduct(Product product) {
-        if (product.getCategoryID() == 0) {
-            product.setCategoryID(4);
-        }
-        if (product.getGemPriceListID() == null) {
-            product.setGemPriceListID(4);
-        }
-        if (product.getTypeID() == 0) {
-            product.setTypeID(2);
-        }
-        if (product.getMaterialPriceListID() == 0) {
-            product.setMaterialPriceListID(1);
-        }
-        boolean categoryExists = categoryRepository.existsById(product.getCategoryID());
-        boolean gemPriceListExists = gemPriceListRepository.existsById(product.getGemPriceListID());
-        boolean typeExists = typeRepository.existsById(product.getTypeID());
-        boolean materialPriceListExists = materialPriceListRepository.existsById(product.getMaterialPriceListID());
-
-        if (categoryExists && gemPriceListExists && typeExists && materialPriceListExists) {
-            Product existingProduct = productRepository.findById(product.getProductID())
-                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
-            existingProduct.setProductName(product.getProductName());
-            existingProduct.setProductCode(product.getProductCode());
-            existingProduct.setWeight(product.getWeight());
-            existingProduct.setPriceRate(product.getPriceRate());
-            existingProduct.setImage(product.getImage());
-            existingProduct.setOrderType(product.getOrderType());
-            existingProduct.setCategoryID(product.getCategoryID());
-            existingProduct.setGemPriceListID(product.getGemPriceListID());
-            existingProduct.setTypeID(product.getTypeID());
-            existingProduct.setMaterialPriceListID(product.getMaterialPriceListID());
-            existingProduct.setOrderDetails(existingProduct.getOrderDetails());
-            productRepository.save(existingProduct);
-        } else {
-            throw new DataIntegrityViolationException("Invalid foreign key value.");
-        }
+    @Override
+    public Product updateProduct(Product product) {
+    	return  productRepository.save(product);
+     
     }
 
-     
-    @Override
+    @Transactional
     public void saveProduct(Product product) {
+        if (productRepository.existsByProductCode(product.getProductCode())) {
+            throw new IllegalArgumentException("Product code already exists");
+        }
+
         if (product.getTypeID() == 2) {
             product.setGemPriceListID(1);
             product.setOrderType("Sell");
             product.setActive(true);
             productRepository.save(product);
         } 
-        if (product.getTypeID() == 1 && product.getGemPriceList() != null) {
-            Gem gem = product.getGemPriceList().getGem();
-            gem.setGemName("Diamond");
-            gem.setOrigin("Natural");
-            gem.setGemCode("GEM001");
-            gem = gemRepository.save(gem);
-            product.getGemPriceList().setGemID(gem.getGemID());
-            product.setGemPriceListID(2);
-            product.setOrderType("Sell");
-            product.setActive(true);
-            productRepository.save(product);
+        if (product.getTypeID() == 1) {
+                product.setGemPriceListID(2);
+                product.setOrderType("Sell");
+                product.setActive(true);
+                productRepository.save(product);
+            }
         }
-    } 	  	
+    
+    
+    @Override
+    public boolean existsByProductCodeAndNotProductId(String productCode, Integer productId) {
+        return productRepository.countByProductCodeAndIdNot(productCode, productId) > 0;
+    }
+
+
+
     }     
 
