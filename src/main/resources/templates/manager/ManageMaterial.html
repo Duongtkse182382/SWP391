@@ -62,20 +62,12 @@
                         <tr>
                             <th>Material ID</th>
                             <th>Material Name</th>
-                            <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="material : ${materials}">
                             <td th:text= ${material.materialID}></td>
                              <td th:text= ${material.name}></td>
-                              <td>
-                              <a th:href="@{'/manange-material/update/' + ${material.materialID}}">
-                              <button class="detail-btn">
-                                   Update
-                               </button>
-                                  </a>
-                            </td>       
                         </tr>
                     </tbody>
                 </table>
