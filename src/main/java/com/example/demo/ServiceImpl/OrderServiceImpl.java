@@ -5,6 +5,7 @@ import com.example.demo.Entity.Material;
 import com.example.demo.Entity.Order;
 import com.example.demo.Entity.OrderDetail;
 import com.example.demo.Entity.Product;
+import com.example.demo.Repository.CustomerRepository;
 import com.example.demo.Repository.MaterialRepository;
 import com.example.demo.Repository.OrderDetailRepository;
 import com.example.demo.Repository.OrderRepository;
@@ -43,6 +44,8 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private TypeRepository typeRepository;
+	@Autowired
+	private CustomerRepository customerRepository;
 
 	@Override
 	public Page<Order> getAllOrders(Pageable pageable) {
@@ -64,17 +67,18 @@ public class OrderServiceImpl implements OrderService {
 		Order order = new Order();
 		order.setTotal(orderDTO.getTotal());
 		order.setQuantity(orderDTO.getProduct().size());
-		order.setStaffID(1);
+//		order.setStaffID(1);
+		order.setStaffID(orderDTO.getStaffID());
 		order.setOrderstatusID(1);
-//		order.setPromotionID(1);
 		Double total = 0.0;
 		for (int i = 0; i < orderDTO.getProduct().size(); i++) {
 			total += orderDTO.getProduct().get(i).getMaterialPriceList().getSellPrice()*orderDTO.getProduct().get(i).getWeight() + orderDTO.getProduct().get(i).getGemPriceList().getSellPrice();
 		}
 		order.setTotal(total);
 		order.setDate(new Date());
-
-		int lpoitn = (int) (total * 0.1);
+		System.out.print("abc");
+System.out.print(orderDTO.getStaffID());
+		int lpoitn = 0;
 		String phone = orderDTO.getPhoneNumber();
 		String name = orderDTO.getCustomerName();
 		Customer cus = customerService.insertOrUpdateCustomer(phone, name, lpoitn);
@@ -94,9 +98,19 @@ public class OrderServiceImpl implements OrderService {
 	public Optional<Order> findOrderById(Integer id){
 		return orderRepository.findById(id);
 	}
+	
 	 @Override
 	    public void updateOrder(Order order) {
 	        orderRepository.save(order);
 	    }
+	 public void updateLoyaltyPoints(Order order) {
+		    Customer customer = order.getCustomer();
+		    if (customer != null) {
+		        int pointsEarned = (int) (order.getTotal() * 0.01); 
+		        customer.setLoyalPoint(customer.getLoyalPoint() + pointsEarned);
+		        customerRepository.save(customer);
+		    }
+		}
+
 
 }

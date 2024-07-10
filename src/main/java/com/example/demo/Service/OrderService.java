@@ -16,6 +16,7 @@ public interface OrderService {
 	void saveProductFromOrder(OrderDTO orderDTO);
 	Optional<Order> findOrderById(Integer id);
 	void updateOrder(Order order);
+	void updateLoyaltyPoints(Order order);
 
 	
 }

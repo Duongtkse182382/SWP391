@@ -14,6 +14,7 @@ import lombok.*;
 public class OrderDTO {
     private String phoneNumber;
     private int staffID;
+    private String staffName;
     private String customerName;
     private int orderID;
     private int productID;
@@ -25,3 +26,4 @@ public class OrderDTO {
 	
 
 }
+=-
