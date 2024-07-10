@@ -57,8 +57,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	public void savePurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
 		Order order = new Order();
 		int quantity = 0;
-		double total = (double) (purchaseOrderDTO.getDiamondPrice() + purchaseOrderDTO.getGoldPrice());
-		order.setTotal(total);
+		double total = (double) ((purchaseOrderDTO.getDiamondPrice() + purchaseOrderDTO.getGoldPrice()));
+		order.setTotal(total*1000);
 		order.setQuantity(quantity);
 		order.setStaffID(purchaseOrderDTO.getStaffId());
 		order.setOrderstatusID(1);
@@ -76,14 +76,14 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		MaterialPriceList maPriceList = materialPrice.get(0);
 		product.setCategoryID(5);
 		product.setTypeID(2);
-		product.setGemPriceListID(1);
-		product.setOrderType("Purchare");
-		product.setActive(true);
+		product.setGemPriceListID(49);
+		product.setOrderType("Purchase");
+		product.setActive(false);
 		product.setMaterialPriceListID(maPriceList.getMaterialPriceListID());
 		product.setCategory(null);
 		product.setWeight(purchaseOrderDTO.getWeight());
 		product.setProductName(purchaseOrderDTO.getMaterialName());
-		product.setProductCode("Materail");
+		product.setProductCode("Material");
 		product.setCounterID(5);
 		productRepository.save(product);
 
@@ -119,8 +119,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		List<OrderDetail> details = purchaseOrderGoldDto.getOrderDetails();
 		Double total = 0.0;
 		for (OrderDetail item : details) {
-			total += item.getProduct().getMaterialPriceList().getBuyPrice() * item.getProduct().getWeight()
+			total += item.getProduct().getMaterialPriceList().getBuyPrice() * item.getProduct().getWeight()/3.75
 					+ item.getProduct().getGemPriceList().getBuyPrice();
+			total *=1000;
 		}
 		order.setTotal(total);
 		order.setDate(new Date());

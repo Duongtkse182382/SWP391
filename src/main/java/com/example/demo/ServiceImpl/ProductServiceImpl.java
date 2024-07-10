@@ -78,13 +78,12 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (product.getTypeID() == 2) {
-            product.setGemPriceListID(1);
+            product.setGemPriceListID(49);
             product.setOrderType("Sell");
             product.setActive(true);
             productRepository.save(product);
         } 
         if (product.getTypeID() == 1) {
-                product.setGemPriceListID(2);
                 product.setOrderType("Sell");
                 product.setActive(true);
                 productRepository.save(product);
