@@ -51,7 +51,7 @@
 				</div>
 			</div>
 			<div class="btn-group">
-				<button class="btn-save" onclick="submitForm()">Save</button>
+				<a th:href="@{/orders/listOfPurchaseOrder}"><button class="btn-save">Back</button></a>
 			</div>
 		</div>
 		<form
@@ -132,26 +132,7 @@
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script>
-		 function submitForm() {
-            const form = document.getElementById('add-result');
-            const formData = new FormData(form);
-
-            fetch(form.action, {
-                method: 'POST',
-                body: formData
-            }).then(response => {
-                if (response.ok) {
-                    window.location.href =  '/orders/listOfPurchaseOrder';
-                } else {
-                    alert('Failed to save the order. Please try again.');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
-            });
-        }
-	</script>
+	
 </body>
 
 </html>
