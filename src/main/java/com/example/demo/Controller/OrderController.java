@@ -1,5 +1,7 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Entity.Counter;
+import com.example.demo.Repository.ProductRepository;
 import com.example.demo.Entity.Order;
 import com.example.demo.Entity.OrderDetail;
 import com.example.demo.Entity.Product;
@@ -27,6 +29,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,13 +47,17 @@ public class OrderController {
 	  private OrderRepository orderRepository;
 	 private PromotionService promotionService;
    private OrderService orderService;
+   @Autowired
 	private ProductService productService;
+   @Autowired
+   private ProductRepository  productRepository;
 	private OrderDTO orderDTOs;
 	private PurchaseOrderGoldDto purchaseOrderGoldDto;
 	private PurchaseOrderGoldDto purchaseSaveGoldDto;
 	private List<OrderDetail> orDetails;
 	private List<OrderDetail> purchaseDetails;
 	private List<Product> lProduct;
+	private List<Counter> ICounter;
 	private int oldId=0;
 	public OrderController(OrderService orderService, ProductService productService,PromotionService promotionService) {
 		this.orderService = orderService;
@@ -58,10 +65,9 @@ public class OrderController {
 		 this.promotionService = promotionService;
 	}
 
-
 	@GetMapping("/orders")
 	public String showHistoryOrderList(Model model, @RequestParam(defaultValue = "0") int page) {
-		Page<Order> orderPage = orderService.getAllOrders(PageRequest.of(page, 10));
+		Page<Order> orderPage = orderService.getAllOrders(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderCode")));
 		model.addAttribute("orders", orderPage);
 		model.addAttribute("currentPage", orderPage.getNumber());
 		model.addAttribute("totalPages", orderPage.getTotalPages());
@@ -73,7 +79,7 @@ public class OrderController {
 
 	@GetMapping("/orders/listOfOrder")
 	public String showOrderList(Model model, @RequestParam(defaultValue = "0") int page) {
-		Page<Order> orderPage = orderRepository.findByOrderCodeStartingWithS(PageRequest.of(page, 10));
+		Page<Order> orderPage = orderRepository.findByOrderCodeStartingWithS(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderCode")));
 		model.addAttribute("orders", orderPage);
 		model.addAttribute("currentPage", orderPage.getNumber());
 		model.addAttribute("totalPages", orderPage.getTotalPages());
@@ -84,7 +90,7 @@ public class OrderController {
 	}
 	    @GetMapping("/orders/listOfPurchaseOrder")
 	    public String showPurchaseOrderList(Model model, @RequestParam(defaultValue = "0") int page) {
-	        Page<Order> orderPage = orderRepository.findByOrderCodeStartingWithP(PageRequest.of(page, 10));
+	        Page<Order> orderPage = orderRepository.findByOrderCodeStartingWithP(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderCode")));
 	        model.addAttribute("orders", orderPage);
 	        model.addAttribute("currentPage", orderPage.getNumber());
 	        model.addAttribute("totalPages", orderPage.getTotalPages());
@@ -120,7 +126,7 @@ public class OrderController {
 			while (item.hasNext()) {
 				Product product = item.next();
 				if (product.getProductID() == removeId) {				
-					item.remove(); // Remove the OrderDetail that matches detailID
+					item.remove();
 				}
 			}
 		}
@@ -130,39 +136,64 @@ public class OrderController {
 	       Staff staff = staffRepository.findByEmail(email);
 	       model.addAttribute("staff", staff);
 		model.addAttribute("products", products);
-		model.addAttribute("orderDto", orderDTOs); // Updated attribute name
+		model.addAttribute("orderDto", orderDTOs);
 		return "seller/newSellOrder";
 	}
 
 	
 	
+//	@PostMapping("/orders/new-sell-order/save")
+//	public String saveNewSellOrder(@Valid @ModelAttribute("orderDto") OrderDTO orderDTO, BindingResult result,
+//			Model model,HttpSession session) {
+//	    Staff loggedInStaff = (Staff) session.getAttribute("staff");
+//
+//	    if (loggedInStaff != null) {
+//            System.out.println("Currently logged-in staff ID: " + loggedInStaff.getStaffID());
+//            System.out.println("Currently logged-in staff name: " + loggedInStaff.getFullName());
+//            orderDTOs.setStaffID(loggedInStaff.getStaffID());
+//            orderDTOs.setStaffName(loggedInStaff.getFullName());
+//        } else {
+//            System.out.println("No staff information found in session.");
+//        }
+//			
+//		orderDTOs.setPhoneNumber(orderDTO.getPhoneNumber());
+//		orderDTOs.setCustomerName(orderDTO.getCustomerName());
+//		orderService.saveProductFromOrder(orderDTOs);
+//		orderDTOs = new OrderDTO();
+//		addedProductIds = new HashSet<>();
+//		lProduct.clear();
+//		 String email = SecurityContextHolder.getContext().getAuthentication().getName();
+//         Staff staff = staffRepository.findByEmail(email);
+//         model.addAttribute("staff", staff);
+//		return "seller/newSellOrder"; 
+//
+//	}
+//	
 	@PostMapping("/orders/new-sell-order/save")
-	public String saveNewSellOrder(@Valid @ModelAttribute("orderDto") OrderDTO orderDTO, BindingResult result,
-			Model model,HttpSession session) {
-	    Staff loggedInStaff = (Staff) session.getAttribute("staff");
+    public String saveNewSellOrder(@Valid @ModelAttribute("orderDto") OrderDTO orderDTO, BindingResult result,
+            Model model,HttpSession session) {
+		   String email = SecurityContextHolder.getContext().getAuthentication().getName();
+	         Staff staff = staffRepository.findByEmail(email);
 
-	    if (loggedInStaff != null) {
-	        System.out.println("Currently logged-in staff ID: " + loggedInStaff.getStaffID());
-	        System.out.println("Currently logged-in staff name: " + loggedInStaff.getFullName());
-	        orderDTOs.setStaffID(loggedInStaff.getStaffID());
-	    } else {
-	        System.out.println("No staff information found in session.");
-	    }
-			
-		orderDTOs.setPhoneNumber(orderDTO.getPhoneNumber());
-		orderDTOs.setCustomerName(orderDTO.getCustomerName());
-		orderService.saveProductFromOrder(orderDTOs);
-		orderDTOs = new OrderDTO();
-		addedProductIds = new HashSet<>();
-		lProduct.clear();
-		 String email = SecurityContextHolder.getContext().getAuthentication().getName();
-         Staff staff = staffRepository.findByEmail(email);
+        if (staff != null) {
+            System.out.println("Currently logged-in staff ID: " + staff.getStaffID());
+            System.out.println("Currently logged-in staff name: " + staff.getFullName());
+            orderDTO.setStaffID(staff.getStaffID());
+            orderDTO.setStaffName(staff.getFullName());
+        } else {
+            System.out.println("No staff information found in session.");
+        }
+        orderDTOs.setStaffID(orderDTO.getStaffID());     
+        orderDTOs.setPhoneNumber(orderDTO.getPhoneNumber());
+        orderDTOs.setCustomerName(orderDTO.getCustomerName());
+        orderService.saveProductFromOrder(orderDTOs);
+        orderDTOs = new OrderDTO();
+        addedProductIds = new HashSet<>();
+        lProduct.clear();       
          model.addAttribute("staff", staff);
-		return "seller/newSellOrder"; 
+        return "seller/newSellOrder"; 
 
-	}
-	
-	
+    }
 
 	@GetMapping("/orders/SellOrderDetail/{orderID}")
 	public String saleOrderDetail(@PathVariable Integer orderID, Model model) {
@@ -171,13 +202,8 @@ public class OrderController {
 	       Staff staff = staffRepository.findByEmail(email);
 	       model.addAttribute("staff", staff);
 		model.addAttribute("order", order);
-		
 		return "seller/sellOrderDetail";
 	}
-	
-	
-	
-
 	@PostMapping("/orders/SellOrderDetail/{orderID}/complete")
 	public String handleCompleteOrderDetailAction(@PathVariable Integer orderID, Model model) {
 		Order order = orderService.findOrderById(orderID).orElseThrow(() -> new RuntimeException("Order not found"));
@@ -200,80 +226,63 @@ public class OrderController {
 		return "seller/purchaseOrderDetail";
 	}
 
-	@PostMapping("/orders/PurchaseOrderDetail/{orderID}/save")
-	public String handleSavePurchaseOrderDetailAction(@PathVariable Integer orderID, Model model) {
+	@GetMapping("/dashboard")
+    public String showDashboard(Model model) {
+	       String email = SecurityContextHolder.getContext().getAuthentication().getName();
+	        Staff staff = staffRepository.findByEmail(email);
+	        model.addAttribute("staff", staff);
+	        Double totalSum = orderRepository.getTotalSum();
+	        Double totalSumWithS = orderRepository.getTotalSumWithOrderCodeStartingWithS();
+	        Double totalSumWithP = orderRepository.getTotalSumWithOrderCodeStartingWithP();
+	        List<Date> datesWithS = orderRepository.getDistinctDatesWithOrderCodeStartingWithS();
+	        List<Date> datesWithP = orderRepository.getDistinctDatesWithOrderCodeStartingWithP();
+	        List<Object[]> totalSumByDateS = orderRepository.getTotalSumByDateForOrderCodeStartingWithS();
+	        List<Object[]> totalSumByDateP = orderRepository.getTotalSumByDateForOrderCodeStartingWithP();
+	        List<Object[]> totalCounterByOrder = orderRepository.findTopCounterByOrderTotal();
+	        model.addAttribute("totalSumByDateS", totalSumByDateS);
+	        model.addAttribute("totalSumByDateP", totalSumByDateP);
+	        model.addAttribute("datesWithS", datesWithS);
+			model.addAttribute("datesWithP", datesWithP);
+	        model.addAttribute("totalSum", totalSum);
+	        model.addAttribute("totalSumWithS", totalSumWithS);
+	        model.addAttribute("totalSumWithP", totalSumWithP);
+	        model.addAttribute("totalCounterByOrder", totalCounterByOrder);
+	        return "manager/dashboard";
+    }
+	@GetMapping("/seller/products/bill-of-sell/{orderID}")
+	public String showBillOfSellById(@PathVariable Integer orderID, Model model) {
 		Order order = orderService.findOrderById(orderID).orElseThrow(() -> new RuntimeException("Order not found"));
-		order.setOrderstatusID(2);
-		orderService.updateOrder(order);
+		 String email = SecurityContextHolder.getContext().getAuthentication().getName();
+	       Staff staff = staffRepository.findByEmail(email);     
+	       List<Promotion> promotions = promotionService.findAll();
+	        model.addAttribute("promotions", promotions);
+	       model.addAttribute("staff", staff);
 		model.addAttribute("order", order);
-		 String email = SecurityContextHolder.getContext().getAuthentication().getName();
-         Staff staff = staffRepository.findByEmail(email);
-         model.addAttribute("staff", staff);
-		return "seller/purchaseOrderDetail";
-	}
-
-	@GetMapping("/counter")
-	public String counterList(Model model) {
-		 String email = SecurityContextHolder.getContext().getAuthentication().getName();
-         Staff staff = staffRepository.findByEmail(email);
-         model.addAttribute("staff", staff);
-		return "manager/counterList";
-	}
-
-	@GetMapping("/counter/counterDetail")
-	public String counterDetail(Model model) {
-		 String email = SecurityContextHolder.getContext().getAuthentication().getName();
-         Staff staff = staffRepository.findByEmail(email);
-         model.addAttribute("staff", staff);
-		return "manager/counterDetail";
-	}
-		@GetMapping("/dashboard")
-	    public String showDashboard(Model model) {
-		       String email = SecurityContextHolder.getContext().getAuthentication().getName();
-		        Staff staff = staffRepository.findByEmail(email);
-		        model.addAttribute("staff", staff);
-		        Double totalSum = orderRepository.getTotalSum();
-		        Double totalSumWithS = orderRepository.getTotalSumWithOrderCodeStartingWithS();
-		        Double totalSumWithP = orderRepository.getTotalSumWithOrderCodeStartingWithP();
-		        List<Date> datesWithS = orderRepository.getDistinctDatesWithOrderCodeStartingWithS();
-		        List<Date> datesWithP = orderRepository.getDistinctDatesWithOrderCodeStartingWithP();
-		        List<Object[]> totalSumByDateS = orderRepository.getTotalSumByDateForOrderCodeStartingWithS();
-		        List<Object[]> totalSumByDateP = orderRepository.getTotalSumByDateForOrderCodeStartingWithP();
-
-		        model.addAttribute("totalSumByDateS", totalSumByDateS);
-		        model.addAttribute("totalSumByDateP",  totalSumByDateP);
-		        model.addAttribute("datesWithS",  datesWithS);
-				model.addAttribute("datesWithP", datesWithP);
-		        model.addAttribute("totalSum", totalSum);
-		        model.addAttribute("totalSumWithS", totalSumWithS);
-		        model.addAttribute("totalSumWithP", totalSumWithP);
-		        return "manager/dashboard";
-	    }
-
-		@GetMapping("/seller/products/bill-of-sell/{orderID}")
-		public String showBillOfSellById(@PathVariable Integer orderID, Model model) {
-			Order order = orderService.findOrderById(orderID).orElseThrow(() -> new RuntimeException("Order not found"));
-			 String email = SecurityContextHolder.getContext().getAuthentication().getName();
-		       Staff staff = staffRepository.findByEmail(email);     
-		       List<Promotion> promotions = promotionService.findAll();
-		        model.addAttribute("promotions", promotions);
-		       model.addAttribute("staff", staff);
-			model.addAttribute("order", order);
-			return "cashier/BillofSell";
-		}
-
-	@PostMapping("/seller/products/bill-of-sell/{orderID}/print")
-	public String handlePrintAction(@PathVariable Integer orderID, @RequestParam Double totalAmount, Model model) {
-		Order order = orderService.findOrderById(orderID).orElseThrow(() -> new RuntimeException("Order not found"));
-		order.setOrderstatusID(3);
-		order.setTotal(totalAmount);
-		orderService.updateOrder(order);
-		model.addAttribute("order", order);
-		 String email = SecurityContextHolder.getContext().getAuthentication().getName();
-         Staff staff = staffRepository.findByEmail(email);
-         model.addAttribute("staff", staff);
 		return "cashier/BillofSell";
 	}
+
+	@PostMapping("/seller/products/bill-of-sell/{orderID}/print")
+    public String handlePrintAction(@PathVariable Integer orderID, @RequestParam Double totalAmount, Model model) {
+        Order order = orderService.findOrderById(orderID).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setOrderstatusID(3);
+        order.setTotal(totalAmount);
+        orderService.updateOrder(order);
+        orderService.updateLoyaltyPoints(order);
+        for (OrderDetail orderDetail : order.getOrderDetails()) {
+            Product product = orderDetail.getProduct();
+            if (product != null) {
+                product.setActive(false); 
+                productRepository.save(product); 
+            }
+        }
+
+        model.addAttribute("order", order);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Staff staff = staffRepository.findByEmail(email);
+        model.addAttribute("staff", staff);
+        return "cashier/BillofSell";
+    }
+
 
 	@PostMapping("/seller/products/bill-of-sell/{orderID}/cancel")
 	public String handleCancelAction(@PathVariable Integer orderID, Model model) {
@@ -295,7 +304,8 @@ public class OrderController {
 	       List<Promotion> promotions = promotionService.findAll();
 	        model.addAttribute("promotions", promotions);
 	       model.addAttribute("staff", staff);
-		model.addAttribute("order", order);	
+		model.addAttribute("order", order);
+		
 		return "cashier/BillofBuy";
 	}
 
@@ -307,9 +317,9 @@ public class OrderController {
 		order.setTotal(totalAmount);
 		orderService.updateOrder(order);
 		model.addAttribute("order", order);
-		 String email = SecurityContextHolder.getContext().getAuthentication().getName();
-         Staff staff = staffRepository.findByEmail(email);
-         model.addAttribute("staff", staff);
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Staff staff = staffRepository.findByEmail(email);
+        model.addAttribute("staff", staff);
 		return "cashier/BillofBuy";
 	}
 
@@ -324,6 +334,5 @@ public class OrderController {
          model.addAttribute("staff", staff);
 		return "cashier/BillofBuy";
 	}
-
-	
+	  
 }

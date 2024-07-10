@@ -37,10 +37,24 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("SELECT DISTINCT o.date FROM Order o WHERE o.orderCode LIKE 'P%'")
     List<Date> getDistinctDatesWithOrderCodeStartingWithP();
     
-    @Query("SELECT o.date, SUM(o.total) FROM Order o WHERE o.orderCode LIKE 'S%' GROUP BY o.date")
+    @Query("SELECT SUM(o.total) FROM Order o WHERE o.orderCode LIKE 'S%' GROUP BY o.date")
     List<Object[]> getTotalSumByDateForOrderCodeStartingWithS();
     
-    @Query("SELECT o.date, SUM(o.total) FROM Order o WHERE o.orderCode LIKE 'P%' GROUP BY o.date")
+    @Query("SELECT SUM(o.total) FROM Order o WHERE o.orderCode LIKE 'P%' GROUP BY o.date")
     List<Object[]> getTotalSumByDateForOrderCodeStartingWithP();
-  
+    
+    @Query("SELECT o.staffID, s.fullName, SUM(o.total) AS totalSum " +
+            "FROM Order o JOIN o.staff s " +
+            "GROUP BY o.staffID, s.fullName " +
+            "ORDER BY totalSum DESC")
+     List<Object[]> findTop5OrdersByTotal();
+     
+     @Query("SELECT c.counterID, c.counterName,COUNT(p) AS productCount, SUM(od.total) AS totalSum " +
+    	       "FROM Product p " +
+    	       "JOIN p.orderDetails od " +
+    	       "JOIN p.counter c " +
+    	       "WHERE p.isActive = false "+
+    	       "GROUP BY c.counterID, c.counterName " +
+    	       "ORDER BY totalSum DESC")
+    	List<Object[]> findTopCounterByOrderTotal();
 }
