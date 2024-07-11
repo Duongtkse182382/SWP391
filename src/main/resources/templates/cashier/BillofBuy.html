@@ -29,7 +29,7 @@
                 <p>History Order</p>
             </a>
             <a class="link-historyOrder" th:href="@{/customers}">
-                <p>List customer</p>
+                <p>List Customer</p>
           </a>
             <p class="active">Bill of buy</p>
             <a class="link-historyOrder" th:href="@{/cashier-profile}">
@@ -53,7 +53,7 @@
         <form id="billForm" th:object="${order}">
             <div class="bill-details">
                 <div class="profile">
-                    <p class="profile-bill">Sales invoices are sent to:</p>
+                    <p class="profile-bill">Buy Invoice is sent to:</p>
                     <p>
                         <span class="profile-customer">Customer name:</span>
                         <input type="text" th:value="*{customer.customerName}" readonly>
@@ -64,7 +64,7 @@
                     </p>
                 </div>
                 <div class="staff">
-                    <p class="staff-name"></p>
+                    <p class="staff-name">Staff Name</p>
                     <p th:text="*{staff.fullName}"></p>
                 </div>
                 <div class="staff-id">
@@ -72,8 +72,8 @@
                     <p th:text="*{staffID}"></p>
                 </div>
                 <div class="bill">
-                    <p class="bill-title">Invoice code</p>
-                    <p th:text="*{orderID}"></p>
+                    <p class="bill-title">Invoice Code</p>
+                    <p th:text="*{orderCode}"></p>
                 </div>
                 <div class="trans-day">
                     <p class="trans-title">Day Trading</p>
@@ -114,7 +114,7 @@
             </div>
              <div class="total-section">
                 <div>
-                    <p>Provisional total:</p>
+                    <p>Provisional Total:</p>
                     <p>Tax (10%):</p>
                     <p>Promotion Code:</p>
                      <p id="promotion-field-percent">Promotion Percent:</p>
@@ -138,9 +138,9 @@
                 </div>
             </div>
             <div class="buttons">
-                <button type="button" class="add-button">Add</button>
-                <button type="button" class="cancel-button" >Cancel</button>
-                <button type="button" class="print-button" >Print</button>
+                <button type="button" class="add-button">Add Promotion</button>
+                <button type="button" class="cancel-button" >Cancel Bill</button>
+                <button type="button" class="print-button" >Print Receipt</button>
             </div>
         </form>
     </div>
