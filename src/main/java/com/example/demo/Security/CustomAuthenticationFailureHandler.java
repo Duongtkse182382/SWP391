@@ -18,13 +18,18 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
             throws IOException, ServletException {
         String errorMessage = null;
 
-        if (exception instanceof UsernameNotFoundException) {
-            // Email not found in database
+        if (exception instanceof UsernameNotFoundException || exception.getMessage().equalsIgnoreCase("Email is not valid")) {
+            // Email not found in database or invalid email
             errorMessage = "Email is not valid";
             request.getSession().setAttribute("emailError", errorMessage);
             getRedirectStrategy().sendRedirect(request, response, "/login?error=email");
+        } else if (exception.getMessage().equalsIgnoreCase("Account is not active")) {
+            // Account is not active
+            errorMessage = "Account is not active";
+            request.getSession().setAttribute("accountError", errorMessage);
+            getRedirectStrategy().sendRedirect(request, response, "/login?error=account");
         } else {
-            // Let Spring Security handle password related errors
+            // Let Spring Security handle password-related errors
             errorMessage = "Password is wrong";
             request.getSession().setAttribute("passwordError", errorMessage);
             getRedirectStrategy().sendRedirect(request, response, "/login?error=EmailOrPassword");
