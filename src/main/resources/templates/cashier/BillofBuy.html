@@ -53,7 +53,7 @@
         <form id="billForm" th:object="${order}">
             <div class="bill-details">
                 <div class="profile">
-                    <p class="profile-bill">Buy Invoice is sent to:</p>
+                    <p class="profile-bill">Sales invoices is sent to:</p>
                     <p>
                         <span class="profile-customer">Customer name:</span>
                         <input type="text" th:value="*{customer.customerName}" readonly>
@@ -107,7 +107,7 @@
                             <td th:text="${detail.product.gemPriceList.gem.clarity}"></td>
                             <td th:text="${detail.product.gemPriceList.gem.cut}"></td>
                             <td th:text="${detail.product.gemPriceList.buyPrice}"></td>
-                            <td class="total" th:text="${#numbers.formatDecimal(detail.total, 1, 'COMMA')}"></td>
+                            <td class="total" th:text="${detail.total}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -120,7 +120,7 @@
                      <p id="promotion-field-percent">Promotion Percent:</p>
                     <p id="promotion-field">Promotion:</p>
                     <hr />
-                    <p class="total">Total:</p>
+                    <p class="total">Total(x1000):</p>
                 </div>
                 <div class="total-right">
                     <p> <span id="provisional-total"></span></p>
@@ -138,7 +138,7 @@
                 </div>
             </div>
             <div class="buttons">
-                <button type="button" class="add-button">Add Promotion</button>
+                <button type="button" class="add-button">Add promotion</button>
                 <button type="button" class="cancel-button" >Cancel Bill</button>
                 <button type="button" class="print-button" >Print Receipt</button>
             </div>

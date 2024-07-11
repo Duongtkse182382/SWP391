@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bill of Sell</title>
-    <link rel="stylesheet"  th:href="@{/css/BillOfSell.css}">
+    <link rel="stylesheet" th:href="@{/css/BillOfSell.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -13,28 +13,31 @@
 
 <body>
     <div class="sidebar">
-    <div class="sidebar-title">
-        <div class="sidebar-profile">
-            <div class="sidebar-pic"></div>
-            <div class="sidebar-name">
-                <div class="child-name">
-                    Trần Đại Dương
-                </div>
-                <div>
-                    <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        <span th:text="${staff.fullName}"></span>
+                    </div>
+                    <div>
+                        <span class="child-manager">Cashier <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
                 </div>
             </div>
+            <a class="link-historyOrder" th:href="@{/orders}"><p>History Order</p></a>
+            <a class="link-historyOrder" th:href="@{/customers}"><p>List Customer</p></a>
+            <p class="active">Bill of Sell</p>
+            
+            <a class="link-historyOrder" th:href="@{/cashier-profile}"><p>Personal Profile</p></a>
         </div>
-        <p>History Order</p>
-        <p>List customer</p>
-        <p>Bill of sell</p>
-        <p class="active">Bill of buy</p>
-        <p>Personal profile</p>
-        <p>Warranty</p>
+           <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
     </div>
-    <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
-    </div>
-    <div class="content">
+    <div class="content" id="content">
         <div class="address">
             <p>FPT Jewelry Store</p>
             <p>Tel: 0909002229</p>
@@ -42,103 +45,260 @@
         <div class="bill-header">
             <h1>Bill of Sell</h1>
         </div>
-        <div class="bill-details">
-            <div class="profile">
-                <p class="profile-bill">Sales invoices are sent to:</p>
-                <p><span class="profile-customer">Customer name:</span> <input type="text" disabled> </p>
-                <p><span class="profile-phone">Phone number:</span><input type="text" disabled></p>
-                <p><span class="profile-address">Address:</span><input type="text" disabled></p>
+<form id="billForm" th:object="${order}">
+            <div class="bill-details">
+                <div class="profile">
+                    <p class="profile-bill">Sales invoices is sent to:</p>
+                    <p>
+                        <span class="profile-customer">Customer name:</span>
+                        <input type="text" th:value="*{customer.customerName}" readonly>
+                    </p>
+                    <p>
+                        <span class="profile-phone">Phone number:</span>
+                        <input type="text" th:value="*{customer.phone}" readonly>
+                    </p>
+                       <p>
+                        <span class="profile-loyal">Loyal Point:</span>
+                        <input type="text" th:value="*{customer.loyalPoint}" readonly>
+                    </p>
+                </div>
+                <div class="staff">
+                    <p class="staff-name">Staff Name</p>
+                    <p th:text="*{staff.fullName}"></p>
+                </div>
+                <div class="loyal-point">
+                    <p class="sf-title">Staff Id</p>
+                    <p th:text="*{staffID}"></p>
+                </div>
+                <div class="bill">
+                    <p class="bill-title">Invoice Code</p>
+                    <p th:text="*{orderCode}"></p>
+                </div>
+                <div class="trans-day">
+                    <p class="trans-title">Day Trading</p>
+                    <p th:text="*{date}"></p>
+                </div>
             </div>
-            <div class="staff">
-                <p class="staff-name">Staff name:</p>
-                <p>Duong Tran Khai</p>
+            <div class="bill-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="product">PRODUCT_NAME</th>
+                            <th>PRODUCT_TYPE</th>
+                            <th>PRODUCT_CODE</th>
+                            <th>MATERIAL</th>
+                            <th>UNIT PRICE</th>
+                            <th class="total">PRICE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="detail : *{orderDetails}">
+                            <td class="product">
+                                <span th:text="${detail.product.productName}"></span>
+                            </td>
+                            <td th:text="${detail.product.type.typeName}"></td>
+                            <td th:text="${detail.product.productCode}"></td>
+                            <td th:text="${detail.product.materialPriceList.material.name}"></td>
+                            <td th:text="${detail.product.materialPriceList.sellPrice}"></td>
+                            <td class="total" th:text="${detail.total}"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="staff-id">
-                <p class="sf-title">Staff Id</p>
-                <p>0001975</p>
+            <div class="total-section">
+                <div>
+                    <p>Provisional Total:</p>
+                    <p>Tax (10%):</p>
+                    <p>Promotion Code:</p>
+                    <p id="promotion-field-percent">Promotion Percent:</p>
+                    <p id="promotion-field">Promotion:</p>
+                    <hr />
+                    <p class="total">Total(x1000):</p>
+                </div>
+                <div class="total-right">
+                    <p> <span id="provisional-total"></span></p>
+                    <p> <span id="discount-amount"></span></p>
+                    <p>
+                        <select id="promotion-code" class="promotion-code">
+                            <option value="">Select Promotion Code</option>
+                            <option th:each="promotion : ${promotions}" th:value="${promotion.promotionCode}" th:data-percent="${promotion.promotionPercent}" th:text="${promotion.promotionCode}"></option>
+                        </select>
+                    </p>
+                     <p id="promotion-field-percent-value"><span id="promotion-percent"></span></p>
+                    <p id="promotion-field-value"><span id="additionalDiscount"></span></p>
+                    <hr />
+                    <p class="total"><span class="total-child" id="total-amount"></span></p>
+                </div>
             </div>
-            <div class="bill">
-                <p class="bill-title">Invoice code</p>
-                <p>#A501</p>
+            <div class="buttons">
+                <button type="button" class="add-button">Add promotion</button>
+                <button type="button" class="cancel-button" >Cancel Bill</button>
+                <button type="button" class="print-button" >Print Receipt</button>
             </div>
-            <div class="trans-day">
-                <p class="trans-title">Day Trading</p>
-                <p>15/5/2024</p>
-            </div>
-        </div>
-        <div class="bill-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="product">PRODUCT_NAME</th>
-                        <th>PRODUCT_CODE</th>
-                        <th>MATERIAL</th>
-                        <th>UNIT PRICE</th>
-                        <th class="total">PRICE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="product">
-                            Bracelet
-                            <p class="bc-title">10K gold barcalet</p>
-                        </td>
-                        <td>J31</td>
-                        <td>Diamond</td>
-                        <td>$1,500.00</td>
-                        <td class="total">$1,500.00</td>
-                    </tr>
-                    <tr>
-                        <td class="product">
-                            Neck Strap
-                            <p class="nc-title">10K White Gold Necklace</p>
-                        </td>
-                        <td>J34</td>
-                        <td>Diamond</td>
-                        <td>$2,000.00</td>
-                        <td class="total">$2,000.00</td>
-                    </tr>
-                    <tr>
-                        <td class="product">
-                            9999 Gold
-                            <p class="pr-title">
-                            </p>
-                        </td>
-                        <td>G32</td>
-                        <td>Gold</td>
-                        <td>$3,000.00</td>
-                        <td class="total">$3,000.00</td>
-                    </tr>
-                    <tr>
-                        <td class="product">24K Gold</td>
-                        <td>G24</td>
-                        <td>Gold</td>
-                        <td>$3,000.00</td>
-                        <td class="total">$3,000.00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="total-section">
-            <div>
-                <p>Provisional total: </p>
-                <p>Tax (10%):</p>
-                <hr />
-                <p class="total">Total: </p>
-            </div>
-            <div class="total-right">
-                <p>$12,000.00</p>
-                <p>$1,200.00</p>
-                <p class="total-child">$13,200.00</p>
-            </div>
-
-        </div>
-        <div class="buttons">
-            <button class="cancel-button">Cancel</button>
-            <button class="print-button">Print</button>
-            <button class="create-button">Create</button>
-        </div>
+        </form>
     </div>
+
+   <script th:inline="javascript">
+   document.addEventListener('DOMContentLoaded', function () {
+   	function calculateProvisionalTotal() {
+           let rows = document.querySelectorAll('.bill-table tbody tr');
+           let provisionalTotal = 0;
+
+           rows.forEach(function (row) {
+               let total = parseFloat(row.querySelector('td.total').textContent.replace(/[^0-9.-]+/g, ""));
+
+               if (!isNaN(total)) {
+                   provisionalTotal += total;
+               }
+           });
+
+           document.getElementById('provisional-total').textContent = provisionalTotal.toFixed(1);
+
+           return provisionalTotal;
+       }
+
+
+       function loadPromotionFromStorage() {
+           const savedPromotionCode = localStorage.getItem('promotionCode');
+           const savedPromotionPercent = localStorage.getItem('promotionPercent');
+
+           if (savedPromotionCode) {
+               document.getElementById('promotion-code').value = savedPromotionCode;
+               document.getElementById('promotion-percent').textContent = savedPromotionPercent;
+           }
+
+           updatePromotionPercent();
+       }
+
+       function savePromotionToStorage() {
+           const promotionCode = document.getElementById('promotion-code').value;
+           const promotionPercent = document.getElementById('promotion-percent').textContent;
+
+           localStorage.setItem('promotionCode', promotionCode);
+           localStorage.setItem('promotionPercent', promotionPercent);
+       }
+
+       document.getElementById('promotion-code').addEventListener('change', function () {
+           updatePromotionPercent();
+           savePromotionToStorage();
+       });
+
+       function updatePromotionPercent() {
+           let promotionCode = document.getElementById('promotion-code').value;
+           let options = document.getElementById('promotion-code').getElementsByTagName('option');
+           let promotionPercent = '';
+           for (let i = 0; i < options.length; i++) {
+               if (options[i].value === promotionCode) {
+                   promotionPercent = options[i].getAttribute('data-percent');
+                   break;
+               }
+           }
+           document.getElementById('promotion-percent').textContent = promotionPercent;
+
+           if (promotionCode === '' || promotionCode === 'Select Promotion Code' || isNaN(parseFloat(promotionPercent))) {
+               document.getElementById('promotion-field-percent').style.display = 'none';
+               document.getElementById('promotion-field').style.display = 'none';
+               document.getElementById('promotion-field-percent-value').style.display = 'none';
+               document.getElementById('promotion-field-value').style.display = 'none';
+           } else {
+               document.getElementById('promotion-field-percent').style.display = 'block';
+               document.getElementById('promotion-field').style.display = 'block';
+               document.getElementById('promotion-field-percent-value').style.display = 'block';
+               document.getElementById('promotion-field-value').style.display = 'block';
+           }
+
+           updateTotalAmount();
+       }
+
+       function updateTotalAmount() {
+       	  let provisionalTotal = calculateProvisionalTotal();
+       	    let discount = provisionalTotal * 0.10;
+       
+       	    let promotionCode = document.getElementById('promotion-code').value;
+       	    let promotionPercent = parseFloat(document.getElementById('promotion-percent').textContent);
+       	    document.getElementById('discount-amount').textContent = discount.toFixed(1);
+    	    let additionalDiscount = (promotionPercent/100)*provisionalTotal;
+    	    document.getElementById('additionalDiscount').textContent =  additionalDiscount.toFixed(1);
+       	      
+       	    if (promotionCode === '' || promotionCode === 'Select Promotion Code' || isNaN(promotionPercent)) {
+       	        let totalAmount = provisionalTotal + discount;
+       	        document.getElementById('total-amount').textContent = totalAmount.toFixed(1);
+       	        document.getElementById('additionalDiscount').parentNode.style.display = 'none';
+       	    } else {
+       	        let totalAmount = provisionalTotal + discount - additionalDiscount;
+       	        document.getElementById('discount-amount').textContent = discount.toFixed(1);
+       	        document.getElementById('total-amount').textContent = totalAmount.toFixed(1);
+       	        document.getElementById('additionalDiscount').parentNode.style.display = 'block';
+       	    }
+       }
+
+       loadPromotionFromStorage();
+
+       calculateProvisionalTotal();
+       updateTotalAmount();
+
+       let orderID = /*[[${order.orderID}]]*/ '';
+       let formData = new FormData();
+       formData.append('orderID', orderID);
+
+       document.querySelector('.add-button').addEventListener('click', function () {
+           let promotionCode = document.getElementById('promotion-code').value;     
+           document.querySelector('.add-button').disabled = true;
+           document.querySelector('.cancel-button').disabled = false;
+           document.querySelector('.print-button').disabled = false;
+           document.getElementById('promotion-code').disabled = true;
+       });
+
+       document.querySelector('.print-button').addEventListener('click', function () {
+     	  html2canvas(document.getElementById('content')).then(function (canvas) {    
+   	        const imgData = canvas.toDataURL('image/png');
+   	        const { jsPDF } = window.jspdf;
+   	        const pdf = new jsPDF('p', 'pt', 'a4');
+   	        const imgProps = pdf.getImageProperties(imgData);
+   	        const pdfWidth = pdf.internal.pageSize.getWidth();
+   	        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+   	        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+   	        pdf.save('bill_of_sell.pdf');
+             formData.append('totalAmount', document.getElementById('total-amount').textContent);
+             fetch(`/seller/products/bill-of-sell/${orderID}/print`, {
+                 method: 'POST',
+                 body: formData
+             }).then(response => {
+                 if (response.ok) {
+                     console.log('Order updated successfully');
+                     window.location.href = '/orders';
+                 } else {
+                     alert('Failed to update order');
+                 }
+             }).catch(error => {
+                 console.error('Error:', error);
+             });
+
+   	    });
+     });
+
+       document.querySelector('.cancel-button').addEventListener('click', function () {
+           formData.append('totalAmount', document.getElementById('total-amount').textContent);
+           fetch(`/seller/products/bill-of-sell/${orderID}/cancel`, {
+               method: 'POST',
+               body: formData
+           }).then(response => {
+               if (response.ok) {
+                   console.log('Order canceled successfully');
+                   window.location.href = '/orders';
+               } else {
+                   alert('Failed to cancel order');
+               }
+           }).catch(error => {
+               console.error('Error:', error);
+           });
+       });
+     
+       
+   });
+</script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </body>
 
 </html>

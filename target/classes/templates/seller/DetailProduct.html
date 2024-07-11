@@ -16,28 +16,32 @@
                 <div class="sidebar-pic"></div>
                 <div class="sidebar-name">
                     <div class="child-name">
-                        Trần Đại Dương
+                       <span th:text="${staff.fullName}"></span>
                     </div>
                     <div>
-                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                        <span class="child-manager">Seller <i class="fa-solid fa-pencil"></i> </span>
                     </div>
                 </div>
             </div>
-            <p>List Of Order</p>
-            <p>New Sell Order</p>
-            <p>Bill of sell</p>
-            <p>New Purchase Order</p>
-            <p class="active">Product List as Counter</p>
+             <a class="link-product" th:href="@{/orders/listOfOrder}"><p>List Of Sell Order</p></a>
+              <a class="link-product" th:href="@{/orders/listOfPurchaseOrder}"><p>List Of Purchase Order</p></a>
+              <p>Product List as Counter</p>
+              <a class="link-product" th:href="@{/seller-profile}"><p>Personal Profile</p></a>
+                 <a class="link-product" th:href="@{/ex-change-policy}"><p>ExChange Policy</p></a>
         </div>
-        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+           <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
     </div>
-    <div class="content">
+     <div class="content">
         <div class="title">
             <div class="title-first">
                 <h1>Detail Of Product</h1>
             </div>
             <div class="title-second">
-                <a href="/products"><button class="title-btn">Back</button></a>
+                <a href="/seller/products"><button class="title-btn">Back</button></a>
             </div>
         </div>
         <div class="detail-product">
@@ -46,30 +50,43 @@
                 </div>
             </div>
             <div class="detail-input">
-                <form action="#" th:action="@{'/products/detail-product/' + ${product.productID} + '/update'}" th:object="${product}" method="post">
                     <div class="input-container">
                         <div class="product-id">
                             <label>Product Code:</label>
-                            <input type="text" th:field="*{productCode}" class="product-input">
+                            <input type="text" th:field="*{product.productCode}" class="product-input" readonly>
+                </div>
                         </div>
                         <div class="product-id">
                             <label>Product Name:</label>
-                            <input type="text" th:field="*{productName}" class="product-input">
+                            <input type="text" th:field="*{product.productName}" class="product-input" readonly>
                         </div>
-                        <div class="product-id">
-                            <label>Quantity:</label>
-                            <input type="text" th:field="*{quantity}" class="product-input">
+                          <div class="product-id">
+                            <label>Catetgory:</label>
+                            <input  th:field="*{product.category.catName}" class="product-input" readonly/>
+                 
                         </div>
-                        <div class="update">
-                            <button type="submit" class="btn-update">Update <i class="fa-solid fa-arrow-right"></i></button>
+                         <div class="product-id">
+                            <label>Type:</label>
+                            <input type="text" th:field="*{product.typeID}"  class="product-input" hidden>
+                             <input type="text"  th:value="${product.typeID == 1 ? 'Gold' : 'Jewelry'}"  class="product-input" readonly>
                         </div>
+                          <div class="product-id">
+                            <label>Material:</label>
+                            <input  th:field="*{product.materialPriceList.material.name}" class="product-input" readonly/>
+                        </div>
+                          <div class="product-id">
+                            <label>Counter:</label>
+                            <input  th:field="*{product.counter.counterName}" class="product-input" readonly/>
+                              
+                        </div>
+                         <div class="product-id">
+                            <input th:field="*{product.materialPriceListID}" class="product-input" hidden/>
+                        </div>
+                     
                     </div>
-                </form>
-                <div th:if="${updateSuccess}">
-                    <p>Update successful!</p>
-                </div>
+         
             </div>
         </div>
     </div>
-</body>
+     </body>
 </html>

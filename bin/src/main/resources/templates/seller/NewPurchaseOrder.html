@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>New Purchase Order</title>
+<link rel="stylesheet" th:href="@{/css/NewPurchaseOrder.css}">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+	integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+
+<body>
+	<div class="sidebar">
+		<div class="sidebar-title">
+			<div class="sidebar-profile">
+				<div class="sidebar-pic"></div>
+				<div class="sidebar-name">
+					<div class="child-name">Trần Đại Dương</div>
+					<div>
+						<span class="child-manager">Seller <i
+							class="fa-solid fa-pencil"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+	         <p class="active">List Of Order</p>
+              <a class="link-historyOrder" th:href="@{/seller/products}">Product List as Counter</p></a>
+		</div>
+		   <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+	</div>
+	<div class="content">
+		<div class="content-header">
+			<div class="bill-header">
+				<h1>New Purchase Order</h1>
+				<div class="title-file">
+					<i class="fa-regular fa-file"></i> <span>#Order:1</span>
+				</div>
+			</div>
+			<div class="btn-group">
+				<button class="btn-save" onclick="submitForm()">Save</button>
+			</div>
+		</div>
+		<form method="post" th:action="@{/orders/NewPurchaseOrder/save}"
+			th:object="${purchaseOrderDTO}" id="add-result">
+			<div class="profile-input-container">
+				<div class="first-group-input">
+					<div class="first-input">
+						<label>Order Date <i class="fa-solid fa-calendar-days"></i></label>
+						<div>
+							<input type="text" th:field="*{orderDate}" class="input-order"
+								placeholder="2024-02-13">
+						</div>
+					</div>
+					<div class="second-input">
+						<label>Staff Name<i class="fa-solid fa-user"></i></label>
+						<div>
+							<input type="text" th:field="*{staffName}" class="input-staff"
+								placeholder="Thanh">
+						</div>
+					</div>
+				</div>
+				<div class="second-group-input">
+					<div class="third-input">
+						<label>Customer Name</label>
+						<div>
+							<input type="text" th:field="*{customerName}"
+								class="input-customer" placeholder="Customer Name">
+						</div>
+					</div>
+					<div class="fourth-input">
+						<label>Phone Number</label>
+						<div>
+							<input type="text" th:field="*{phoneNumber}" class="input-phone"
+								placeholder="Phone Number">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bill-group">
+				<div class="bill-title-first">Diamond</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-3">
+							<label>Dimond Code</label> <input type="text"
+								th:field="*{diamondCode}" class="form-control"
+								placeholder="Input name product">
+							<div class="detail-add">
+
+								<button type="button" class="btn-check"
+									onclick="checkDiamondCode()">Check</button>
+
+							</div>
+						</div>
+						<div class="col-3">
+							<label>Origin</label> <input type="text" th:field="*{origin}"
+								class="form-control" placeholder="Origin" readonly>
+						</div>
+					</div>
+					<div class="row mt-3">
+						<div class="col-3">
+							<label>Carat</label> <input type="text" th:field="*{carat}"
+								class="form-control" placeholder="Carat" readonly>
+						</div>
+						<div class="col-3">
+							<label>Color</label> <input type="text" th:field="*{color}"
+								class="form-control" placeholder="Color" readonly>
+						</div>
+						<div class="col-3">
+							<label>Clarity</label> <input type="text" th:field="*{clarity}"
+								class="form-control" placeholder="Clarity" readonly>
+						</div>
+						<div class="col-3">
+							<label>Cut</label> <input type="text" th:field="*{cut}"
+								class="form-control" placeholder="Cut" readonly>
+						</div>
+					</div>
+				</div>
+				<div class="bill-title-second">Material</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-3">
+							<label>Name Product</label> <input type="text"
+								th:field="*{materialName}" class="form-control"
+								placeholder="Input name product">
+						</div>
+						<div class="col-3">
+							<label>Type Gold</label> <select th:field="*{typeGold}"
+								class="form-control" id="typeGold" onchange="updatePrice()">
+								<option value="" disabled selected>Select type gold</option>
+								<option th:each="material : ${materials}"
+									th:value="${material.materialID}" th:text="${material.name}"></option>
+							</select>
+						</div>
+						<div class="col-3">
+							<label>Weight</label> <input type="text" th:field="*{weight}"
+								class="form-control" placeholder="Input weight" id="weight" oninput="updatePrice()">
+						</div>
+					</div>
+				</div>
+				<div class="total-section mt-2">
+					<div>
+						<p>Diamond Price:</p>
+						<p>Material Price:</p>
+						<hr />
+						<p class="total">Total price:</p>
+					</div>
+					<div class="total-right">
+						<input type="text" th:field="*{diamondPrice}" class="form-control"
+							placeholder="Input diamond price"  readonly>
+							 <input type="text" th:field="*{goldPrice}" class="form-control" id="gold-price" placeholder="Material price" readonly>
+						<p class="total-child"
+							th:text="${purchaseOrderDTO.diamondPrice + purchaseOrderDTO.goldPrice}" ></p>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script th:src ="@{/js/NewPurchaseOrder.js}"></script>
+</body>
+
+
+</html>

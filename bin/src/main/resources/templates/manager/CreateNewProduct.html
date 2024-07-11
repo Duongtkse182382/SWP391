@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create New Product</title>
+    <link rel="stylesheet" th:href="@{/css/CreateNewProduct.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+            <a  class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a>
+            <p class="active">Manage Product</p>
+             <a class="link-product" th:href="@{/staff}"><p>Manage Staff</p></a>
+             <a  class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
+           <a  class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
+            <p>Manage Category</p>
+            <p>Manage Material</p>
+        </div>
+       <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+    </div>
+    <div class="content">
+        <div class="profile">
+            <div class="profile-container">
+                <div class="profile-title">
+                    <h4>Create New Product</h4>
+                </div>
+            </div>
+            <div class="input-profile">
+				<form id="create-product-form" th:action="@{/manager/products/create-product/create}" th:object="${product}" method="post">
+        <div class="form-group">
+            <label for="product-code">Product Code</label>
+            <input type="text" class="form-control" id="product-code" th:field="*{productCode}">
+            <small id="product-code-error" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="product-name">Product Name</label>
+            <input type="text" class="form-control" id="product-name" th:field="*{productName}">
+             <small id="product-name-error" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="material">Material</label>
+            <select class="form-control" id="material" th:field="*{materialPriceListID}">
+                <option th:each="materialPriceList : ${materialPriceLists}"
+                        th:value="${materialPriceList.materialPriceListID}"
+                        th:text="${materialPriceList.material.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="type">Type</label>
+            <select class="form-control" id="type" th:field="*{typeID}">
+                <option th:each="type : ${types}"
+                        th:value="${type.typeID}"
+                        th:text="${type.typeName}"></option>
+            </select>
+        </div>
+        <div id="jewelry-fields" style="display: none;">
+            <div class="form-group">
+                <label for="origin">Origin</label>
+                <select class="form-control" id="origin" th:field="*{gemPriceList.gemID}" >
+                    <option th:each="products : ${products}"
+                            th:value="${products.gemPriceList.gemID}"
+                            th:text="${products.gemPriceList.gem.origin}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="carat">Carat</label>
+                <input type="text" class="form-control" id="carat" th:field="*{gemPriceList.gem.carat}">
+            </div>
+            <div class="form-group">
+                <label for="clarity">Clarity</label>
+                <input type="text" class="form-control" id="clarity" th:field="*{gemPriceList.gem.clarity}">
+            </div>
+            <div class="form-group">
+                <label for="color">Color</label>
+                <input type="text" class="form-control" id="color" th:field="*{gemPriceList.gem.color}">
+            </div>
+            <div class="form-group">
+                <label for="cut">Cut</label>
+                <input type="text" class="form-control" id="cut" th:field="*{gemPriceList.gem.cut}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" th:field="*{categoryID}">
+                <option th:each="category : ${categories}"
+                        th:value="${category.categoryID}"
+                        th:text="${category.catName}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="weight">Weight</label>
+            <input type="text" class="form-control" id="weight" th:field="*{weight}">
+              <small id="weight-error" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="price-rate">Price Rate</label>
+            <input type="text" class="form-control" id="price-rate" th:field="*{priceRate}">
+             <small id="price-rate-error" class="text-danger"></small>
+        </div>
+           <div class="d-flex justify-content-center">
+			 <button type="button" class="btn btn-primary mx-auto" id="create-button">Create</button>  
+		   </div>
+          
+    </form>             
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/CreateNewProduct.js}"></script>
+</body>
+
+</html>

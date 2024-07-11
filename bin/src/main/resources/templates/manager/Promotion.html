@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promotion</title>
+    <link rel="stylesheet" th:href="@{/css/Promotion.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+             <a  class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a>
+             <a  class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
+            <a  class="link-product" th:href="@{/staff}"><p>Manage Staff</p></a>
+            <p class="active">Promotion</p>
+             <a  class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
+            <p>Manage Category</p>
+            <p>Manage Material</p>
+        </div>
+          <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+    </div>
+    <div class="content">
+        <div class="content-group">
+        <div class="bill-header">
+            <h1>Promotion</h1>
+        </div>
+        <div class="bill-details">
+                        <div class="staff">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input class="staff-input" id="searchInput" onkeyup="searchProducts()" placeholder="Search by promotion name..." />
+</div>
+
+            <div class="create">
+                <button class="btn-create"  onclick="showPasswordModal()">Create</button>
+            </div>
+        </div>
+        <div class="bill-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Promotion Name</th>
+                        <th>Promotion ID</th>
+                        <th>Promotion code</th>
+                        <th>Discount Rate</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>14K Yellow Diamond bracelet</td>
+                        <td>256</td>
+                        <td>123054</td>
+                        <td>2%</td>
+                        <td>02/05/2012</td>
+                        <td>02/08/2012</td>
+                        <td><button class="status complete"><span class="sf"><i
+                                        class="fa-solid fa-circle"></i></span>On</button></td>
+                    </tr>
+                    <tr>
+                        <td>14K Yellow Diamond bracelet</td>
+                        <td>256</td>
+                        <td>123054</td>
+                        <td>2%</td>
+                        <td>02/05/2012</td>
+                        <td>02/08/2012</td>
+                        <td><button class="status pending"><span class="sf"><i
+                                        class="fa-solid fa-circle"></i></span>Off</button></td>
+                    </tr>
+                    <tr>
+                        <td>14K Yellow Diamond bracelet</td>
+                        <td>256</td>
+                        <td>123054</td>
+                        <td>2%</td>
+                        <td>02/05/2012</td>
+                        <td>02/08/2012</td>
+                        <td><button class="status complete"><span class="sf"><i
+                                        class="fa-solid fa-circle"></i></span>On</button></td>
+                    </tr>
+                    <tr>
+                        <td>24K Diamond bracelet</td>
+                        <td>256</td>
+                        <td>123054</td>
+                        <td>2%</td>
+                        <td>02/05/2012</td>
+                        <td>02/08/2012</td>
+                        <td><button class="status complete"><span class="sf"><i
+                                        class="fa-solid fa-circle"></i></span>On</button></td>
+                    </tr>
+                    <tr>
+                        <td>14K Platinum bracelet</td>
+                        <td>256</td>
+                        <td>123054</td>
+                        <td>2%</td>
+                        <td>02/05/2012</td>
+                        <td>02/08/2012</td>
+                        <td><button class="status pending"><span class="sf"><i
+                                        class="fa-solid fa-circle"></i></span>Off</button></td>
+                    </tr>
+                    <tr>
+                        <td>14K Gold bracelet</td>
+                        <td>256</td>
+                        <td>123054</td>
+                        <td>2%</td>
+                        <td>02/05/2012</td>
+                        <td>02/08/2012</td>
+                        <td><button class="status pending"><span class="sf"><i
+                                        class="fa-solid fa-circle"></i></span>Off</button></td>
+                    </tr>
+                    <tr>
+                        <td>14K Yellow Diamond bracelet</td>
+                        <td>256</td>
+                        <td>123054</td>
+                        <td>2%</td>
+                        <td>02/05/2012</td>
+                        <td>02/08/2012</td>
+                        <td><button class="status complete"><span class="sf"><i
+                                        class="fa-solid fa-circle"></i></span>On</button></td>
+                    </tr>
+                    <tr>
+                        <td>14K Yellow Diamond bracelet</td>
+                        <td>256</td>
+                        <td>123054</td>
+                        <td>2%</td>
+                        <td>02/05/2012</td>
+                        <td>02/08/2012</td>
+                        <td><button class="status complete"><span class="sf"><i
+                                        class="fa-solid fa-circle"></i></span>On</button></td>
+                    </tr>
+                    <tr>
+                        <td>14K Yellow Diamond bracelet</td>
+                        <td>256</td>
+                        <td>123054</td>
+                        <td>2%</td>
+                        <td>02/05/2012</td>
+                        <td>02/08/2012</td>
+                        <td><button class="status pending"><span class="sf"><i
+                                        class="fa-solid fa-circle"></i></span>Off</button></td>
+                    </tr>
+                    <tr>
+                        <td>14K Yellow Diamond bracelet</td>
+                        <td>256</td>
+                        <td>123054</td>
+                        <td>2%</td>
+                        <td>02/05/2012</td>
+                        <td>02/08/2012</td>
+                        <td><button class="status complete"><span class="sf"><i
+                                        class="fa-solid fa-circle"></i></span>On</button></td>
+                    </tr>
+                    <tr>
+                        <td>14K Yellow Diamond bracelet</td>
+                        <td>256</td>
+                        <td>123054</td>
+                        <td>2%</td>
+                        <td>02/05/2012</td>
+                        <td>02/08/2012</td>
+                        <td><button class="status complete"><span class="sf"><i
+                                        class="fa-solid fa-circle"></i></span>On</button></td>
+                    </tr>
+                    <tr>
+                        <td>14K Yellow Diamond bracelet</td>
+                        <td>256</td>
+                        <td>123054</td>
+                        <td>2%</td>
+                        <td>02/05/2012</td>
+                        <td>02/08/2012</td>
+                        <td><button class="status pending"><span class="sf"><i
+                                        class="fa-solid fa-circle"></i></span>Off</button></td>
+                    </tr>           
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination-container">
+            <div class="previous">
+                <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
+            </div>
+            <div class="pages">
+                <span class="page-active">1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>...</span>
+                <span>8</span>
+                <span>9</span>
+                <span>10</span>
+            </div>
+            <div class="next">
+                <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
+            </div>
+        </div>
+        </div>
+        <div id="passwordModal" class="container">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <form id="passwordForm" class="col-5 passwordForm">
+                        <span class="close" onclick="hidePasswordModal()">&times;</span>
+                        <div class="text-center create-new-password">Create Promotion </div>
+                        <div class="group mt-4">
+                            <div class="row">
+                                <div class="col-6 form-group">
+                                    <label>Name</label>
+                                    <input type="text" value="Nguyen Van A" class="form-control" required>
+                                </div>
+                            <div class="col-6 form-group">
+                                <label>Code</label>
+                                <input type="text" value="#001" class="form-control" required>
+                            </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 form-group">
+                                    <label>Discount rate</label>
+                                    <input type="text"  class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 form-group">
+                                    <label>Start Date</label>
+                                    <input type="date"  class="form-control" required>
+                                </div>
+                                <div class="col-6 form-group">
+                                    <label>End Date</label>
+                                    <input type="date" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-save-password"
+                                    onclick="hidePasswordModal()">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" th:src="@{/js/Promotion.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

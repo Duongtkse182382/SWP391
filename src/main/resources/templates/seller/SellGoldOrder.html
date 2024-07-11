@@ -129,7 +129,7 @@
                             <td th:text="${orderDetail.product.gemPriceList.gem.clarity}"></td>
                             <td th:text="${orderDetail.product.gemPriceList.gem.cut}"></td>
                             <td th:text="${orderDetail.product.gemPriceList.gem.origin}"></td>
-								<td th:text="${#numbers.formatDecimal(orderDetail.total, 1, 'COMMA')}"></td>
+								<td th:text="${orderDetail.total}"></td>
 								<td><a
 									th:href="@{/orders/sell-gold-order/{orderID}(orderID=${purchaseOrderGoldDto.order.orderID},detailID=${orderDetail.detailID})}">
 										<i class="fa-solid fa-cart-shopping"></i>
@@ -172,7 +172,7 @@
                             <td th:text="${orderDetail.product.gemPriceList.gem.clarity}"></td>
                             <td th:text="${orderDetail.product.gemPriceList.gem.cut}"></td>
                             <td th:text="${orderDetail.product.gemPriceList.gem.origin}"></td>
-								<td class="orderDetail-price" th:text="${#numbers.formatDecimal(orderDetail.total, 1, 'COMMA')}"></td>
+								<td class="orderDetail-price" th:text="${orderDetail.total}"></td>
 							
 							<td><a
 								th:href="@{/orders/sell-gold-order/{orderID}(orderID=${purchaseOrderGoldDto.order.orderID},detailID=${orderDetail.detailID})}">
@@ -182,7 +182,7 @@
 					</tbody>
 				</table>
 				<div class="total-container-product">
-					<div class="product-total">Total</div>
+					<div class="product-total">Total(x1000)</div>
 					<div class="product-total-input">
 						<input id="total-price" name="totalPrice" readonly />
 					</div>

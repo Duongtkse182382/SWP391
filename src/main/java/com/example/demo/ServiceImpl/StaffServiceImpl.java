@@ -36,15 +36,16 @@ public class StaffServiceImpl implements StaffService {
 	   
 	  @Override
 	  @Transactional
-	    public Staff save(Staff staff) {
-		   if (staffRepository.existsByEmail(staff.getEmail())) {
-	            throw new IllegalArgumentException("Email '" + staff.getEmail() + "' is already in use.");
-	        }else {
-		        staff.setPassword(bCryptPasswordEncoder.encode(staff.getPassword()));
-		        staff.setActive(true);
-		        return staffRepository.save(staff);
-	        }
-	    }
+	  public Staff save(Staff staff) {
+	      if (staffRepository.existsByEmail(staff.getEmail())) {
+	          throw new IllegalArgumentException("Email '" + staff.getEmail() + "' is already in use.");
+	      } else {
+	          staff.setPassword(bCryptPasswordEncoder.encode(staff.getPassword()));
+	          staff.setActive(true);
+	          return staffRepository.save(staff);
+	      }
+	  }
+
 	  
 	  @Override
 	  public List<Staff> getAllStaff(){
@@ -70,22 +71,20 @@ public class StaffServiceImpl implements StaffService {
 	        Staff existingStaff = staffRepository.findById(staffId)
 	                .orElseThrow(() -> new RuntimeException("Staff not found"));
 	        if (existingStaff.getEmail() == null || existingStaff.getEmail().equals(newEmail)) {
-	        	 staff.setPassword(existingStaff.getPassword());
-	                staffRepository.save(staff);
+	            staff.setPassword(existingStaff.getPassword());
+	            staffRepository.save(staff);
 	        } else {
 	            Staff staffWithSameEmail = staffRepository.findByEmail(newEmail);
 	            if (staffWithSameEmail == null || staffWithSameEmail.getStaffID() == staffId) {
-	                if (!isEmailExistsForOtherStaff(newEmail, staffId)) {
-	                	 staff.setPassword(existingStaff.getPassword());
-	                    staffRepository.save(staff);
-	                } else {
-	                    throw new Exception("Email already exists. Please select a different email.");
-	                }
+	                staff.setPassword(existingStaff.getPassword());
+	                staffRepository.save(staff);
 	            } else {
 	                throw new Exception("Email already exists. Please select a different email.");
 	            }
 	        }
 	    }
+
+	    
 
 
 	   

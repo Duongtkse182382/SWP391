@@ -66,12 +66,12 @@
                         <tr>
                             <th>Promotion Name</th>
                             <th>Promotion ID</th>
-                            <th>Promotion Code</th>
+                            <th>Promotion code</th>
                             <th>Discount Rate</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
+                            <th>Start date</th>
+                            <th>End date</th>
                             <th>Status</th>
-                              <th>Action</th>
+                              <th>Update</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -139,7 +139,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-6 form-group">
-                                    <label>Discount Rate</label>
+                                    <label>Discount rate</label>
                                     <input type="text" th:field="*{promotionPercent}" class="form-control"
                                         required />
                                         <div th:if="${percentErrorMessage}" class="error-message text-danger" th:text="${percentErrorMessage}"></div>

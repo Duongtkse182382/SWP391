@@ -2,149 +2,137 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pucharse Order Detail</title>
-    <link rel="stylesheet" th:href="@{css/PucharseOrderDetail.css}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pucharse Order Detail</title>
+<link rel="stylesheet" th:href="@{/css/PucharseOrderDetail.css}">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+	integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
 </head>
 
 <body>
-    <div class="sidebar">
-        <div class="sidebar-title">
-            <div class="sidebar-profile">
-                <div class="sidebar-pic"></div>
-                <div class="sidebar-name">
-                    <div class="child-name">
-                        Trần Đại Dương
-                    </div>
-                    <div>
-                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
-                    </div>
-                </div>
-            </div>
-            <p class="active">List Of Order</p>
-            <p>New Sell Order</p>
-            <p>Bill of sell</p>
-            <p>New Purchase Order</p>
-            <p>Product List as Counter</p>
-        </div>
-        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
-    </div>
-    <div class="content">
-        <div class="content-header">
-            <div class="bill-header">
-                <h1>Pucharse Order Detail</h1>
-                <div class="title-file">
-                    <i class="fa-regular fa-file"></i>
-                    <span>Code: #P01</span>
-                </div>
-            </div>
-            <div class="btn-group">
-                <button class="btn-save">Save</button>
-            </div>
-        </div>
+	<div class="sidebar">
+		<div class="sidebar-title">
+			<div class="sidebar-profile">
+				<div class="sidebar-pic"></div>
+				<div class="sidebar-name">
+					<div class="child-name">
+					 <span th:text="${staff.fullName}"></span>
+					</div>
+					<div>
+						<span class="child-manager">Seller <i
+							class="fa-solid fa-pencil"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+			 <a class="link-product" th:href="@{/orders/listOfOrder}"><p>List Of Sell Order</p></a>
+	           <p class="active">List Of Purchase Order</p>
+              <a class="link-product" th:href="@{/seller/products}"><p>Product List as Counter</p></a>
+               <a class="link-product" th:href="@{/seller-profile}"><p>Personal Profile</p></a>
+		</div>
+		<form th:action="@{/perform_logout}" method="post">
+			<button type="submit">
+				<i class="fa-solid fa-right-from-bracket"></i> Log out
+			</button>
+		</form>
+	</div>
+	<div class="content">
+		<div class="content-header">
+			<div class="bill-header">
+				<h1>Pucharse Order Detail</h1>
+				<div class="title-file">
+					<i class="fa-regular fa-file"></i> <span>Code: #P01</span>
+				</div>
+			</div>
+			<div class="btn-group">
+				<a th:href="@{/orders/listOfPurchaseOrder}"><button class="btn-save">Back</button></a>
+			</div>
+		</div>
+		<form
+			th:action="@{/orders/purchaseOrderDetail/{orderID}/save(orderID=${order.orderID})}"
+			method="post" id="add-result">
+			<div class="profile-input-container">
+				<div class="first-group-input">
+					<div class="first-input">
+						<label>Order Date <i class="fa-solid fa-calendar-days"></i></label>
+						<div>
+							<input type="text" th:value=${order.date} class="input-order"
+								readonly>
+						</div>
+					</div>
+					<div class="second-input">
+						<label>Staff Name<i class="fa-solid fa-user"></i></label>
+						<div>
+							<input type="text" th:value="${order.staff.fullName}"
+								class="input-staff" readonly>
+						</div>
+					</div>
+				</div>
+				<div class="second-group-input">
+					<div class="third-input">
+						<label>Customer Name</label>
+						<div>
+							<input type="text" th:value="${order.customer.customerName}"
+								class="input-customer" readonly>
+						</div>
+					</div>
+					<div class="fourth-input">
+						<label>Phone Number</label>
+						<div>
+							<input type="text" th:value="${order.customer.phone}"
+								class="input-phone" readonly>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bill-table">
+				<table>
+					<thead>
+						<tr>
+							<th>Product Code</th>
+							<th>Product Name</th>
+							<th>Type</th>					
+							<th>Material</th>
+							<th>Weight</th>
+							<th>Carat</th>
+							<th>Price(x1000)</th>
 
-        <div class="profile-input-container">
-            <div class="first-group-input">
-                <div class="first-input">
-                    <label>Order Date <i class="fa-solid fa-calendar-days"></i></label>
-                    <div>
-                        <input type="text" value="2024-02-13" class="input-order">
-                    </div>
-                </div>
-                <div class="second-input">
-                    <label>Staff Name<i class="fa-solid fa-user"></i></label>
-                    <div>
-                        <input type="text" value="Thanh" class="input-staff">
-                    </div>
-                </div>
-            </div>
-            <div class="second-group-input">
-                <div class="third-input">
-                    <label>Customer Name</label>
-                    <div>
-                        <input type="text" value="Thanh Cọc" class="input-customer">
-                    </div>
-                </div>
-                <div class="fourth-input">
-                    <label>Phone Number</label>
-                    <div>
-                        <input type="text" value="0930920332" class="input-phone">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="bill-group">
-            <div class="bill-title-first">Diamond</div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-3">
-                        <label>Name Product</label>
-                        <input type="text" class="form-control" placeholder="Input name product" />
-                    </div>
-                    <div class="col-3">
-                        <label>Origin</label>
-                        <input type="text" class="form-control" placeholder="Input origin" />
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-3">
-                        <label>Carat</label>
-                        <input type="text" class="form-control" placeholder="Input carat" />
-                    </div>
-                    <div class="col-3">
-                        <label>Color</label>
-                        <input type="text" class="form-control" placeholder="Input color" />
-                    </div>
-                    <div class="col-3">
-                        <label>Clarity</label>
-                        <input type="text" class="form-control" placeholder="Input clarity" />
-                    </div>
-                    <div class="col-3">
-                        <label>Cut</label>
-                        <input type="text" class="form-control" placeholder="Input cut" />
-                    </div>
-                </div>
-            </div>
-            <div class="bill-title-second">Meterial</div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-3">
-                        <label>Name Product</label>
-                        <input type="text" class="form-control" placeholder="Input name product" />
-                    </div>
-                    <div class="col-3">
-                        <label>Type Gold</label>
-                        <input type="text" class="form-control" placeholder="Input type gold" />
-                    </div>
-                    <div class="col-3">
-                        <label>Weight</label>
-                        <input type="text" class="form-control" placeholder="Input weight" />
-                    </div>
-                </div>
-            </div>
-            <div class="total-section mt-2">
-                <div>
-                    <p>Diamond Price: </p>
-                    <p>Meterial Price:</p>
-                    <hr />
-                    <p class="total">Total price: </p>
-                </div>
-                <div class="total-right">
-                    <p>$10,000</p>
-                    <p>$10,000</p>
-                    <p class="total-child">$20,000</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="orderDetail : ${order.orderDetails}">
+
+							<td th:text="${orderDetail.product.productCode}"></td>
+							<td th:text="${orderDetail.product.productName}"></td>
+							<td th:text="${orderDetail.product.type.typeName}"></td>
+							<td
+								th:text="${orderDetail.product.materialPriceList.material.name}"></td>
+							<td th:text="${orderDetail.product.weight}"></td>
+							<td th:text="${orderDetail.product.gemPriceList.gem.carat}"></td>
+							<td th:text="${orderDetail.total}"></td>
+
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+
+		</form>
+
+	</div>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
 </body>
 
 </html>

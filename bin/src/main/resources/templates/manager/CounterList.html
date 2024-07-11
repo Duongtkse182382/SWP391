@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CounterList</title>
+    <link rel="stylesheet" th:href="@{/css/CounterList.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+             <a  class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a>
+             <a  class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
+             <a class="link-product" th:href="@{/staff}"><p>Manage Staff</p></a>
+             <a  class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
+            <p class="active">Manage Counter</p>
+            <p>Manage Category</p>
+            <p>Manage Material</p>
+        </div>
+       <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+    </div>
+    <div class="content">
+        <div class="content-group">
+            <div class="bill-header">
+                <div class="counter-list">
+                    <h1>Counter List</h1>
+                </div>
+                <div class="create-counter-list">
+                    <button onclick="showPasswordModal()">Create</button>
+                </div>
+            </div>
+            <div class="bill-details">
+                <div class="staff">
+    <input id="searchInput" class="staff-input" onkeyup="searchOrders()" placeholder="Search by customer name or phone number..." />
+    <i class="fa-solid fa-magnifying-glass"></i>
+</div>
+            </div>
+            <div class="bill-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Phone Number</th>
+                            <th>Staff Name</th>
+                            <th>Quantity</th>
+                            <th>Status</th>
+                            <th>Price</th>
+                            <th>Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>#P3626-04</td>
+                        <td> Nguyễn Văn A</td>
+                        <td>09090902229</td>
+                        <td> Võ Văn Tân</td>
+                        <td>2</td>
+                        <td><button class="status complete"><span class="sf"><i class="fa-solid fa-circle"></i></span>Complete</button></td>
+                        <td>4,950.00</td>
+                      <td>
+    <a th:href="@{/counter/counterDetail}">
+        <button class="detail-btn">
+            <i class="fa-solid fa-file"></i>
+        </button>
+    </a>
+</td>
+                    </tr>
+                    <tr>
+                        <td>#P3626-04</td>
+                        <td> Nguyễn Văn B</td>
+                        <td>09081472846</td>
+                        <td> Võ Văn Kiệt</td>
+                        <td>6</td>
+                        <td><button class="status pending"><span class="sf"><i class="fa-solid fa-circle"></i></span>Pending</button></td>
+                        <td>5,927.00</td>
+                           <td>
+    <a th:href="@{/counter/counterDetail}">
+        <button class="detail-btn">
+            <i class="fa-solid fa-file"></i>
+        </button>
+    </a>
+</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination-container">
+                <div class="previous">
+                    <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
+                </div>
+                <div class="pages">
+                    <span class="page-active">1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>...</span>
+                    <span>8</span>
+                    <span>9</span>
+                    <span>10</span>
+                </div>
+                <div class="next">
+                    <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
+                </div>
+            </div>
+        </div>
+            <div id="passwordModal" class="container">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <form id="passwordForm" class="col-4 passwordForm">
+                            <span class="close" onclick="hidePasswordModal()">&times;</span>
+                            <div class="text-center create-new-password">Create Counter </div>
+                            <div class="group mt-4">
+                                <div class="col-12">
+                                    <label>Create Name</label>
+                                    <input type="text" name="Input Type" class="form-control" required>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <label>Status</label>
+                                    <select class="form-control">
+                                        <option>Active</option>
+                                        <option>Active</option>
+                                        <option>Active</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-save-password"
+                                        onclick="hidePasswordModal()">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+  
+        <script  type="text/javascript" th:src="@{/js/CounterList.js}"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Warranty</title>
+    <link rel="stylesheet" th:href="@{/css/Warranty.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Cashier <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+            <a  class="link-historyOrder" th:href="@{/orders}"><p>History Order</p></a>
+            <a class="link-historyOrder" th:href="@{/customers}"><p>List customer</p></a>
+            <a  class="link-historyOrder" th:href="@{seller/products/bill-of-sell/11}"><p>Bill of Sell</p></a>
+            <a  class="link-historyOrder" th:href="@{seller/products/bill-of-buy/14}"><p>Bill of Buy</p></a>
+            <a  class="link-historyOrder" th:href="@{/cashier-profile}"><p>Personal Profile</p></a>
+            <p class="active">Warranty</p>
+        </div>
+         <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+    </div>
+    <div class="content">
+        <div class="bill-header">
+         <h1>List Warranty</h1> 
+        </div>
+        <div class="bill-details">
+            <div class="staff">
+                <input value="Enter the Customer's name" class="staff-input" />
+            </div>
+            <div class="staff-id">
+                <button class="sfaff-btn">Search</button>
+            </div>
+        </div>
+        <div class="bill-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product's Name</th>
+                        <th>Customer's name</th>
+                        <th>Warranty Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Diamonds
+                        </td>
+                        <td>Nguyen Van A</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Gold
+                        </td>
+                        <td>Tran Van C</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Diamond Ring
+                        </td>
+                        <td>Nguyen Van Hao</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Diamond Ring
+                        </td>
+                        <td>Nguyen Van Hao</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Gold
+                        </td>
+                        <td>Nguyen Van A</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Gold
+                        </td>
+                        <td>Nguyen Van B</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Gold
+                        </td>
+                        <td>Nguyen Van B</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Gold
+                        </td>
+                        <td>Nguyen Van B</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination-container">
+             <div class="previous">
+                <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
+             </div>
+             <div class="pages">
+                <span class="page-active">1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>...</span>
+                <span>8</span>
+                <span>9</span>
+                <span>10</span>
+             </div>
+            <div class="next">
+                <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

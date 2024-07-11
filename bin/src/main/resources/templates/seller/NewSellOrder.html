@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Sell Order</title>
+    <link rel="stylesheet" th:href="@{/css/NewSellOrder.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Seller <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+           <p class="active">List Of Order</p>
+           <a class="link-historyOrder" th:href="@{/seller/products}">Product List as Counter</a>
+        </div>
+          <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+    </div>
+    
+    <div class="content">
+        <div class="content-header">
+            <div class="bill-header">
+                <h1>New Sell Order</h1>
+                <div class="title-file">
+                    <i class="fa-regular fa-file"></i>
+                    <span>#Order:1</span>
+                </div>
+            </div>
+            
+            <div>
+                <button class="btn-save" onclick="submitForm()">Save</button>
+            </div>
+        </div>
+      <form method="post" action="/orders/new-sell-order/save" th:object="${orderDto}" id="add-result">
+          <div class="profile-input-container">
+                <div class="first-group-input">
+                    <div class="first-input">
+                        <label>Order Date <i class="fa-solid fa-calendar-days"></i></label>
+                        <div>
+                            <input type="text" id="order-date" class="input-order">
+                            <span id="order-date-error" class="error-message"></span>
+                        </div>
+                    </div>
+                    <div class="second-input">
+                        <label>Staff Name<i class="fa-solid fa-user"></i></label>
+                        <div>
+                            <input type="text" id="staff-name" class="input-staff">
+                            <span id="staff-name-error" class="error-message"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="second-group-input">
+                    <div class="third-input">
+                        <label>Customer Name</label>
+                        <div>
+                            <input type="text" id="customer-name" class="input-customer">
+                            <span id="customer-name-error" class="error-message"></span>
+                        </div>
+                    </div>
+                    <div class="fourth-input">
+                        <label>Phone Number</label>
+                        <div>
+                            <input type="text" id="phone-number" class="input-phone">
+                            <span id="phone-number-error" class="error-message"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bill-details">
+                <div class="staff">
+                    <input id="product-search" placeholder="Search" class="staff-input" onfocus="showDropdown()" />
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <div id="dropdown" class="dropdown-content">
+                        <ol>
+                            <li th:each="product: ${products}">
+                                <div th:data-order="${product}" th:text="${product.productName}"
+                                    th:attr="data-product-id=${product.productID}"
+                                    onclick="selectProduct(this.textContent, this.getAttribute('data-product-id'))"></div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="detail-add">
+                    <button type="button"  class="btn-add" onclick="addProduct()">Add</button>
+                </div>
+            </div>
+            <div class="bill-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Code</th>
+                            <th>Type</th>
+                            <th>Product Name</th>
+                            <th>Material</th>
+                            <th>Weight/Carat</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:field="*{Product}" th:each="Product : ${orderDto.Product}">
+                            <td th:text="${Product.productCode}"></td>
+                            <td th:text="${Product.type.typeName}"></td>
+                            <td th:text="${Product.productName}"></td>
+                           <td th:text="${Product.materialPriceList.material.name}"></td>
+                            <td th:text="${Product.weight}"></td>
+                           <td th:text="${Product.MaterialPriceList.sellPrice * Product.weight}"></td>
+                             <td><i class="fa-solid fa-trash-can" onclick="removeProduct(this.parentElement.parentElement)"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="total-container-product">
+				 <div class="product-total">
+					  Total
+				 </div>
+				 <div class="product-total-input">
+					 <input id="total-price" name="totalPrice"  readonly  />
+				 </div>
+			 </div>
+            </div>
+             
+        </form>
+    </div>
+    <script th:src="@{/js/NewSellOrder.js}"></script>
+
+</body>
+
+</html>

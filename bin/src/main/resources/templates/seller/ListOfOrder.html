@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List Of Order</title>
+    <link rel="stylesheet" th:href="@{/css/ListOfOrder.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Seller <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+            <p class="active">List Of Order</p>
+             <a class="link-product" th:href="@{/seller/products}"><p>Product List as Counter</p></a>
+        </div>
+          <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+    </div>
+    <div class="content">
+        <div class="bill-header">
+            <h1>List Of Order</h1>
+        </div>
+          <div class="bill-btn-confirm">
+            <a  th:href="@{/orders/new-sell-order}"><button class="btn-sell" >New Sell <i class="fa-solid fa-circle-plus"></i></button></a>
+            <a th:href="@{/orders/NewPurchaseOrder}"><button class="btn-purchase">New Purchase <i class="fa-solid fa-circle-plus"></i></button></a>
+          </div>
+        <div class="bill-details">
+              <div class="staff">
+    <input id="searchInput" class="staff-input" onkeyup="searchOrders()" placeholder="Search by customer name or phone number..." />
+    <i class="fa-solid fa-magnifying-glass"></i>
+</div>
+        </div>
+        <div class="bill-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order Code<span class="id"><i class="fa-solid fa-caret-down"></i></span></th>
+                        <th>Customer Name</th>
+                         <th>Phone Number</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Status<span class="id"><i class="fa-solid fa-caret-down"></i></span></th>
+                    </tr>
+                </thead>
+               <tbody>
+    <tr th:each="order : ${orders}">
+       <td>
+    <a th:href="@{${order.orderCode.startsWith('S')} ? '/orders/SellOrderDetail/' + ${order.orderID} : '/orders/PurchaseOrderDetail/'+${order.orderID}}">
+        <i class="fa-solid fa-file"></i>
+    </a>
+    <span class="code-file" th:text="${order.orderCode}"></span>
+</td>
+        <td th:text="${order.customer.customerName}"></td>
+        <td th:text="${order.customer.phone}"></td>
+        <td th:text="${order.quantity}"></td>
+        <td th:text="${order.total}"></td>
+        <td>
+         <button class="status" th:classappend="${order.orderStatus.name == 'Completed' || order.orderStatus.name == 'Delivering'} ? 'complete' : 'pending'">
+    <span class="sf"><i class="fa-solid fa-circle"></i></span>
+    <span th:text="${order.orderStatus.name}"></span>
+</button>
+
+        </td>
+    </tr>
+</tbody>
+
+            </table>
+        </div>
+                     <div class="pagination-container">
+    <div class="previous">
+        <a th:if="${currentPage > 0}" th:href="@{/orders/listOfOrder(page=${currentPage - 1 })}">
+            <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
+        </a>
+    </div>
+    <div class="pages">
+        <span th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:class="${pageNumber == currentPage ? 'page-active' : ''}">
+            <a th:href="@{/orders/listOfOrder(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+        </span>
+    </div>
+    <div class="next">
+        <a th:if="${currentPage < totalPages - 1}" th:href="@{/orders/listOfOrder(page=${currentPage + 1})}">
+            <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
+        </a>
+    </div>
+</div>
+           
+    </div>
+    <script type="text/javascript">
+    function searchOrders() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase().trim();
+        table = document.querySelector("table");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            tdName = tr[i].getElementsByTagName("td")[1]; 
+            tdPhone = tr[i].getElementsByTagName("td")[2];
+
+            if (tdName || tdPhone) {
+                txtValueName = tdName.textContent || tdName.innerText;
+                txtValuePhone = tdPhone.textContent || tdPhone.innerText;
+                
+                if (txtValueName.toUpperCase().includes(filter) || txtValuePhone.includes(filter)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+</body>
+
+</html>

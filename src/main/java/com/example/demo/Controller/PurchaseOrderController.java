@@ -153,13 +153,13 @@ public class PurchaseOrderController {
 
 			for(OrderDetail item:purchaseDetails) 
 			{
-				float buyPrice=item.getProduct().getMaterialPriceList().getBuyPrice()*item.getProduct().getWeight() + item.getProduct().getGemPriceList().getBuyPrice();;
+				float buyPrice=(float) (item.getProduct().getMaterialPriceList().getBuyPrice()*(item.getProduct().getWeight()/3.75) + item.getProduct().getGemPriceList().getBuyPrice());;
 				item.setTotal(buyPrice);
 			}
 			
 			for(OrderDetail item:orDetails) 
 			{
-				float buyPrice=item.getProduct().getMaterialPriceList().getSellPrice()*item.getProduct().getWeight() + item.getProduct().getGemPriceList().getSellPrice();;
+				float buyPrice=(float) (item.getProduct().getMaterialPriceList().getSellPrice()*(item.getProduct().getWeight()/3.75) + item.getProduct().getGemPriceList().getSellPrice());;
 				item.setTotal(buyPrice);
 			}
 			

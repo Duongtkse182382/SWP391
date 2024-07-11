@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SellOrderDetail</title>
+    <link rel="stylesheet" th:href="@{/css/SellOrderDetail.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Seller <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+            <a class="link-product" th:href="@{/orders/listOfOrder}">
+                <p>List Of Order</p>
+            </a>
+            <a class="link-product" th:href="@{/seller/products}">
+                <p>Product List as Counter</p>
+            </a>
+        </div>
+           <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+    </div>
+    <div class="content">
+        <div class="content-header">
+            <div class="bill-header">
+                <h1>Sell Order Detail</h1>
+                <div class="title-file">
+                    <i class="fa-regular fa-file"></i>
+                    <span th:text="'#Order:' + ${order.orderID}"></span>
+                </div>
+            </div>
+            <div class="btn-group">
+               
+                    <button  class="btn-save"  onclick="submitForm()">Completed</button>
+                
+            </div>
+        </div>
+ <form th:action="@{/orders/SellOrderDetail/{orderID}/complete(orderID=${order.orderID})}" method="post" id="add-result"> 
+        <div class="profile-input-container">
+            <div class="first-group-input">
+                <div class="first-input">
+                    <label>Order Date <i class="fa-solid fa-calendar-days"></i></label>
+                    <div>
+                        <input type="text" th:value="${order.date}" class="input-order" readonly>
+                    </div>
+                </div>
+                <div class="second-input">
+                    <label>Staff Name<i class="fa-solid fa-user"></i></label>
+                    <div>
+                        <input type="text" th:value="${order.staff.fullName}" class="input-staff" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="second-group-input">
+                <div class="third-input">
+                    <label>Customer Name</label>
+                    <div>
+                        <input type="text" th:value="${order.customer.customerName}" class="input-customer" readonly>
+                    </div>
+                </div>
+                <div class="fourth-input">
+                    <label>Phone Number</label>
+                    <div>
+                        <input type="text" th:value="${order.customer.phone}" class="input-phone" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-price-bill">
+            <div class="bill-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Code</th>
+                            <th>Product Name</th>
+                            <th>Material</th>
+                            <th>Weight/Carat</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="orderDetail : ${order.orderDetails}">
+                            <td th:text="${orderDetail.product.productCode}"></td>
+                            <td th:text="${orderDetail.product.productName}"></td>
+                            <td th:text="${orderDetail.product.gemPriceList.gem.gemName}"></td>
+                            <td th:text="${orderDetail.product.gemPriceList.gem.carat}"></td>
+                            <td th:text="${orderDetail.total}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+          <div class="totals">
+    <div class="total-price">Total Price:</div>
+    <div class="price" th:text="${order.total}" ></div>
+</div>
+            
+        </div>
+</form>
+    </div>
+    <script>
+
+function submitForm() {
+    const form = document.getElementById('add-result');
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+    }).then(response => {
+        if (response.ok) {
+            window.location.href = `/orders/listOfOrder`;
+        } else {
+            alert('Failed to save the order. Please try again.');
+        }
+    }).catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    });
+}
+
+	</script>
+</body>
+
+</html>

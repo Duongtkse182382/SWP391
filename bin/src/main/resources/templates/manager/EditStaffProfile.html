@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Staff Profile</title>
+    <link rel="stylesheet" th:href="@{/css/EditStaffProfile.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+                 <a  class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a>
+              <a  class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
+            <p class="active">Manage Staff</p>
+             <a  class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
+           <a  class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
+            <p>Manage Category</p>
+            <p>Manage Material</p>
+        </div>
+        <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+    </div>
+    <div class="content">
+        <div class="profile">
+            <div class="profile-container">
+                <div class="profile-title">
+                    <h1>Edit Staff Profile</h1>
+                    <p>FPT Jewelry Store</p>
+                </div>
+                <div class="img-profile">
+
+                </div>
+                <div class="img-title">
+                    Bui Doan Nhat Truong
+                    <p>#bdnt2583</p>
+                </div>
+            </div>
+            <div class="input-profile">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="full-name">Full Name</label>
+                        <input type="text" class="form-control" id="full-name" value="Bui Doan Nhat Truong">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" class="form-control" id="dob" value="25-08-2003">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="sex">Gender</label>
+                    <select class="form-control" id="sex">
+                        <option value="Men">Men</option>
+                        <option value="Women">Women</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address"
+                            value="Duc Tho, Huyen Duc Tho, Tinh Ha Tinh">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" id="phone" value="0379870607">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" value="truongbdnse170294@fpt.edu.vn">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="role">Role</label>
+                        <input type="text" class="form-control" id="role" value="Seller Diamond">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="counter">Of the Counter</label>
+                        <input type="text" class="form-control" id="counter" value="Diamond">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="status">Status</label>
+                        <select class="form-control">
+                            <option value="Active">Active</option>
+                            <option value="Deactive">Deactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="buttons text-center mt-4">
+                    <button type="button" class="btn btn-profile">Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

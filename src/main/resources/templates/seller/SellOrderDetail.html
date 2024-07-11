@@ -112,15 +112,15 @@
                             <td th:text="${orderDetail.product.gemPriceList.gem.clarity}"></td>
                             <td th:text="${orderDetail.product.gemPriceList.gem.cut}"></td>
                             <td th:text="${orderDetail.product.gemPriceList.gem.origin}"></td>
-                            <td th:text="${#numbers.formatDecimal(orderDetail.total, 1, 'COMMA')}"></td>
+                            <td th:text="${orderDetail.total}"></td>
                         </tr>
                     </tbody>
                 </table>
                 
             </div>
           <div class="totals">
-    <div class="total-price">Total Price:</div>
-    <div class="price" th:text="${#numbers.formatDecimal(order.total, 1, 'COMMA')}" ></div>
+    <div class="total-price">Total Price(x1000):</div>
+    <div class="price" th:text="${order.total}" ></div>
 </div>
             
         </div>

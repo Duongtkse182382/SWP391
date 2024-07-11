@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Of Product</title>
+    <link rel="stylesheet" th:href="@{/css/DetailProduct.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Seller <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+             <a class="link-product" th:href="@{/orders/listOfOrder}"><p>List Of Order</p></a>
+              <p>Product List as Counter</p>
+        </div>
+           <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+    </div>
+    <div class="content">
+        <div class="title">
+            <div class="title-first">
+                <h1>Detail Of Product</h1>
+            </div>
+            <div class="title-second">
+                <a href="/seller/products"><button class="title-btn">Back</button></a>
+            </div>
+        </div>
+        <div class="detail-product">
+            <div class="container">
+                <div class="detail-container">
+                </div>
+            </div>
+            <div class="detail-input">
+                    <div class="input-container">
+                        <div class="product-id">
+                            <label>Product Code:</label>
+                            <input type="text" th:value="${product.productCode}" class="product-input">
+                        </div>
+                        <div class="product-id">
+                            <label>Product Name:</label>
+                            <input type="text" th:value="${product.productName}" class="product-input">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+     </body>
+</html>

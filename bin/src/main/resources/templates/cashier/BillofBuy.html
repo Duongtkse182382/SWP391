@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bill of Buy</title>
+    <link rel="stylesheet" th:href="@{/css/BillOfBuy.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">Trần Đại Dương</div>
+                    <div>
+                        <span class="child-manager">Cashier <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+            <a class="link-historyOrder" th:href="@{/orders}">
+                <p>History Order</p>
+            </a>
+            <a class="link-historyOrder" th:href="@{/customers}">
+                <p>List customer</p>
+            </a>
+            <a class="link-historyOrder" th:href="@{/seller/products/bill-of-sell/11}">
+                <p>Bill of Sell</p>
+            </a>
+            <p class="active">Bill of buy</p>
+            <a class="link-historyOrder" th:href="@{/cashier-profile}">
+                <p>Personal Profile</p>
+            </a>
+            <a class="link-historyOrder" th:href="@{/warranty}">
+                <p>Warranty</p>
+            </a>
+        </div>
+          <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+    </div>
+    <div class="content">
+        <div class="address">
+            <p>FPT Jewelry Store</p>
+            <p>Tel: 0909002229</p>
+        </div>
+        <div class="bill-header">
+            <h1>Bill of Buy</h1>
+        </div>
+        <form id="billForm" th:object="${order}">
+            <div class="bill-details">
+                <div class="profile">
+                    <p class="profile-bill">Sales invoices are sent to:</p>
+                    <p>
+                        <span class="profile-customer">Customer name:</span>
+                        <input type="text" th:value="*{customer.customerName}" readonly>
+                    </p>
+                    <p>
+                        <span class="profile-phone">Phone number:</span>
+                        <input type="text" th:value="*{customer.phone}" readonly>
+                    </p>
+                </div>
+                <div class="staff">
+                    <p class="staff-name"></p>
+                    <p th:text="*{staff.fullName}"></p>
+                </div>
+                <div class="staff-id">
+                    <p class="sf-title">Staff Id</p>
+                    <p th:text="*{staffID}"></p>
+                </div>
+                <div class="bill">
+                    <p class="bill-title">Invoice code</p>
+                    <p th:text="*{orderID}"></p>
+                </div>
+                <div class="trans-day">
+                    <p class="trans-title">Day Trading</p>
+                    <p th:text="*{date}"></p>
+                </div>
+            </div>
+            <div class="bill-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="product">PRODUCT_NAME</th>
+                            <th>TYPE</th>
+                            <th>WEIGHT</th>
+                            <th>CARAT</th>
+                            <th>COLOR</th>
+                            <th>CLARITY</th>
+                            <th>CUT</th>
+                            <th class="price">UNIT PRICE</th>
+                            <th class="total">PRICE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="detail : *{orderDetails}">
+                            <td class="product">
+                                <span th:text="${detail.product.productName}"></span>
+                            </td>
+                            <td th:text="${detail.product.type.typeName}"></td>
+                            <td th:text="${detail.product.weight}"></td>
+                            <td th:text="${detail.product.gemPriceList.gem.carat}"></td>
+                            <td th:text="${detail.product.gemPriceList.gem.color}"></td>
+                            <td th:text="${detail.product.gemPriceList.gem.clarity}"></td>
+                            <td th:text="${detail.product.gemPriceList.gem.cut}"></td>
+                            <td th:text="${detail.product.gemPriceList.buyPrice}"></td>
+                            <td class="total" th:text="${detail.total}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="total-section">
+                <div>
+                    <p>Provisional total:</p>
+                    <p>Discount (10%):</p>
+                    <p>Discount code:</p>
+                    <p>Discount:</p>
+                    <hr />
+                    <p class="total">Total:</p>
+                </div>
+                <div class="total-right">
+                    <p> <span id="provisional-total"></span></p>
+                    <p> <span id="discount-amount"></span></p>
+                    <p><input class="sales" disabled /></p>
+                    <p> <span id="additionalDiscount">350.0</span></p>
+                    <hr />
+                    <p class="total"> <span class="total-child" id="total-amount"></span></p>
+                </div>
+            </div>
+            <div class="buttons">
+                <button type="button" class="cancel-button">Cancel</button>
+                <button type="button" class="print-button">Print</button>
+            </div>
+        </form>
+    </div>
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            let rows = document.querySelectorAll('.bill-table tbody tr');
+            let provisionalTotal = 0;
+            rows.forEach(function (row) {
+                let total = parseFloat(row.querySelector('td.total').textContent.replace(/[^0-9.-]+/g, ""));
+                if (!isNaN(total)) {
+                    provisionalTotal += total;
+                }
+            });
+
+            document.getElementById('provisional-total').textContent = provisionalTotal.toFixed(1);
+
+            let discount = provisionalTotal * 0.10;
+            let additionalDiscount = parseFloat(document.getElementById('additionalDiscount').textContent.replace(/[^0-9.-]+/g, ""));
+            let totalAmount = provisionalTotal - discount - additionalDiscount;
+
+            document.getElementById('discount-amount').textContent = discount.toFixed(1);
+            document.getElementById('total-amount').textContent = totalAmount.toFixed(1);
+
+            let orderID = /*[[${order.orderID}]]*/ '';
+            let formData = new FormData();
+            formData.append('orderID', orderID);
+            formData.append('totalAmount', totalAmount.toFixed(1));
+
+            document.querySelector('.print-button').addEventListener('click', function () {
+                fetch(`/seller/products/bill-of-buy/${orderID}/print`, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('Order updated successfully');
+                        window.location.href = '/orders';
+                    } else {
+                        alert('Failed to update order');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+            document.querySelector('.cancel-button').addEventListener('click', function () {
+                fetch(`/seller/products/bill-of-buy/${orderID}/cancel`, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('Order canceled successfully');
+                        window.location.href = '/orders';
+                    } else {
+                        alert('Failed to cancel order');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

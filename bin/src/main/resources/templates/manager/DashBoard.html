@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DashBoard</title>
+    <link rel="stylesheet" th:href="@{/css/DashBoard.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+</head>
+
+<body>
+  <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+             <p class="active">Dashboard</p>
+             <a  class="link-product" th:href="@{/manager/products}"><p>Manage Product</p></a>
+             <a class="link-product" th:href="@{/staff}"><p>Manage Staff</p></a>
+             <a  class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
+             <a  class="link-product" th:href="@{/counter}"><p>Manage Counter</p></a>
+            <p>Manage Category</p>
+            <p>Manage Material</p>
+        </div>
+        <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+    </div>
+    <div class="content">
+        <h1>Dashboard</h1>
+        <div class="stats-container mb-4 mt-4">
+            <div class="card card-stat first">
+                <p>Total</p>
+                <h2>$45,678.90</h2>
+                <p>+20% month over month</p>
+            </div>
+            <div class="card card-stat">
+                <p>Total Gem bill</p>
+                <h2>2,405</h2>
+                <p>+33% month over month</p>
+            </div>
+            <div class="card card-stat third">
+                <p>Total gold bill</p>
+                <h2>10,353</h2>
+                <p>-8% month over month</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Overview</h5>
+                         <canvas id="overviewChart1"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Overview</h5>
+                         <canvas id="overviewChart2"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Quantity sold</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>14K Yellow Diamond bracelet</td>
+                        <td>4321</td>
+                        <td>+84%</td>
+                    </tr>
+                    <tr>
+                        <td>18K Italian White Gold Necklace</td>
+                        <td>2104</td>
+                        <td>+33%</td>
+                    </tr>
+                    <tr>
+                        <td>10K Gold bracelet</td>
+                        <td>2003</td>
+                        <td>+30%</td>
+                    </tr>
+                    <tr>
+                        <td>Peter Pan Silver bracelet</td>
+                        <td>1894</td>
+                        <td>+15%</td>
+                    </tr>
+                    <tr>
+                        <td>Silver children's earrings</td>
+                        <td>3128</td>
+                        <td>+2%</td>
+                    </tr>
+                    <tr>
+                        <td>14K Gold bracelet</td>
+                        <td>4033</td>
+                        <td>-8%</td>
+                    </tr>
+                    <tr>
+                        <td>Unisex Silver bracelet</td>
+                        <td>405</td>
+                        <td>-12%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script th:src="@{/js/DashBoard.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

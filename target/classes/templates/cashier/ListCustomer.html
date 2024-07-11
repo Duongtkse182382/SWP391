@@ -18,41 +18,41 @@
                 <div class="sidebar-pic"></div>
                 <div class="sidebar-name">
                     <div class="child-name">
-                        Trần Đại Dương
+                        <span th:text="${staff.fullName}"></span>
                     </div>
                     <div>
-                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                        <span class="child-manager">Cashier <i class="fa-solid fa-pencil"></i> </span>
                     </div>
                 </div>
             </div>
             <a  class="link-historyOrder" th:href="@{/orders}"><p>History Order</p></a>
-            <p class="active">List customer</p>
-            <p>Bill of sell</p>
-            <p >Bill of buy</p>
-            <p>Personal profile</p>
-            <p>Warranty</p>
+            <p class="active">List Customer</p>
+            <a  class="link-historyOrder" th:href="@{/cashier-profile}"><p>Personal Profile</p></a>
         </div>
-        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+           <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
     </div>
     <div class="content">
         <div class="bill-header">
             <h1>List Customer</h1>
         </div>
         <div class="bill-details">
-            <div class="staff">
-                <input value="Search" class="staff-input" />
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
+              <div class="staff">
+    <input id="searchInput" class="staff-input" onkeyup="searchOrders()" placeholder="Search by customer name or phone number..." />
+    <i class="fa-solid fa-magnifying-glass"></i>
+</div>
         </div>
    
         <div class="bill-table">
             <table>
                 <thead>
                     <tr>
-                        <th>Customer name</th>
-                        <th>Phone</th>
-                        <th>Loyal Code</th>
-                        <th>Point</th>
+                        <th>Customer Name</th>
+                        <th>Phone Number</th>
+                        <th>Loyal Point</th>
                         <th>Rank</th>
                     </tr>
                 </thead>
@@ -60,7 +60,6 @@
                     <tr th:each="customer : ${customers}">
                         <td th:text="${customer.customerName}"></td>
                         <td th:text="${customer.phone}"></td>
-                        <td th:text="${customer.loyalCode}"></td>
                         <td th:text="${customer.loyalPoint}"></td>
                         <td th:text="${customer.rank}"></td>
                     </tr>
@@ -84,6 +83,31 @@
         </a>
     </div>
     </div>
+     <script type="text/javascript">
+    function searchOrders() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase().trim();
+        table = document.querySelector("table");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            tdName = tr[i].getElementsByTagName("td")[0]; 
+            tdPhone = tr[i].getElementsByTagName("td")[1];
+
+            if (tdName || tdPhone) {
+                txtValueName = tdName.textContent || tdName.innerText;
+                txtValuePhone = tdPhone.textContent || tdPhone.innerText;
+                
+                if (txtValueName.toUpperCase().includes(filter) || txtValuePhone.includes(filter)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 </body>
 
 </html>

@@ -101,7 +101,7 @@
 							<th>Material</th>
 							<th>Weight</th>
 							<th>Carat</th>
-							<th>Price</th>
+							<th>Price(x1000)</th>
 
 						</tr>
 					</thead>
@@ -115,7 +115,7 @@
 								th:text="${orderDetail.product.materialPriceList.material.name}"></td>
 							<td th:text="${orderDetail.product.weight}"></td>
 							<td th:text="${orderDetail.product.gemPriceList.gem.carat}"></td>
-							<td th:text="${#numbers.formatDecimal(orderDetail.total, 1, 'COMMA')}"></td>
+							<td th:text="${orderDetail.total}"></td>
 
 						</tr>
 					</tbody>

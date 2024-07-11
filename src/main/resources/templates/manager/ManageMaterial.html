@@ -31,16 +31,18 @@
 					</div>
 				</div>
 			</div>
-			<a class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a> <a class="link-product" th:href="@{/manager/products}"><p>Manage
+			<a class="link-product" th:href="@{/dashboard}"><p>Dashboard</p></a>
+			<a class="link-product" th:href="@{/manager/products}"><p>Manage
 					Product</p></a> <a class="link-product" th:href="@{/staff}"><p>Manage
-					Staff</p></a> <a class="link-product" th:href="@{/promotion}"><p>Promotion</p></a> <a class="link-product" th:href="@{/manager-profile}"><p>Personal
+					Staff</p></a> <a class="link-product" th:href="@{/promotion}"><p>Promotion</p></a>
+			<a class="link-product" th:href="@{/manager-profile}"><p>Personal
 					Profile</p></a> <a class="link-product" th:href="@{/counter}"><p>Manage
 					Counter</p></a>
 			<p class="active">Manage Material</p>
 			<a class="link-product" th:href="@{/manage-gem}"><p>Manage
 					Gem</p></a> <a class="link-product" th:href="@{/price-list}"><p>Material
-					Price List</p></a> <a class="link-product"
-				th:href="@{/gem-price-list}"><p>Gem Price List</p></a>
+					Price List</p></a> <a class="link-product" th:href="@{/gem-price-list}"><p>Gem
+					Price List</p></a>
 		</div>
 		<form th:action="@{/perform_logout}" method="post">
 			<button type="submit">
@@ -68,7 +70,7 @@
 						<tr>
 							<th>Material ID</th>
 							<th>Material Name</th>
-							<th>Action</th>
+							<th>Edit</th>
 						</tr>
 					</thead>
 					<tbody>

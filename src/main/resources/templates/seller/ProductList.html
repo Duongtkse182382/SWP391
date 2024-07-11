@@ -45,35 +45,36 @@
 </div>
         </div>
         <div class="bill-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>ProductCode</th>
-                          <th>Counter Name</th>
-                        <th>Status</th>
-                        <th>Detail</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="product : ${products}">
-                        <td th:text="${product.productName}"></td>
-                        <td th:text="${product.productCode}"></td>
-                          <td th:text="${product.counter.counterName}"></td>
-                        <td>
-                            <button th:classappend="${product.isActive} ? 'status complete' : 'status pending'">
-                                <span class="sf"><i class="fa-solid fa-circle"></i></span>
-                                <span th:text="${product.isActive} ? 'On Sale' : 'Sold Out'"></span>
-                            </button>
-                        </td>
-                        <td>
-                            <a th:href="@{'products/detail-product/' + ${product.productID}}">
-                                <button class="detail-btn"><i class="fa-solid fa-file"></i></button>
-                            </a>
-                        </td>
-                </tbody>
-            </table>
-        </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ProductCode</th>
+                <th>Counter Name</th>
+                <th>Status</th>
+                <th>Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}" th:if="${product.isActive}">
+                <td th:text="${product.productName}"></td>
+                <td th:text="${product.productCode}"></td>
+                <td th:text="${product.counter.counterName}"></td>
+                <td>
+                    <button th:classappend="${product.isActive} ? 'status complete' : 'status pending'">
+                        <span class="sf"><i class="fa-solid fa-circle"></i></span>
+                        <span th:text="${product.isActive} ? 'On Sale' : 'Sold Out'"></span>
+                    </button>
+                </td>
+                <td>
+                    <a th:href="@{'products/detail-product/' + ${product.productID}}">
+                        <button class="detail-btn"><i class="fa-solid fa-file"></i></button>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
         <div class="pagination-container">
             <div class="previous">
                 <a th:if="${currentPage > 0}" th:href="@{/seller/products(page=${currentPage - 1})}">

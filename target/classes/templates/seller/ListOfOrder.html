@@ -18,66 +18,77 @@
                 <div class="sidebar-pic"></div>
                 <div class="sidebar-name">
                     <div class="child-name">
-                        Trần Đại Dương
+                        <span th:text="${staff.fullName}"></span>
                     </div>
                     <div>
-                        <span class="child-manager">Manager <i class="fa-solid fa-pencil"></i> </span>
+                        <span class="child-manager">Seller <i class="fa-solid fa-pencil"></i> </span>
                     </div>
                 </div>
             </div>
-            <p class="active">List Of Order</p>
-             <a class="link-product" th:href="@{/orders/new-sell-order}"><p>New Sell Order</p></a>
-            <p>Bill of sell</p>
-            <p>New Purchase Order</p>
-             <a class="link-product" th:href="@{/products}"><p>Product List as Counter</p></a>
+            <p class="active">List Of Sell Order</p>
+              <a class="link-product" th:href="@{/orders/listOfPurchaseOrder}"><p>List Of Purchase Order</p></a>
+             <a class="link-product" th:href="@{/seller/products}"><p>Product List as Counter</p></a>
+              <a class="link-product" th:href="@{/seller-profile}"><p>Personal Profile</p></a>
         </div>
-        <button> <i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+          <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
     </div>
     <div class="content">
         <div class="bill-header">
-            <h1>List Of Order</h1>
+            <h1>List Of Sell Order</h1>
         </div>
           <div class="bill-btn-confirm">
-            <button class="btn-sell" >New Sell <i class="fa-solid fa-circle-plus"></i></button>
-            <button class="btn-purchase">New Purchase <i class="fa-solid fa-circle-plus"></i></button>
+            <a  th:href="@{/orders/new-sell-order}"><button class="btn-sell" >New Sell <i class="fa-solid fa-circle-plus"></i></button></a>
           </div>
         <div class="bill-details">
-            <div class="staff">
-                <input value="Search" class="staff-input" />
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
+              <div class="staff">
+    <input id="searchInput" class="staff-input" onkeyup="searchOrders()" placeholder="Search by customer name or phone number..." />
+    <i class="fa-solid fa-magnifying-glass"></i>
+</div>
         </div>
         <div class="bill-table">
             <table>
                 <thead>
                     <tr>
                         <th>Order Code<span class="id"><i class="fa-solid fa-caret-down"></i></span></th>
-                        <th>Type<span class="id"><i class="fa-solid fa-caret-down"></i></span></th>
                         <th>Customer Name</th>
+                         <th>Phone Number</th>
                         <th>Quantity</th>
                         <th>Total</th>
                         <th>Status<span class="id"><i class="fa-solid fa-caret-down"></i></span></th>
+                        <th>New Sell Gold</th>
                     </tr>
                 </thead>
                <tbody>
     <tr th:each="order : ${orders}">
-        <td><i class="fa-solid fa-file"></i> <span class="code-file" th:text="${order.orderCode}"></span></td>
-        <td th:text="${order.type.typeName}"></td>
+       <td>
+    <a th:href="@{'/orders/SellOrderDetail/' + ${order.orderID} }">
+        <i class="fa-solid fa-file"></i>
+    </a>
+    <span class="code-file" th:text="${order.orderCode}"></span>
+</td>
         <td th:text="${order.customer.customerName}"></td>
-        <td th:text="${order.product.quantity}"></td>
-        <td >$4900</td>
+        <td th:text="${order.customer.phone}"></td>
+        <td th:text="${order.quantity}"></td>
+        <td th:text="${order.total}"></td>
         <td>
-           <button class="status" th:classappend="${order.status ? 'complete' : 'pending'}">
-                                <span class="sf"><i class="fa-solid fa-circle"></i></span>
-                                <span th:text="${order.status ? 'Complete' : 'Pending'}"></span>
-            </button>
+         <button class="status" th:classappend="${order.orderStatus.name == 'Completed' || order.orderStatus.name == 'Delivering'} ? 'complete' : 'pending'">
+    <span class="sf"><i class="fa-solid fa-circle"></i></span>
+    <span th:text="${order.orderStatus.name}"></span>
+</button>
+        </td>
+        <td>
+           <a th:href="@{'/orders/sell-gold-order/' + ${order.orderID}}"><i class="fa-brands fa-sellcast"></i></a>
         </td>
     </tr>
 </tbody>
 
             </table>
         </div>
-                         <div class="pagination-container">
+                     <div class="pagination-container">
     <div class="previous">
         <a th:if="${currentPage > 0}" th:href="@{/orders/listOfOrder(page=${currentPage - 1 })}">
             <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
@@ -89,11 +100,38 @@
         </span>
     </div>
     <div class="next">
-        <a th:if="${currentPage < totalPages - 1}"th:href="@{/orders/listOfOrder(page=${currentPage - 1 })}">
+        <a th:if="${currentPage < totalPages - 1}" th:href="@{/orders/listOfOrder(page=${currentPage + 1})}">
             <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
         </a>
     </div>
+</div>
+           
     </div>
+    <script type="text/javascript">
+    function searchOrders() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase().trim();
+        table = document.querySelector("table");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            tdName = tr[i].getElementsByTagName("td")[1]; 
+            tdPhone = tr[i].getElementsByTagName("td")[2];
+
+            if (tdName || tdPhone) {
+                txtValueName = tdName.textContent || tdName.innerText;
+                txtValuePhone = tdPhone.textContent || tdPhone.innerText;
+                
+                if (txtValueName.toUpperCase().includes(filter) || txtValuePhone.includes(filter)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 </body>
 
 </html>

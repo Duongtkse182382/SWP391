@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List Customer</title>
+    <link rel="stylesheet" th:href="@{css/ListCustomer.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-profile">
+                <div class="sidebar-pic"></div>
+                <div class="sidebar-name">
+                    <div class="child-name">
+                        Trần Đại Dương
+                    </div>
+                    <div>
+                        <span class="child-manager">Cashier <i class="fa-solid fa-pencil"></i> </span>
+                    </div>
+                </div>
+            </div>
+            <a  class="link-historyOrder" th:href="@{/orders}"><p>History Order</p></a>
+            <p class="active">List customer</p>
+            <a  class="link-historyOrder" th:href="@{seller/products/bill-of-sell/11}"><p>Bill of Sell</p></a>
+            <a  class="link-historyOrder" th:href="@{seller/products/bill-of-buy/14}"><p>Bill of Buy</p></a>
+            <a  class="link-historyOrder" th:href="@{/cashier-profile}"><p>Personal Profile</p></a>
+             <a  class="link-historyOrder" th:href="@{/warranty}"><p>Warranty</p></a>
+        </div>
+           <form th:action="@{/perform_logout}" method="post">
+            <button type="submit"> 
+                <i class="fa-solid fa-right-from-bracket"></i> Log out
+            </button>
+        </form>
+    </div>
+    <div class="content">
+        <div class="bill-header">
+            <h1>List Customer</h1>
+        </div>
+        <div class="bill-details">
+              <div class="staff">
+    <input id="searchInput" class="staff-input" onkeyup="searchOrders()" placeholder="Search by customer name or phone number..." />
+    <i class="fa-solid fa-magnifying-glass"></i>
+</div>
+        </div>
+   
+        <div class="bill-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer name</th>
+                        <th>Phone</th>
+                        <th>Point</th>
+                        <th>Rank</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="customer : ${customers}">
+                        <td th:text="${customer.customerName}"></td>
+                        <td th:text="${customer.phone}"></td>
+                        <td th:text="${customer.loyalPoint}"></td>
+                        <td th:text="${customer.rank}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+           <div class="pagination-container">
+    <div class="previous">
+        <a th:if="${currentPage > 0}" th:href="@{/customers(page=${currentPage - 1 })}">
+            <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
+        </a>
+    </div>
+    <div class="pages">
+        <span th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:class="${pageNumber == currentPage ? 'page-active' : ''}">
+            <a th:href="@{/customers(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+        </span>
+    </div>
+    <div class="next">
+        <a th:if="${currentPage < totalPages - 1}" th:href="@{/customers(page=${currentPage + 1})}">
+            <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
+        </a>
+    </div>
+    </div>
+     <script type="text/javascript">
+    function searchOrders() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase().trim();
+        table = document.querySelector("table");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            tdName = tr[i].getElementsByTagName("td")[0]; 
+            tdPhone = tr[i].getElementsByTagName("td")[1];
+
+            if (tdName || tdPhone) {
+                txtValueName = tdName.textContent || tdName.innerText;
+                txtValuePhone = tdPhone.textContent || tdPhone.innerText;
+                
+                if (txtValueName.toUpperCase().includes(filter) || txtValuePhone.includes(filter)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+</body>
+
+</html>

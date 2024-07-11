@@ -133,7 +133,7 @@
         }
 
         .buttons button {
-            background-color: rgba(227, 54, 54, 0.72);
+            background-color: #55A2FD;
             color           : #000000;
             border-radius   : 10px;
         }
@@ -151,7 +151,12 @@
             color           : #000000;
             border-radius   : 10px;
         }
-
+		button.btn.btn-cancel {
+             background-color: rgba(227, 54, 54, 0.72);
+            color           : #000000;
+            border-radius   : 10px;
+            padding: 8px 22px
+        }
         .group {
             display       : flex;
             flex-direction: column;
