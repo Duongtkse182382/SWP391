@@ -82,7 +82,7 @@ public class PurchaseOrderController {
 	public ResponseEntity<Map<String, Object>> updatePrice(@RequestParam int typeGold, @RequestParam float weight,Model model) {
 		Optional<Material> material = materialService.getMaterialById(typeGold);
 		
-	    float goldPrice = weight * (material.get().getMaterialPriceLists().get(material.get().getMaterialPriceLists().size()-1).getBuyPrice()); 
+	    float goldPrice = (float) ((weight/3.75) * (material.get().getMaterialPriceLists().get(material.get().getMaterialPriceLists().size()-1).getBuyPrice())); 
 	    purchaseOrderDTO.setWeight(weight);
 	    purchaseOrderDTO.setGoldPrice(goldPrice);
 	    Map<String, Object> response = new HashMap<>();
