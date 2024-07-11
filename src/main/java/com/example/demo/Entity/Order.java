@@ -1,6 +1,7 @@
 package com.example.demo.Entity;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.*;
@@ -36,15 +37,6 @@ public class Order {
     
     @Column(name="orderCode")
     private String orderCode;
-    
-//    
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "promotionID", referencedColumnName = "promotionID", insertable = false, updatable = false)
-//    private Promotion promotion;
-//    
-//
-//    @Column(name = "promotionID")
-//    private int promotionID;
 
     private int quantity;
     private Double total;
@@ -66,5 +58,7 @@ public class Order {
     private List<OrderDetail> orderDetails;
 
 }
+
+
 
 
