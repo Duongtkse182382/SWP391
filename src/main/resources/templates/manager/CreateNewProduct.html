@@ -87,7 +87,7 @@
                         th:text="${counter.counterName}"></option>
             </select>
         </div>
-        <div id="jewelry-fields" style="display: none;">
+        <div id="jewelry-fields">
     <div class="form-group">
         <label for="gemCode">GemCode</label>
         <select class="form-control" id="gemCode" th:field="*{gemPriceListID}">
@@ -116,10 +116,15 @@
             <input type="text" class="form-control" id="price-rate" th:field="*{priceRate}">
              <small id="price-rate-error" class="text-danger"></small>
         </div>
-           <div class="d-flex justify-content-center">
-			 <button type="submit" class="btn btn-primary mx-auto" id="create-button">Create</button>  
+        <div class="new-div">
+           <div class="back-button">
+           	<a th:href="@{/manager/products}"><button type="button" class="btn btn-cancel">Cancel</button></a>  
+			 
 		   </div>
-          
+		   <div class="create-button">
+		   <button type="submit" class="btn btn-primary" id="create-button">Create</button>
+		   </div>
+         </div>
     </form>             
             </div>
         </div>

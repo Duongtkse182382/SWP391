@@ -52,12 +52,13 @@
                         <div class="group mt-4">
                             <div class="row">
                                 <div class="col-6 form-group">
-                                    <label>Material Name</label>
-                                    <select th:field="*{gemID}">
+                                    <label>Gem code</label>
+                                    <select th:field="*{gemID}" disabled>
                                        <option th:each="gem : ${gem}"
                         th:value="${gem.gemID}"
-                        th:text="${gem.gemName}"></option>
+                        th:text="${gem.gemCode}"></option>
                                     </select>
+                                    <input type="hidden" th:field="*{gemID}">
                                 </div>
                                 <div class="col-6 form-group">
                                     <label>Buy Price</label>
@@ -72,6 +73,7 @@
                             </div>
                             <div class="col-12 text-center">
                                 <button type="submit" class="btn btn-save-password">Update</button>
+                                <a th:href="@{/gem-price-list}"><button class="btn btn-cancel">Cancel</button></a>
                             </div>
                         </div>
             </form>
