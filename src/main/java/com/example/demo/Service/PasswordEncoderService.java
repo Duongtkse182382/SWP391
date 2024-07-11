@@ -12,7 +12,4 @@ public class PasswordEncoderService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public String encodePassword(String password) {
-        return bCryptPasswordEncoder.encode(password);
-    }
-}
+ 
