@@ -73,7 +73,7 @@
         <td th:text="${order.customer.customerName}"></td>
         <td th:text="${order.customer.phone}"></td>
         <td th:text="${order.quantity}"></td>
-        <td th:text="${order.total}"></td>
+        <td th:text="${#numbers.formatDecimal(order.total, 1, 'COMMA')}"></td>
         <td>
          <button class="status" th:classappend="${order.orderStatus.name == 'Completed' || order.orderStatus.name == 'Delivering'} ? 'complete' : 'pending'">
     <span class="sf"><i class="fa-solid fa-circle"></i></span>

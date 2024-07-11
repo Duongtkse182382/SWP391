@@ -92,7 +92,12 @@
                             <th>Product Code</th>
                             <th>Product Name</th>
                             <th>Material</th>
-                            <th>Weight/Carat</th>
+                            <th>Weight</th>
+                            <th>Carat</th>
+                            <th>Color</th>
+                            <th>Clarity</th>
+                            <th>Cut</th>
+                            <th>Origin</th>
                             <th>Price</th>
                         </tr>
                     </thead>
@@ -100,9 +105,14 @@
                         <tr th:each="orderDetail : ${order.orderDetails}">
                             <td th:text="${orderDetail.product.productCode}"></td>
                             <td th:text="${orderDetail.product.productName}"></td>
-                            <td th:text="${orderDetail.product.gemPriceList.gem.gemName}"></td>
+                            <td th:text="${orderDetail.product.materialPriceList.material.name}"></td>
+                            <td th:text="${orderDetail.product.weight}"></td>
                             <td th:text="${orderDetail.product.gemPriceList.gem.carat}"></td>
-                            <td th:text="${orderDetail.total}"></td>
+                            <td th:text="${orderDetail.product.gemPriceList.gem.color}"></td>
+                            <td th:text="${orderDetail.product.gemPriceList.gem.clarity}"></td>
+                            <td th:text="${orderDetail.product.gemPriceList.gem.cut}"></td>
+                            <td th:text="${orderDetail.product.gemPriceList.gem.origin}"></td>
+                            <td th:text="${#numbers.formatDecimal(orderDetail.total, 1, 'COMMA')}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -110,7 +120,7 @@
             </div>
           <div class="totals">
     <div class="total-price">Total Price:</div>
-    <div class="price" th:text="${order.total}" ></div>
+    <div class="price" th:text="${#numbers.formatDecimal(order.total, 1, 'COMMA')}" ></div>
 </div>
             
         </div>
