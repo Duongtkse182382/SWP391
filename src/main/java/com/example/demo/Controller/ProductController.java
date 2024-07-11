@@ -376,16 +376,17 @@ public class ProductController {
         gemPriceList.setApplyDate(new Date());
         model.addAttribute("staff", staff);
         gemPriceListService.save(gemPriceList);
+        
+        String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(gemPriceList.getApplyDate());
         String logEntry = String.format("%s, Saved game price list:ID, ApplyDate: %s, BuyPrice: %.2f, SellPrice: %.2f",
-        		                         gemPriceList.getGemPriceListID(),
-                                        new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()),
-                                        gemPriceList.getApplyDate(), 
+                                        gemPriceList.getGemPriceListID(),
+                                        formattedDate,
                                         gemPriceList.getBuyPrice(), 
                                         gemPriceList.getSellPrice());
         csvlog2.log(logEntry);
 
         return "redirect:/gem-price-list";
-    } 
+    }
     @GetMapping("/gem-price-list/update/{gemPriceListID}") 
     public String showGemPriceListDetail(@PathVariable Integer gemPriceListID, Model model) { 
     	 Optional<GemPriceList> gemPriceListOpt = gemPriceListService.findGemPriceListById(gemPriceListID);
@@ -406,11 +407,13 @@ public class ProductController {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Staff staff = staffRepository.findByEmail(email);
         model.addAttribute("staff", staff);
+        
+        String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(gemPriceList.getApplyDate());
         String logEntry = String.format("%s, Update game price list: , ApplyDate: %s, BuyPrice: %.2f, SellPrice: %.2f",
-                gemPriceList.getGemPriceListID(),
-                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(gemPriceList.getApplyDate()),
-                gemPriceList.getBuyPrice(),
-                gemPriceList.getSellPrice());
+                                        gemPriceList.getGemPriceListID(),
+                                        formattedDate,
+                                        gemPriceList.getBuyPrice(),
+                                        gemPriceList.getSellPrice());
         csvlog2.log(logEntry);
 
         return "redirect:/gem-price-list";
