@@ -50,6 +50,7 @@
                     <tr>
                         <th>Name</th>
                         <th>ProductCode</th>
+                          <th>Counter Name</th>
                         <th>Status</th>
                         <th>Detail</th>
                     </tr>
@@ -58,6 +59,7 @@
                     <tr th:each="product : ${products}">
                         <td th:text="${product.productName}"></td>
                         <td th:text="${product.productCode}"></td>
+                          <td th:text="${product.counter.counterName}"></td>
                         <td>
                             <button th:classappend="${product.isActive} ? 'status complete' : 'status pending'">
                                 <span class="sf"><i class="fa-solid fa-circle"></i></span>

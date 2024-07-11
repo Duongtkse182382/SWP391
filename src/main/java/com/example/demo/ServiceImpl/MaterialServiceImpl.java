@@ -1,9 +1,12 @@
 package com.example.demo.ServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Entity.Material;
+import com.example.demo.Entity.MaterialPriceList;
 import com.example.demo.Repository.MaterialRepository;
 import com.example.demo.Service.MaterialService;
 
@@ -28,15 +31,23 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public Material saveMaterial(Material material) {
+    	 if (materialRepository.existsByName(material.getName())) {
+    		 throw new IllegalArgumentException("Material name already exists");
+         }
         return materialRepository.save(material);
     }
     @Override
     public Material getMaterialByName(String name) {
         return materialRepository.findByName(name).orElse(null);
     }
-
     @Override
     public Material updateMaterial(Material material) {
+        if (materialRepository.existsByName(material.getName())) {
+            Optional<Material> existingMaterial = materialRepository.findByName(material.getName());
+            if (existingMaterial.isPresent() && existingMaterial.get().getMaterialID() != material.getMaterialID()) {
+                throw new IllegalArgumentException("Material name already exists.");
+            }
+        }
         return materialRepository.save(material);
     }
 
@@ -44,4 +55,9 @@ public class MaterialServiceImpl implements MaterialService {
     public void deleteMaterial(int id) {
         materialRepository.deleteById(id);
     }
+    @Override
+    public Page<Material> findAllMaterialList(Pageable pageable) {
+        return materialRepository.findAll(pageable);
+    }
+
 }

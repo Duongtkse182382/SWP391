@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface MaterialRepository extends JpaRepository<Material, Integer> {
 
 	Optional<Material> findByName(String name);
-
+	
+	 boolean existsByName(String name);
 
 }
