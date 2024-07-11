@@ -100,7 +100,7 @@
                             <td th:text="${detail.product.productCode}"></td>
                             <td th:text="${detail.product.materialPriceList.material.name}"></td>
                             <td th:text="${detail.product.materialPriceList.sellPrice}"></td>
-                            <td class="total" th:text="${detail.total}"></td>
+                            <td class="total" th:text="${#numbers.formatDecimal(detail.total, 1, 'COMMA')}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -225,7 +225,7 @@
        	        document.getElementById('total-amount').textContent = totalAmount.toFixed(1);
        	        document.getElementById('additionalDiscount').parentNode.style.display = 'none';
        	    } else {
-       	        let totalAmount = provisionalTotal + discount + additionalDiscount;
+       	        let totalAmount = provisionalTotal + discount - additionalDiscount;
        	        document.getElementById('discount-amount').textContent = discount.toFixed(1);
        	        document.getElementById('total-amount').textContent = totalAmount.toFixed(1);
        	        document.getElementById('additionalDiscount').parentNode.style.display = 'block';
