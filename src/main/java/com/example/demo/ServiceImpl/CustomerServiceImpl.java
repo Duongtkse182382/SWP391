@@ -1,6 +1,7 @@
 package com.example.demo.ServiceImpl;
 
 import com.example.demo.Entity.Customer;
+import com.example.demo.Entity.Order;
 import com.example.demo.Repository.CustomerRepository;
 import com.example.demo.Service.CustomerService;
 
@@ -57,4 +58,5 @@ public class CustomerServiceImpl implements CustomerService {
 	        }
 	        return customerRepository.save(customer);
 	    }
+	   
 }

@@ -26,8 +26,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (staff == null || !staff.getEmail().equalsIgnoreCase(email)) {
             throw new InvalidEmailException("Email is not valid");
         }
-
-    
+        
+        if (staff.isActive() == false) {
+            throw new InvalidEmailException("Account is not active");
+        }
 
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + staff.getRole().getRoleName().toUpperCase());
         return new User(staff.getEmail(), staff.getPassword(), Collections.singleton(authority));

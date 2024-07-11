@@ -21,9 +21,5 @@ public class OrderStatus {
     
     @OneToMany(mappedBy = "orderStatus")
     private List<Order> orders;
-
-	public void getName(String string) {
-	    this.name=name;
-	}
 }
 

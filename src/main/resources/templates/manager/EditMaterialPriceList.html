@@ -53,11 +53,12 @@
                             <div class="row">
                                 <div class="col-6 form-group">
                                     <label>Material Name</label>
-                                    <select th:field="*{materialID}">
+                                    <select th:field="*{materialID}" disabled>
                                       <option th:each="material : ${material}"
                         th:value="${material.materialID}"
                         th:text="${material.name}"></option>
                                     </select>
+                                    <input type="hidden" th:field="*{materialID}">
                                 </div>
                                 <div class="col-6 form-group">
                                     <label>Buy Price</label>
@@ -72,6 +73,7 @@
                             </div>
                             <div class="col-12 text-center">
                                 <button type="submit" class="btn btn-save-password">Update</button>
+                                <a th:href="@{/price-list}"><button class="btn btn-cancel">Cancel</button></a>
                             </div>
                         </div>
             </form>

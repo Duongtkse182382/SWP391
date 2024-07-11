@@ -26,6 +26,4 @@ public class Promotion {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
     private String applyFor;
- 
-
 }

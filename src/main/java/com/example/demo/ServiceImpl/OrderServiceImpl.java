@@ -72,7 +72,8 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderstatusID(1);
 		Double total = 0.0;
 		for (int i = 0; i < orderDTO.getProduct().size(); i++) {
-			total += orderDTO.getProduct().get(i).getMaterialPriceList().getSellPrice()*orderDTO.getProduct().get(i).getWeight() + orderDTO.getProduct().get(i).getGemPriceList().getSellPrice();
+			total += (orderDTO.getProduct().get(i).getMaterialPriceList().getSellPrice()*orderDTO.getProduct().get(i).getWeight()/3.75 
+					+ orderDTO.getProduct().get(i).getGemPriceList().getSellPrice()*orderDTO.getProduct().get(i).getPriceRate())*1000;	 
 		}
 		order.setTotal(total);
 		order.setDate(new Date());
@@ -90,10 +91,11 @@ System.out.print(orderDTO.getStaffID());
 			OrderDetail orDetail = new OrderDetail();
 			orDetail.setOrderID(order.getOrderID());
 			orDetail.setProductID(orderDTO.getProduct().get(i).getProductID());
-			orDetail.setTotal((orderDTO.getProduct().get(i).getMaterialPriceList().getSellPrice()*orderDTO.getProduct().get(i).getWeight() + orderDTO.getProduct().get(i).getGemPriceList().getSellPrice()));
+			orDetail.setTotal((float) (orderDTO.getProduct().get(i).getMaterialPriceList().getSellPrice()*orderDTO.getProduct().get(i).getWeight()/3.75 
+					+ orderDTO.getProduct().get(i).getGemPriceList().getSellPrice()*orderDTO.getProduct().get(i).getPriceRate()*1000));
 			orderDetailRepository.save(orDetail);
 		}
-	}
+	} 
 	@Override
 	public Optional<Order> findOrderById(Integer id){
 		return orderRepository.findById(id);

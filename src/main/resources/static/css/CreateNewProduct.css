@@ -146,7 +146,14 @@
             color           : #000000;
             border-radius   : 10px;
         }
-
+        
+		button.btn.btn-cancel {
+             background-color: rgba(227, 54, 54, 0.72);
+             color: #ffffff;
+             border-radius   : 10px;
+             padding: 8px 22px;
+        }
+        
         .group {
             display       : flex;
             flex-direction: column;
@@ -193,3 +200,14 @@
             height       : 40px;
             margin-bottom: 30px;
         }
+        
+        .new-div {
+    		display: flex;
+    		justify-content: center;
+    		gap: 15px;
+		}
+		
+		button#create-button {
+    		padding: 8px 22px;
+    		border-radius: 8px;
+		}

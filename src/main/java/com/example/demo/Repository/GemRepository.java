@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GemRepository extends JpaRepository<Gem, Integer> {
 	   Gem findByGemCode(String gemCode);
+	   boolean existsByGemCode(String gemCode);
 }

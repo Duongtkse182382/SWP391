@@ -56,6 +56,25 @@
 						th:action="@{/manange-gem/update/{gemID}(gemID=${gem.gemID})}">
 						<div class="text-center edit-counter">Edit Gem</div>
 						<div class="group mt-4">
+						<div class="row">
+								<div class="col-6 form-group">
+									<label>Gem code</label> 
+									<input type="text" th:field="*{gemCode}"
+										class="form-control"/>
+								</div>
+								<div class="col-6 form-group">
+									<label>Gem name</label> 
+									<input type="text" th:field="*{gemName}"
+										class="form-control"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-6 form-group">
+									<label>Origin</label> 
+									<input type="text" th:field="*{origin}" class="form-control"/>
+								</div>
+
+							</div>
 							<div class=row>
 								<div class="col-6 form-group">
 									<label>Carat</label> 
@@ -76,27 +95,11 @@
 									<input type="text" class="form-control" th:field="*{clarity}"/>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-6 form-group">
-
-									<input type="text" th:field="*{gemCode}"
-										class="form-control" hidden />
-								</div>
-								<div class="col-6 form-group">
-
-									<input type="text" th:field="*{gemName}"
-										class="form-control" hidden />
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-6 form-group">
-									<input type="text" th:field="*{origin}" class="form-control" hidden />
-								</div>
-
-							</div>
+							
 							<div class="col-12 text-center">
 								<button type="submit" class="btn btn-save"
 									onclick="hideEditModal()">Save</button>
+									<a th:href="@{/gem-price-list}"><button class="btn btn-cancel">Cancel</button></a>
 							</div>
 						</div>
 					</form>

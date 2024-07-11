@@ -87,17 +87,17 @@
         </div>
                      <div class="pagination-container">
     <div class="previous">
-        <a th:if="${currentPage > 0}" th:href="@{/orders/listOfOrder(page=${currentPage - 1 })}">
+        <a th:if="${currentPage > 0}" th:href="@{/orders/listOfPurchaseOrder(page=${currentPage - 1 })}">
             <button class="btn-previous"> <i class="fa-solid fa-arrow-left i-left"></i>Previous</button>
         </a>
     </div>
     <div class="pages">
         <span th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:class="${pageNumber == currentPage ? 'page-active' : ''}">
-            <a th:href="@{/orders/listOfOrder(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+            <a th:href="@{/orders/listOfPurchaseOrder(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
         </span>
     </div>
     <div class="next">
-        <a th:if="${currentPage < totalPages - 1}" th:href="@{/orders/listOfOrder(page=${currentPage + 1})}">
+        <a th:if="${currentPage < totalPages - 1}" th:href="@{/orders/listOfPurchaseOrder(page=${currentPage + 1})}">
             <button class="btn-next"> Next <i class="fa-solid fa-arrow-right i-right"></i></button>
         </a>
     </div>

@@ -14,9 +14,15 @@ import javax.persistence.*;
 public class Counter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int counterID;
+    private Integer counterID;
     
     @Column(name="counterName")
     private String counterName;
+    
+    @Column(name="active")
+    private boolean active;
+    
+    @OneToMany(mappedBy = "productID", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Product> product;
 
 }

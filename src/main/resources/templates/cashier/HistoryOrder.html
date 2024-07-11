@@ -73,7 +73,7 @@
 </button>
 
                         </td>
-                        <td th:text="${order.total}"></td>
+                        <td th:text="${#numbers.formatDecimal(order.total, 1, 'COMMA')}"></td>
                         <td>
             
            <button class="detail-btn" th:attr="data-order-id=${order.orderID}">

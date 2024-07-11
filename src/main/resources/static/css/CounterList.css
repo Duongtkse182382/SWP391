@@ -171,6 +171,12 @@
             margin-bottom: 30px;
             background   : #55A2FD;
         }
+        button.btn.btn-cancel {
+            padding      : 8px 22px;
+            margin-top   : 16px;
+            margin-bottom: 30px;
+            background   : #F15046;
+        }
 
         .bill-table {
             width     : 100%;

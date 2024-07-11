@@ -142,8 +142,5 @@ public class PersonProfileController {
        return "manager/personalProfile";
    }
  
-   @GetMapping("/warranty")
-   public String Warranty() {
-	   return "cashier/warranty";
-   }
+
 }

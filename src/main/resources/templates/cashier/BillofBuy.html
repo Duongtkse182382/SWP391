@@ -107,7 +107,7 @@
                             <td th:text="${detail.product.gemPriceList.gem.clarity}"></td>
                             <td th:text="${detail.product.gemPriceList.gem.cut}"></td>
                             <td th:text="${detail.product.gemPriceList.buyPrice}"></td>
-                            <td class="total" th:text="${detail.total}"></td>
+                            <td class="total" th:text="${#numbers.formatDecimal(detail.total, 1, 'COMMA')}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -115,7 +115,7 @@
              <div class="total-section">
                 <div>
                     <p>Provisional total:</p>
-                    <p>Promotion (10%):</p>
+                    <p>Tax (10%):</p>
                     <p>Promotion Code:</p>
                      <p id="promotion-field-percent">Promotion Percent:</p>
                     <p id="promotion-field">Promotion:</p>
@@ -231,7 +231,7 @@
         	        document.getElementById('total-amount').textContent = totalAmount.toFixed(1);
         	        document.getElementById('additionalDiscount').parentNode.style.display = 'none';
         	    } else {
-        	        let totalAmount = provisionalTotal + discount + additionalDiscount;
+        	        let totalAmount = provisionalTotal - discount + additionalDiscount;
         	        document.getElementById('discount-amount').textContent = discount.toFixed(1);
         	        document.getElementById('total-amount').textContent = totalAmount.toFixed(1);
         	        document.getElementById('additionalDiscount').parentNode.style.display = 'block';

@@ -26,6 +26,7 @@ public class Staff {
     private String address;
     private String phoneNumber;
     private boolean isActive;
+   
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "roleID", insertable = false, updatable = false)
@@ -40,6 +41,8 @@ public class Staff {
     
     @Column(name = "counter_id")
     private int counterID;
+    
+    
     
 
   
