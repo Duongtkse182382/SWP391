@@ -142,33 +142,7 @@ public class OrderController {
 
 	
 	
-//	@PostMapping("/orders/new-sell-order/save")
-//	public String saveNewSellOrder(@Valid @ModelAttribute("orderDto") OrderDTO orderDTO, BindingResult result,
-//			Model model,HttpSession session) {
-//	    Staff loggedInStaff = (Staff) session.getAttribute("staff");
-//
-//	    if (loggedInStaff != null) {
-//            System.out.println("Currently logged-in staff ID: " + loggedInStaff.getStaffID());
-//            System.out.println("Currently logged-in staff name: " + loggedInStaff.getFullName());
-//            orderDTOs.setStaffID(loggedInStaff.getStaffID());
-//            orderDTOs.setStaffName(loggedInStaff.getFullName());
-//        } else {
-//            System.out.println("No staff information found in session.");
-//        }
-//			
-//		orderDTOs.setPhoneNumber(orderDTO.getPhoneNumber());
-//		orderDTOs.setCustomerName(orderDTO.getCustomerName());
-//		orderService.saveProductFromOrder(orderDTOs);
-//		orderDTOs = new OrderDTO();
-//		addedProductIds = new HashSet<>();
-//		lProduct.clear();
-//		 String email = SecurityContextHolder.getContext().getAuthentication().getName();
-//         Staff staff = staffRepository.findByEmail(email);
-//         model.addAttribute("staff", staff);
-//		return "seller/newSellOrder"; 
-//
-//	}
-//	
+
 	@PostMapping("/orders/new-sell-order/save")
     public String saveNewSellOrder(@Valid @ModelAttribute("orderDto") OrderDTO orderDTO, BindingResult result,
             Model model,HttpSession session) {
@@ -326,7 +300,7 @@ public class OrderController {
 	@PostMapping("/seller/products/bill-of-buy/{orderID}/cancel")
 	public String handleCancelBillOfSellAction(@PathVariable Integer orderID, Model model) {
 		Order order = orderService.findOrderById(orderID).orElseThrow(() -> new RuntimeException("Order not found"));
-		order.setOrderstatusID(1);
+		order.setOrderstatusID(4);
 		orderService.updateOrder(order);
 		model.addAttribute("order", order);
 		 String email = SecurityContextHolder.getContext().getAuthentication().getName();

@@ -87,7 +87,11 @@
                             <th>PRODUCT_TYPE</th>
                             <th>PRODUCT_CODE</th>
                             <th>MATERIAL</th>
-                            <th>UNIT PRICE</th>
+                            <th>CARAT</th>
+                            <th>COLOR</th>
+                            <th>CUT</th>
+                            <th>CLARITY</th>
+                            <th>ORIGIN</th>
                             <th class="total">PRICE</th>
                         </tr>
                     </thead>
@@ -99,7 +103,11 @@
                             <td th:text="${detail.product.type.typeName}"></td>
                             <td th:text="${detail.product.productCode}"></td>
                             <td th:text="${detail.product.materialPriceList.material.name}"></td>
-                            <td th:text="${detail.product.materialPriceList.sellPrice}"></td>
+                            <td th:text="${detail.product.gemPriceList.gem.carat}"></td>
+                            <td th:text="${detail.product.gemPriceList.gem.color}"></td>
+                            <td th:text="${detail.product.gemPriceList.gem.cut}"></td>
+                            <td th:text="${detail.product.gemPriceList.gem.clarity}"></td>
+                            <td th:text="${detail.product.gemPriceList.gem.origin}"></td>
                             <td class="total" th:text="${detail.total}"></td>
                         </tr>
                     </tbody>

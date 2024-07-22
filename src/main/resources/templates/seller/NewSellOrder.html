@@ -134,8 +134,8 @@
                          <td th:text="${Product.type.typeName == 'Gold' ? '' : Product.gemPriceList.gem.color}"></td>
                            <td th:text="${Product.MaterialPriceList != null &amp;&amp; Product.MaterialPriceList.sellPrice != null &amp;&amp; Product.weight != null &amp;&amp; Product.gemPriceList != null &amp;&amp; Product.gemPriceList.sellPrice != null 
                            ? ((Product.MaterialPriceList.sellPrice * (Product.weight / 3.75)) + Product.gemPriceList.sellPrice)*Product.priceRate : '0'}"></td>
-                           <td><a
-								th:href="@{/orders/new-sell-order(removeId=${Product.productID})}">
+                           <td>
+                           <a th:href="@{/orders/new-sell-order(removeId=${Product.productID})}">
 									<i class="fa-solid fa-trash-can"></i>
 							</a></td>
                              

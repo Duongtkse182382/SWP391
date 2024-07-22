@@ -101,22 +101,26 @@
 							<th>Material</th>
 							<th>Weight</th>
 							<th>Carat</th>
+							<th>Cut</th>
+							<th>Color</th>
+							<th>Clarity</th>
+							<th>Origin</th>
 							<th>Price(x1000)</th>
-
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="orderDetail : ${order.orderDetails}">
-
 							<td th:text="${orderDetail.product.productCode}"></td>
 							<td th:text="${orderDetail.product.productName}"></td>
 							<td th:text="${orderDetail.product.type.typeName}"></td>
-							<td
-								th:text="${orderDetail.product.materialPriceList.material.name}"></td>
+							<td th:text="${orderDetail.product.materialPriceList.material.name}"></td>
 							<td th:text="${orderDetail.product.weight}"></td>
 							<td th:text="${orderDetail.product.gemPriceList.gem.carat}"></td>
+							<td th:text="${orderDetail.product.gemPriceList.gem.cut}"></td>
+							<td th:text="${orderDetail.product.gemPriceList.gem.color}"></td>
+							<td th:text="${orderDetail.product.gemPriceList.gem.clarity}"></td>
+							<td th:text="${orderDetail.product.gemPriceList.gem.origin}"></td>
 							<td th:text="${orderDetail.total}"></td>
-
 						</tr>
 					</tbody>
 				</table>

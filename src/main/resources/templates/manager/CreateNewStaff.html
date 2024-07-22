@@ -118,9 +118,10 @@
                         <div class="form-group col-md-6">
                             <label for="counterID">Of the Counter</label>
                             <select class="form-control" id="counterID" th:field="*{counterID}">
-                                <option value="1" th:selected="${staff.counterID == 1}">Gold</option>
-                                <option value="2" th:selected="${staff.counterID == 2}">Jewelry</option>
-                            </select>
+            <option th:each="counter : ${counters}"
+                    th:value="${counter.counterID}"
+                    th:text="${counter.counterName}"></option>
+        </select>
                               <small id="counterID-error" class="text-danger"></small>
                         </div>
                         
