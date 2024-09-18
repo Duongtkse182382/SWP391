@@ -5,24 +5,26 @@ import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 import javax.validation.constraints.NotNull;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)    
 public class Gem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int gemID;
-    private String gemCode;
-    private String gemName;
-    private String origin;
-    private float carat;
-    private String color;             
-    private String clarity;
-    private String cut;
+    int gemID;
+    String gemCode;
+    String gemName;
+    String origin;
+    float carat;
+    String color;             
+    String clarity;
+    String cut;
 
     @OneToMany(mappedBy = "gem",cascade = CascadeType.ALL)
-    private List<GemPriceList> gemPriceLists;
+    List<GemPriceList> gemPriceLists;
 }
