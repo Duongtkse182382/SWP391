@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.Entity.Staff;
 import com.example.demo.Repository.StaffRepository;
 
+import lombok.experimental.FieldDefaults;
+import lombok.RequiredArgsConstructor;
+
+
 @Controller
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PersonProfileController {
-	   @Autowired
-	    private StaffRepository staffRepository;
-	  
-	   @Autowired
-	    private BCryptPasswordEncoder bCryptPasswordEncoder;
+         StaffRepository staffRepository;
+	 BCryptPasswordEncoder bCryptPasswordEncoder;
 	   
 
    @GetMapping("/cashier-profile")
