@@ -1,6 +1,6 @@
 package com.example.demo.Entity;
 import lombok.*;
-
+import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 import javax.persistence.*;
@@ -11,18 +11,19 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class Counter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer counterID;
+    Integer counterID;
     
     @Column(name="counterName")
-    private String counterName;
+     String counterName;
     
     @Column(name="active")
-    private boolean active;
+     boolean active;
     
     @OneToMany(mappedBy = "productID", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private List<Product> product;
+     List<Product> product;
 
 }
