@@ -5,20 +5,24 @@ import javax.validation.constraints.NotNull;
 import lombok.*;
 import java.util.List;
 
+import lombok.experimental.FieldDefaults;
+
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int categoryID;
+    int categoryID;
 
     @NotNull(message = "Vui lòng không để trống trường này")
-    private String catName;
+    String catName;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products;
+    List<Product> products;
     
 }
