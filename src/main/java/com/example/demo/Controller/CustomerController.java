@@ -12,13 +12,16 @@ import com.example.demo.Entity.Customer;
 import com.example.demo.Entity.Staff;
 import com.example.demo.Repository.StaffRepository;
 import com.example.demo.Service.CustomerService;
+import lombok.experimental.FieldDefaults;
 
 
 @Controller
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CustomerController {
-	 private final CustomerService customerService;
-	  @Autowired
-	    private StaffRepository staffRepository;
+          CustomerService customerService;
+	
+	  StaffRepository staffRepository;
 
 	    public CustomerController(CustomerService customerService) {
 	        this.customerService = customerService;
