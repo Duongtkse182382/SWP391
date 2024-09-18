@@ -38,20 +38,25 @@ import com.example.demo.Service.PurchaseOrderService;
 import com.example.demo.dto.PurchaseOrderDTO;
 import com.example.demo.dto.PurchaseOrderGoldDto;
 
+import lombok.experimental.FieldDefaults;
+import lombok.RequiredArgsConstructor;
+
+
 @Controller
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PurchaseOrderController {
-	private PurchaseOrderDTO purchaseOrderDTO = new PurchaseOrderDTO();
-	private MaterialService materialService;
-	private OrderService orderService;
-	private GemService gemService;
-	private PurchaseOrderService purchaseOrderService;
-	private PurchaseOrderGoldDto purchaseOrderGoldDto;
-	private PurchaseOrderGoldDto purchaseSaveGoldDto;
-	private List<OrderDetail> orDetails;
-	private List<OrderDetail> purchaseDetails;
-	private int oldId=0;
-	   @Autowired
-	    private StaffRepository staffRepository;
+	 PurchaseOrderDTO purchaseOrderDTO = new PurchaseOrderDTO();
+	 MaterialService materialService;
+	 OrderService orderService;
+	 GemService gemService;
+	 PurchaseOrderService purchaseOrderService;
+	 PurchaseOrderGoldDto purchaseOrderGoldDto;
+	 PurchaseOrderGoldDto purchaseSaveGoldDto;
+	 List<OrderDetail> orDetails;
+         List<OrderDetail> purchaseDetails;
+	 int oldId=0;
+         StaffRepository staffRepository;
 	public PurchaseOrderController(OrderService orderService,MaterialService materialService, GemService gemService,PurchaseOrderService purchaseOrderService) {
 		this.materialService = materialService;
 		this.gemService = gemService;
