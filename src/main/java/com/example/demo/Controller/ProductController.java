@@ -45,21 +45,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import lombok.experimental.FieldDefaults;
+import lombok.RequiredArgsConstructor;
+
+
 @Controller
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ProductController {
 
-    private ProductService productService;
-    private  CategoryService categoryService;
-    private GemPriceListService gemPriceListService;
-    private  MaterialPriceListService materialPriceListService;
-    private  TypeService typeService;
-    private PromotionService promotionService;
-    private CounterService counterService;
-    private MaterialService materialService;
-    private GemService gemService;
-    @Autowired
-    private StaffRepository staffRepository;
-    private static final Logger logger = LogManager.getLogger(ProductController.class);
+     ProductService productService;
+     CategoryService categoryService;
+     GemPriceListService gemPriceListService;
+     MaterialPriceListService materialPriceListService;
+     TypeService typeService;
+     PromotionService promotionService;
+     CounterService counterService;
+    MaterialService materialService;
+    GemService gemService;
+
+    StaffRepository staffRepository;
+    Logger logger = LogManager.getLogger(ProductController.class);
 
     public ProductController(ProductService productService, CategoryService categoryService,GemPriceListService gemPriceListService,
     		MaterialPriceListService materialPriceListService,TypeService typeService,PromotionService promotionService,
