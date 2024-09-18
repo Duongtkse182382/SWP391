@@ -38,27 +38,30 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import lombok.experimental.FieldDefaults;
+import lombok.RequiredArgsConstructor;
+
 
 @Controller
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class OrderController {
-	@Autowired
-    private StaffRepository staffRepository;
-	 @Autowired
-	  private OrderRepository orderRepository;
-	 private PromotionService promotionService;
-   private OrderService orderService;
-   @Autowired
-	private ProductService productService;
-   @Autowired
-   private ProductRepository  productRepository;
-	private OrderDTO orderDTOs;
-	private PurchaseOrderGoldDto purchaseOrderGoldDto;
-	private PurchaseOrderGoldDto purchaseSaveGoldDto;
-	private List<OrderDetail> orDetails;
-	private List<OrderDetail> purchaseDetails;
-	private List<Product> lProduct;
-	private List<Counter> ICounter;
-	private int oldId=0;
+      StaffRepository staffRepository;
+
+	  OrderRepository orderRepository;
+	  PromotionService promotionService;
+          OrderService orderService;
+	  ProductService productService;
+
+         ProductRepository  productRepository;
+	 OrderDTO orderDTOs;
+	 PurchaseOrderGoldDto purchaseOrderGoldDto;
+	 PurchaseOrderGoldDto purchaseSaveGoldDto;
+	 List<OrderDetail> orDetails;
+         List<OrderDetail> purchaseDetails;
+	 List<Product> lProduct;
+	 List<Counter> ICounter;
+	 int oldId=0;
 	public OrderController(OrderService orderService, ProductService productService,PromotionService promotionService) {
 		this.orderService = orderService;
 		this.productService = productService;
@@ -100,7 +103,7 @@ public class OrderController {
 	        return "seller/listOfPurchaseOrder";
 	    }
 
-	private Set<Integer> addedProductIds = new HashSet<>();
+	  Set<Integer> addedProductIds = new HashSet<>();
 
 	@GetMapping("/orders/new-sell-order")
 	public String showNewSellOrder(@RequestParam(required = false) Integer productId,@RequestParam(required = false) Integer removeId, Model model) {
