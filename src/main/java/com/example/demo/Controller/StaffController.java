@@ -18,17 +18,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import lombok.experimental.FieldDefaults;
+import lombok.RequiredArgsConstructor;
+
+
 @Controller
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class StaffController {
-
-    @Autowired
-    private StaffRepository staffRepository;
-
-    @Autowired
-    private OrderRepository orderRepository;
-
-    private final StaffService staffService;
-    private final CounterService counterService;
+   StaffRepository staffRepository;
+   OrderRepository orderRepository;
+   StaffService staffService;
+   CounterService counterService;
 
     public StaffController(StaffService staffService, CounterService counterService) {
         this.staffService = staffService;
