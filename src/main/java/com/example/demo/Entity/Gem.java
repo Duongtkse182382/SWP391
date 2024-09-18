@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)    
+@FieldDefaults(level = AccessLevel.PRIVATE)    
 public class Gem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
